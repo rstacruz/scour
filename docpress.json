@@ -8,5 +8,9 @@
     "plugins": {
       "decorate": {}
     }
+  },
+  "googleAnalytics": {
+    "id": "UA-20473929-1",
+    "domain": "ricostacruz.com"
   }
 }
