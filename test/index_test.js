@@ -93,18 +93,6 @@ describe('index', function () {
     })
   })
 
-  describe('.where()', function () {
-    beforeEach(function () {
-      this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
-    })
-
-    it('works', function () {
-      expect(this.results.get(0).data).toEqual({ name: 'john' })
-      expect(this.results.get(1).data).toEqual({ name: 'jake' })
-      expect(this.results.get(2)).toEqual(undefined)
-    })
-  })
-
   describe('.len()', function () {
     it('works for objects', function () {
       expect(scour(data).len())
@@ -117,6 +105,18 @@ describe('index', function () {
     })
   })
 
+  describe('.where()', function () {
+    beforeEach(function () {
+      this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
+    })
+
+    it('works', function () {
+      expect(this.results.get(0).data).toEqual({ name: 'john' })
+      expect(this.results.get(1).data).toEqual({ name: 'jake' })
+      expect(this.results.get(2)).toEqual(undefined)
+    })
+  })
+
   describe('.where() empty', function () {
     beforeEach(function () {
       this.results = scour(data).get('users').where({ abc: 'def' })
@@ -124,6 +124,26 @@ describe('index', function () {
 
     it('works', function () {
       expect(this.results.len()).toEqual(0)
+    })
+  })
+
+  describe('.find()', function () {
+    beforeEach(function () {
+      this.result = scour(data).get('users').find({ name: { $regex: /^j/ } })
+    })
+
+    it('works', function () {
+      expect(this.result.data).toEqual({ name: 'john' })
+    })
+  })
+
+  describe('.find() empty', function () {
+    beforeEach(function () {
+      this.result = scour(data).get('users').find({ abc: 'def' })
+    })
+
+    it('works', function () {
+      expect(this.result).toEqual(undefined)
     })
   })
 

@@ -157,8 +157,28 @@ Scour.prototype = {
    */
 
   where (conditions) {
+    // TODO: this should return an object.
     const results = sift(conditions, this.toArray())
     return this._get(results, [])
+  },
+
+  /**
+   * Returns the first value that matches `conditions`.
+   * Supports MongoDB-style queries.
+   *
+   * For reference, see [MongoDB Query Operators][query-ops].
+   *
+   * [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+   *
+   *     scour(data).find({ name: 'john' })
+   *     scour(data).find({ name: { $in: ['moe', 'larry'] })
+   */
+
+  find (conditions) {
+    const keys = this.keys()
+    const idx = sift.indexOf(conditions, this.toArray())
+    if (idx === -1) return
+    return this._get(this.data[keys[idx]], [idx])
   },
 
   /**
