@@ -66,7 +66,7 @@ Has the following properties:
 
 ```js
 s = scour(obj)
-s.root             // => <scour>
+s.root             // => [scour object]
 s.keypath          // => array (string)
 ```
 
@@ -106,7 +106,7 @@ scour(data).go('users').data   // => same as data.users
 
 ### _get
 
-> `_get(result, keypath)`
+> `_get(result, keypath, strict)`
 
 (Internal)
 

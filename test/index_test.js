@@ -44,9 +44,8 @@ describe('index', function () {
     })
 
     it('fails when traversing to a string', function () {
-      expect(function () {
-        scour(data).go('users', '1', 'name')
-      }).toThrow(/object not found/)
+      expect(scour(data).go('users', '1', 'name'))
+        .toEqual(undefined)
     })
   })
 

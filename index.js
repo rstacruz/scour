@@ -14,7 +14,7 @@ const define = require('./lib/define_property')
  * Has the following properties:
  *
  *    s = scour(obj)
- *    s.root             // => <scour>
+ *    s.root             // => [scour object]
  *    s.keypath          // => array (string)
  */
 
@@ -85,7 +85,8 @@ scour.prototype = {
         keypath: this.keypath.concat(keypath)
       })
     } else {
-      if (strict && result) throw new Error(`object not found in '${keypath}'`)
+      // value in keypath is not an object
+      if (strict && result) return
       return result
     }
   },
