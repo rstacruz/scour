@@ -58,7 +58,7 @@ admins.go('bob').get('logged_in')           // => true
 scour(data)
   .go('users')
   .filter({ admin: true })
-  .get()
+  .value
 ```
 
 [Underscore]: http://underscorejs.org/
