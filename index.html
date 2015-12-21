@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/style.css?t=a44c9e9d">
+    <link rel="stylesheet" href="http://ricostacruz.com/docpress-rsc/style.css">
+    <script src="assets/script.js?t=2bcc4b59"></script>
+    <title>scour</title>
+    <meta name="viewport" content="width=device-width">
+  </head>
+  <body class="-menu-visible">
+    <div class="doc-layout">
+      <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="body page-index">
+        <div class="header-nav">
+          <div class="right"><a href="https://github.com/rstacruz/scour" data-title="rstacruz/scour" class="iconlink">
+              <!-- span.title Open in GitHub--><span class="icon -github"></span></a>
+          </div>
+        </div>
+        <div class="markdown-body"><h1 class="massive-header -with-tagline" id="scour">scour</h1>
+<blockquote>
+<p>Traverse objects and arrays immutably</p>
+</blockquote>
+<p>Scour can be used to solve many problems. You can use it to:</p>
+<ul>
+<li>Manage your <a href="http://rackt.github.io/redux">Redux</a> datastore.</li>
+<li>Provide a model layer to access data in your single-page app.</li>
+<li>Navigate a large JSON tree easily.</li>
+</ul>
+<p><a href="https://travis-ci.org/rstacruz/scour" title="See test builds"><img src="https://travis-ci.org/rstacruz/scour.svg?branch=master" alt="Status"></a></p>
+<h2 id="features">Features</h2>
+<p>Calling <code>scour(object)</code> returns a wrapper that you can use to traverse <code>object</code>.
+Use <a href="#get">get()</a> to retrieve values.</p>
+<pre><code class="lang-js">data =
+  { users:
+    { <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;john&apos;</span> },
+      <span class="hljs-number">2</span>: { name: <span class="pl-s">&apos;shane&apos;</span>, confirmed: <span class="pl-c1">true</span> },
+      <span class="hljs-number">3</span>: { name: <span class="pl-s">&apos;barry&apos;</span>, confirmed: <span class="pl-c1">true</span> } } }
+</code></pre>
+<pre><code class="lang-js">scour(data).get(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;1&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;john&apos;</span>
+</code></pre>
+<h3 id="traversal">Traversal</h3>
+<p>Use <a href="#go">go()</a> to dig into the structure. It will return another <code>scour</code>
+wrapper scoped to that object.</p>
+<pre><code class="lang-js">data =
+  { users:
+    { admins:
+      { bob: { logged_in: <span class="pl-c1">true</span> },
+        sue: { logged_in: <span class="pl-c1">false</span> } } } }
+</code></pre>
+<pre><code class="lang-js">users  = scour(data).go(<span class="pl-s">&apos;users&apos;</span>)            <span class="pl-c">// =&gt; [scour (admins)]</span>
+admins = scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;admins&apos;</span>)  <span class="pl-c">// =&gt; [scour (bob, sue)]</span>
+
+admins.go(<span class="pl-s">&apos;bob&apos;</span>).get(<span class="pl-s">&apos;logged_in&apos;</span>)           <span class="pl-c">// =&gt; true</span>
+</code></pre>
+<h3 id="chaining">Chaining</h3>
+<p><code>scour()</code> provides a wrapper that can be used to chain methods. This is inspired by <a href="http://underscorejs.org/">Underscore</a> and <a href="http://lodash.com/">Lodash</a>.</p>
+<pre><code class="lang-js">scour(data)
+  .go(<span class="pl-s">&apos;users&apos;</span>)
+  .filter({ admin: <span class="pl-c1">true</span> })
+  .value
+</code></pre>
+<h3 id="immutable-modifications">Immutable modifications</h3>
+<p>Use <a href="#set">set()</a> to update values. Scout treats all data as immutable, so this
+doesn&#x2019;t modify your original <code>data</code>, but gets you a new one with the
+modifications made.</p>
+<pre><code class="lang-js">data = scour(data)
+  .set([<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;1&apos;</span>, <span class="pl-s">&apos;updated_at&apos;</span>], +<span class="pl-k">new</span> <span class="pl-c1">Date</span>())
+  .value
+
+<span class="pl-c">// =&gt; { users:</span>
+<span class="pl-c">//      { 1: { name: &apos;john&apos;, updated_at: 1450667171188 },</span>
+<span class="pl-c">//        2: { name: &apos;shane&apos;, confirmed: true },</span>
+<span class="pl-c">//        3: { name: &apos;barry&apos;, confirmed: true } } }</span>
+</code></pre>
+<h3 id="advanced-traversing">Advanced traversing</h3>
+<p>Use <a href="#where">where()</a> to filter results with advanced querying.</p>
+<pre><code class="lang-js">users = scour(data).go(<span class="pl-s">&apos;users&apos;</span>)
+
+users
+  .where({ confirmed: <span class="pl-c1">true</span> })
+  .at(<span class="hljs-number">0</span>)
+  .get(<span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;shane&apos;</span>
+</code></pre>
+<h3 id="models">Models</h3>
+<p>Use <a href="#extend">extend()</a> to add your own methods to certain keypaths. This makes them behave like models.</p>
+<pre><code class="lang-js">db = scour(data)
+  .extend({
+    <span class="pl-s">&apos;&apos;</span>: {
+      artists () {
+        <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>)
+      }
+    },
+    <span class="pl-s">&apos;artists.*&apos;</span>: {
+      fullname () {
+        <span class="pl-k">return</span> <span class="pl-k">this</span>.get(<span class="pl-s">&apos;first_name&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + <span class="pl-k">this</span>.get(<span class="pl-s">&apos;last_name&apos;</span>)
+      }
+      albums () {
+        <span class="pl-k">return</span> <span class="pl-k">this</span>.root.go(<span class="pl-s">&apos;albums&apos;</span>)
+          .where({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
+      }
+    }
+  })
+</code></pre>
+<pre><code class="lang-js">data =
+  { artists:
+    { <span class="hljs-number">1</span>: { first_name: <span class="pl-s">&apos;Louie&apos;</span>, last_name: <span class="pl-s">&apos;Armstrong&apos;</span> },
+      <span class="hljs-number">2</span>: { first_name: <span class="pl-s">&apos;Miles&apos;</span>, last_name: <span class="pl-s">&apos;Davis&apos;</span> } },
+    albums:
+    { <span class="hljs-number">32</span>: { artist_id: <span class="hljs-number">1</span>, title: <span class="pl-s">&apos;Kind of Blue&apos;</span> },
+      <span class="hljs-number">35</span>: { artist_id: <span class="hljs-number">2</span>, title: <span class="pl-s">&apos;Struttin&apos;</span> } } }
+</code></pre>
+<pre><code class="lang-js">db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).fullname()
+<span class="pl-c">//=&gt; &apos;Miles Davis&apos;</span>
+
+db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).albums().at(<span class="hljs-number">0</span>).get(<span class="pl-s">&apos;title&apos;</span>)
+<span class="pl-c">// =&gt; &apos;Kind of Blue&apos;</span>
+</code></pre>
+<h2 id="api">API</h2>
+<!--api-->
+<h3 id="scour">scour</h3>
+<blockquote>
+<p><code>scour(value, options)</code></p>
+</blockquote>
+<p>scour:
+Returns a scour instance.</p>
+<pre><code class="lang-js">scour(obj)
+</code></pre>
+<p>Has the following properties:</p>
+<pre><code class="lang-js">s = scour(obj)
+s.root             <span class="pl-c">// =&gt; [scour object]</span>
+s.value            <span class="pl-c">// =&gt; raw data (that is, `obj`)</span>
+s.keypath          <span class="pl-c">// =&gt; string array</span>
+</code></pre>
+<p>You can access the raw data using <code>.value</code>.</p>
+<pre><code class="lang-js">db = scour(data)
+db.value              <span class="pl-c">// =&gt; same as `data`</span>
+db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">// =&gt; same as `data.users`</span>
+</code></pre>
+<p>When you traverse down using <a href="#go">go()</a>, <code>root</code> will point to the root
+scour instance, and <code>keypath</code> will be updated accordingly.</p>
+<pre><code class="lang-js">db = scour(data)
+admins = db.go(<span class="pl-s">&apos;users&apos;</span>).go(<span class="pl-s">&apos;admins&apos;</span>)
+</code></pre>
+<pre><code class="lang-js">admins.keypath  <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;]</span>
+admins.root     <span class="pl-c">// =&gt; db</span>
+</code></pre>
+<h3 id="go">go</h3>
+<blockquote>
+<p><code>go(keypath)</code></p>
+</blockquote>
+<p>Navigates down to a given <code>keypath</code>. Always returns a <code>scour</code> instance.</p>
+<pre><code class="lang-js">data =
+  { users:
+    { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, last: <span class="pl-s">&apos;jobs&apos;</span> },
+      <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span>, last: <span class="pl-s">&apos;gates&apos;</span> } } }
+
+scour(data).go(<span class="pl-s">&apos;users&apos;</span>)                    <span class="pl-c">// =&gt; [scour (users)]</span>
+scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>)              <span class="pl-c">// =&gt; [scour (name, last)]</span>
+scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>).get(<span class="pl-s">&apos;name&apos;</span>)  <span class="pl-c">// =&gt; &apos;steve&apos;</span>
+</code></pre>
+<p>If you use it on a non-object or non-array value, it will still be
+returned as a scour instance. This is not likely what you want; use
+<a href="#get">get()</a> instead.</p>
+<pre><code class="lang-js">attr = scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
+attr           <span class="pl-c">// =&gt; [scour object]</span>
+attr.value     <span class="pl-c">// =&gt; &apos;steve&apos;</span>
+attr.keypath   <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;12&apos;, &apos;name&apos;]</span>
+</code></pre>
+<h3 id="get">get</h3>
+<blockquote>
+<p><code>get(keypath)</code></p>
+</blockquote>
+<p>Returns data in a given <code>keypath</code>.</p>
+<pre><code class="lang-js">data =
+  { users:
+    { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+      <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } } }
+
+scour(data).get(<span class="pl-s">&apos;users&apos;</span>)       <span class="pl-c">// =&gt; same as data.users</span>
+scour(data).go(<span class="pl-s">&apos;users&apos;</span>).value  <span class="pl-c">// =&gt; same as data.users</span>
+
+</code></pre>
+<h3 id="_get">_get</h3>
+<blockquote>
+<p><code>_get(result, keypath)</code></p>
+</blockquote>
+<p>(Internal)</p>
+<h3 id="at">at</h3>
+<blockquote>
+<p><code>at(index)</code></p>
+</blockquote>
+<p>Returns the item at <code>index</code>. This differs from <code>get</code> as this searches by
+index, not by key.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+
+scour(users).at(<span class="hljs-number">0</span>)          <span class="pl-c">// =&gt; { name: &apos;steve&apos; }</span>
+scour(users).get(<span class="hljs-number">12</span>).value  <span class="pl-c">// =&gt; { name: &apos;steve&apos; }</span>
+
+</code></pre>
+<h3 id="set">set</h3>
+<blockquote>
+<p><code>set(keypath, value)</code></p>
+</blockquote>
+<p>Sets values. (To be implemented)</p>
+<h3 id="spawn">spawn</h3>
+<blockquote>
+<p><code>spawn(value, options)</code></p>
+</blockquote>
+<p>(Internal) Returns a clone of the instance extended with the given <code>value</code>
+and <code>options</code>.</p>
+<h3 id="foreach">forEach</h3>
+<blockquote>
+<p><code>forEach(fn)</code></p>
+</blockquote>
+<p>Loops through each item. Supports both arrays and objects.</p>
+<p>If the item found is an object, it will be returned as a <code>scour</code> instance.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+
+scour(users).each((user, key) =&gt; {
+  <span class="pl-c1">console</span>.log(user.get(<span class="pl-s">&apos;name&apos;</span>))
+})
+</code></pre>
+<p>The values passed onto the function are:</p>
+<ul>
+<li><code>item</code> - the value; always a scour object.</li>
+<li><code>key</code> - the key.</li>
+</ul>
+<p>The value being passed onto the function is going to be a <code>scour</code> object.
+Use <code>item.value</code> or <code>this</code> to access the raw values.</p>
+<h3 id="each">each</h3>
+<blockquote>
+<p><code>each(fn)</code></p>
+</blockquote>
+<p>Alias for <a href="#foreach">forEach</a>.</p>
+<h3 id="map:-collections.map">map: collections.map,</h3>
+<p>Loops through each item and returns an array based on the iterator&#x2019;s
+return values. Supports both arrays and objects.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+
+names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;name&apos;</span>))
+<span class="pl-c">// =&gt; [ &apos;steve&apos;, &apos;bill&apos; ]</span>
+
+</code></pre>
+<h3 id="len">len</h3>
+<blockquote>
+<p><code>len()</code></p>
+</blockquote>
+<p>Returns the length of the object or array. For objects, it returns the
+number of keys.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+
+names = scour(users).len()  <span class="pl-c">// =&gt; 2</span>
+
+</code></pre>
+<h3 id="toarray">toArray</h3>
+<blockquote>
+<p><code>toArray()</code></p>
+</blockquote>
+<p>Returns an array. If the the value is an object, it returns the values of
+that object.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+
+names = scour(users).toArray()
+<span class="pl-c">// =&gt; [ {name: &apos;steve&apos;}, {name: &apos;bill&apos;} ]</span>
+
+</code></pre>
+<h3 id="values">values</h3>
+<blockquote>
+<p><code>values()</code></p>
+</blockquote>
+<p>Alias for <code>toArray()</code>.</p>
+<h3 id="keys">keys</h3>
+<blockquote>
+<p><code>keys()</code></p>
+</blockquote>
+<p>Returns keys. If the value is an array, this returns the array&#x2019;s indices.</p>
+<h3 id="where">where</h3>
+<blockquote>
+<p><code>where(conditions)</code></p>
+</blockquote>
+<p>Sifts through the values and returns a set that matches given <code>conditions</code>.
+Supports MongoDB-style queries.</p>
+<p>For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
+<pre><code class="lang-js">scour(data).where({ name: <span class="pl-s">&apos;john&apos;</span> })
+scour(data).where({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
+</code></pre>
+<h3 id="find">find</h3>
+<blockquote>
+<p><code>find(conditions)</code></p>
+</blockquote>
+<p>Returns the first value that matches <code>conditions</code>.
+Supports MongoDB-style queries.</p>
+<p>For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
+<pre><code class="lang-js">scour(data).find({ name: <span class="pl-s">&apos;john&apos;</span> })
+scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
+</code></pre>
+<h3 id="extend">extend</h3>
+<blockquote>
+<p><code>extend(props)</code></p>
+</blockquote>
+<p>Extends functionality with some prototype.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, surname: <span class="pl-s">&apos;jobs&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span>, surname: <span class="pl-s">&apos;gates&apos;</span> } }
+
+methods = {
+  fullname () {
+    <span class="pl-k">return</span> <span class="pl-k">this</span>.get(<span class="pl-s">&apos;name&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + <span class="pl-k">this</span>.get(<span class="pl-s">&apos;surname&apos;</span>)
+  }
+}
+
+scour(users)
+  .get(<span class="hljs-number">12</span>)
+  .extend(methods)
+  .fullname()       <span class="pl-c">// =&gt; &apos;bill gates&apos;</span>
+
+</code></pre>
+<h3 id="tojson">toJSON</h3>
+<blockquote>
+<p><code>toJSON()</code></p>
+</blockquote>
+<p>Returns the value for serialization. This allows <code>JSON.stringify()</code> to
+work with <code>scour</code>-wrapped objects.</p>
+<p>The name of this method is a bit confusing, as it doesn&#x2019;t actually return
+a JSON string &#x2014; but I&#x2019;m afraid that it&#x2019;s the way that the JavaScript API
+for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior">JSON.stringify</a> works.</p>
+<!--api:end-->
+
+        </div>
+      </div>
+      <div class="menu toc-menu">
+        <li class="menu-item -level-0 -parent">
+          <ul class="submenu">
+            <li class="menu-item -level-1"><a href="index.html" class="link title -active link-index">scour</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><a href="#features" class="link title link-features">Features</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="#traversal" class="link title link-traversal">Traversal</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#chaining" class="link title link-chaining">Chaining</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#immutable-modifications" class="link title link-immutable-modifications">Immutable modifications</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#advanced-traversing" class="link title link-advanced-traversing">Advanced traversing</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#models" class="link title link-models">Models</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a href="#api" class="link title link-api">API</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="#scour" class="link title link-scour">scour</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#go" class="link title link-go">go</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#get" class="link title link-get">get</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#_get" class="link title link-_get">_get</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#at" class="link title link-at">at</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#set" class="link title link-set">set</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#spawn" class="link title link-spawn">spawn</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#foreach" class="link title link-foreach">forEach</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#each" class="link title link-each">each</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#map:-collections.map" class="link title link-map:-collections.map">map: collections.map,</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#len" class="link title link-len">len</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#toarray" class="link title link-toarray">toArray</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#values" class="link title link-values">values</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#keys" class="link title link-keys">keys</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#where" class="link title link-where">where</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#find" class="link title link-find">find</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#extend" class="link title link-extend">extend</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#tojson" class="link title link-tojson">toJSON</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </div>
+  </body>
+</html>

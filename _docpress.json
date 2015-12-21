@@ -1,0 +1,286 @@
+{
+  "toc": {
+    "sections": [
+      {
+        "title": "scour",
+        "source": "README.md",
+        "expand": true,
+        "url": "index.html",
+        "slug": "index",
+        "headings": [
+          {
+            "title": "Features",
+            "depth": 2,
+            "id": "features",
+            "headings": [
+              {
+                "title": "Traversal",
+                "depth": 3,
+                "id": "traversal"
+              },
+              {
+                "title": "Chaining",
+                "depth": 3,
+                "id": "chaining"
+              },
+              {
+                "title": "Immutable modifications",
+                "depth": 3,
+                "id": "immutable-modifications"
+              },
+              {
+                "title": "Advanced traversing",
+                "depth": 3,
+                "id": "advanced-traversing"
+              },
+              {
+                "title": "Models",
+                "depth": 3,
+                "id": "models"
+              }
+            ]
+          },
+          {
+            "title": "API",
+            "depth": 2,
+            "id": "api",
+            "headings": [
+              {
+                "title": "scour",
+                "depth": 3,
+                "id": "scour"
+              },
+              {
+                "title": "go",
+                "depth": 3,
+                "id": "go"
+              },
+              {
+                "title": "get",
+                "depth": 3,
+                "id": "get"
+              },
+              {
+                "title": "_get",
+                "depth": 3,
+                "id": "_get"
+              },
+              {
+                "title": "at",
+                "depth": 3,
+                "id": "at"
+              },
+              {
+                "title": "set",
+                "depth": 3,
+                "id": "set"
+              },
+              {
+                "title": "spawn",
+                "depth": 3,
+                "id": "spawn"
+              },
+              {
+                "title": "forEach",
+                "depth": 3,
+                "id": "foreach"
+              },
+              {
+                "title": "each",
+                "depth": 3,
+                "id": "each"
+              },
+              {
+                "title": "map: collections.map,",
+                "depth": 3,
+                "id": "map:-collections.map"
+              },
+              {
+                "title": "len",
+                "depth": 3,
+                "id": "len"
+              },
+              {
+                "title": "toArray",
+                "depth": 3,
+                "id": "toarray"
+              },
+              {
+                "title": "values",
+                "depth": 3,
+                "id": "values"
+              },
+              {
+                "title": "keys",
+                "depth": 3,
+                "id": "keys"
+              },
+              {
+                "title": "where",
+                "depth": 3,
+                "id": "where"
+              },
+              {
+                "title": "find",
+                "depth": 3,
+                "id": "find"
+              },
+              {
+                "title": "extend",
+                "depth": 3,
+                "id": "extend"
+              },
+              {
+                "title": "toJSON",
+                "depth": 3,
+                "id": "tojson"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "index": {
+    "index.html": {
+      "source": "README.md",
+      "title": "scour",
+      "slug": "index",
+      "headings": [
+        {
+          "title": "Features",
+          "depth": 2,
+          "id": "features",
+          "headings": [
+            {
+              "title": "Traversal",
+              "depth": 3,
+              "id": "traversal"
+            },
+            {
+              "title": "Chaining",
+              "depth": 3,
+              "id": "chaining"
+            },
+            {
+              "title": "Immutable modifications",
+              "depth": 3,
+              "id": "immutable-modifications"
+            },
+            {
+              "title": "Advanced traversing",
+              "depth": 3,
+              "id": "advanced-traversing"
+            },
+            {
+              "title": "Models",
+              "depth": 3,
+              "id": "models"
+            }
+          ]
+        },
+        {
+          "title": "API",
+          "depth": 2,
+          "id": "api",
+          "headings": [
+            {
+              "title": "scour",
+              "depth": 3,
+              "id": "scour"
+            },
+            {
+              "title": "go",
+              "depth": 3,
+              "id": "go"
+            },
+            {
+              "title": "get",
+              "depth": 3,
+              "id": "get"
+            },
+            {
+              "title": "_get",
+              "depth": 3,
+              "id": "_get"
+            },
+            {
+              "title": "at",
+              "depth": 3,
+              "id": "at"
+            },
+            {
+              "title": "set",
+              "depth": 3,
+              "id": "set"
+            },
+            {
+              "title": "spawn",
+              "depth": 3,
+              "id": "spawn"
+            },
+            {
+              "title": "forEach",
+              "depth": 3,
+              "id": "foreach"
+            },
+            {
+              "title": "each",
+              "depth": 3,
+              "id": "each"
+            },
+            {
+              "title": "map: collections.map,",
+              "depth": 3,
+              "id": "map:-collections.map"
+            },
+            {
+              "title": "len",
+              "depth": 3,
+              "id": "len"
+            },
+            {
+              "title": "toArray",
+              "depth": 3,
+              "id": "toarray"
+            },
+            {
+              "title": "values",
+              "depth": 3,
+              "id": "values"
+            },
+            {
+              "title": "keys",
+              "depth": 3,
+              "id": "keys"
+            },
+            {
+              "title": "where",
+              "depth": 3,
+              "id": "where"
+            },
+            {
+              "title": "find",
+              "depth": 3,
+              "id": "find"
+            },
+            {
+              "title": "extend",
+              "depth": 3,
+              "id": "extend"
+            },
+            {
+              "title": "toJSON",
+              "depth": 3,
+              "id": "tojson"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "sources": {
+    "README.md": "index.html",
+    "docs/docpress.json": "docpress.json"
+  }
+}
