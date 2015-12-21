@@ -3,6 +3,6 @@ update: README.md
 README.md: lib/index.js
 	( sed '/<!--api-->/q' $@; \
 		echo; \
-		./node_modules/.bin/mdx $^ --format markdown; \
-		sed -n '/<!--api:end-->/,$$p' $@ ) > $@_
-	@mv $@_ $@
+		./node_modules/.bin/mdx $^ --format markdown -x internal; \
+		sed -n '/<!--api:end-->/,$$p' $@ ) > .$@
+	@mv .$@ $@

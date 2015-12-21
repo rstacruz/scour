@@ -12,6 +12,7 @@
     "url": "https://github.com/rstacruz/scour/issues"
   },
   "dependencies": {
+    "mdx": "0.2.3",
     "object-assign": "4.0.1",
     "sift": "https://github.com/rstacruz/sift.js/tarball/feature/sift-by-object"
   },

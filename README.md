@@ -143,10 +143,9 @@ db.artists().find({ name: 'Miles' }).albums().at(0).get('title')
 
 ### scour
 
-> `scour(value, options)`
+> `scour(object)`
 
-scour:
-Returns a scour instance.
+Returns a scour instance wrapping `object`.
 
 ```js
 scour(obj)
@@ -182,11 +181,31 @@ admins.keypath  // => ['users', 'admins']
 admins.root     // => db
 ```
 
+## Attributes
+
+These attributes are available to [scour] instances.
+
+### root
+
+> `.root`
+
+A reference to the root [scour] instance.
+
+### keypath
+
+> `.keypath`
+
+The keypath.
+
+## Traversal methods
+
+For traversing.
+
 ### go
 
 > `go(keypath)`
 
-Navigates down to a given `keypath`. Always returns a `scour` instance.
+Navigates down to a given `keypath`. Always returns a [scour] instance.
 
 ```js
 data =
@@ -200,8 +219,8 @@ scour(data).go('users', '12').get('name')  // => 'steve'
 ```
 
 If you use it on a non-object or non-array value, it will still be
-returned as a scour instance. This is not likely what you want; use
-[get()](#get) instead.
+returned as a [scour] instance. This is not likely what you want; use
+[get()] instead.
 
 ```js
 attr = scour(data).go('users', '12', 'name')
@@ -209,6 +228,59 @@ attr           // => [scour object]
 attr.value     // => 'steve'
 attr.keypath   // => ['users', '12', 'name']
 ```
+
+### at
+
+> `at(index)`
+
+Returns the item at `index`. This differs from `go` as this searches by
+index, not by key.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+scour(users).at(0)          // => [scour { name: 'steve' }]
+scour(users).get(12)        // => [scour { name: 'steve' }]
+
+```
+
+### where
+
+> `where(conditions)`
+
+Sifts through the values and returns a set that matches given `conditions`.
+Supports MongoDB-style queries.
+
+For reference, see [MongoDB Query Operators][query-ops].
+
+[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+
+```js
+scour(data).where({ name: 'john' })
+scour(data).where({ name: { $in: ['moe', 'larry'] })
+```
+
+### find
+
+> `find(conditions)`
+
+Returns the first value that matches `conditions`.
+Supports MongoDB-style queries.
+
+For reference, see [MongoDB Query Operators][query-ops].
+
+[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+
+```js
+scour(data).find({ name: 'john' })
+scour(data).find({ name: { $in: ['moe', 'larry'] })
+```
+
+## Reading methods
+
+for retrieving data.
 
 ### get
 
@@ -224,89 +296,6 @@ data =
 
 scour(data).get('users')       // => same as data.users
 scour(data).go('users').value  // => same as data.users
-
-```
-
-### _get
-
-> `_get(result, keypath)`
-
-(Internal)
-
-### at
-
-> `at(index)`
-
-Returns the item at `index`. This differs from `get` as this searches by
-index, not by key.
-
-```js
-users =
-  { 12: { name: 'steve' },
-    23: { name: 'bill' } }
-
-scour(users).at(0)          // => { name: 'steve' }
-scour(users).get(12).value  // => { name: 'steve' }
-
-```
-
-### set
-
-> `set(keypath, value)`
-
-Sets values. (To be implemented)
-
-### spawn
-
-> `spawn(value, options)`
-
-(Internal) Returns a clone of the instance extended with the given `value`
-and `options`.
-
-### forEach
-
-> `forEach(fn)`
-
-Loops through each item. Supports both arrays and objects.
-
-If the item found is an object, it will be returned as a `scour` instance.
-
-```js
-users =
-  { 12: { name: 'steve' },
-    23: { name: 'bill' } }
-
-scour(users).each((user, key) => {
-  console.log(user.get('name'))
-})
-```
-
-The values passed onto the function are:
-
-- `item` - the value; always a scour object.
-- `key` - the key.
-
-The value being passed onto the function is going to be a `scour` object.
-Use `item.value` or `this` to access the raw values.
-
-### each
-
-> `each(fn)`
-
-Alias for [forEach](#foreach).
-
-### map: collections.map,
-
-Loops through each item and returns an array based on the iterator's
-return values. Supports both arrays and objects.
-
-```js
-users =
-  { 12: { name: 'steve' },
-    23: { name: 'bill' } }
-
-names = scour(users).map((user, key) => user.get('name'))
-// => [ 'steve', 'bill' ]
 
 ```
 
@@ -355,37 +344,19 @@ Alias for `toArray()`.
 
 Returns keys. If the value is an array, this returns the array's indices.
 
-### where
+## Writing methods
 
-> `where(conditions)`
+for writing data.
 
-Sifts through the values and returns a set that matches given `conditions`.
-Supports MongoDB-style queries.
+### set
 
-For reference, see [MongoDB Query Operators][query-ops].
+> `set(keypath, value)`
 
-[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+Sets values. (To be implemented)
 
-```js
-scour(data).where({ name: 'john' })
-scour(data).where({ name: { $in: ['moe', 'larry'] })
-```
+## Utilities
 
-### find
-
-> `find(conditions)`
-
-Returns the first value that matches `conditions`.
-Supports MongoDB-style queries.
-
-For reference, see [MongoDB Query Operators][query-ops].
-
-[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
-
-```js
-scour(data).find({ name: 'john' })
-scour(data).find({ name: { $in: ['moe', 'larry'] })
-```
+For stuff.
 
 ### extend
 
@@ -423,4 +394,60 @@ a JSON string — but I'm afraid that it's the way that the JavaScript API
 for [JSON.stringify] works.
 
 [JSON.stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior
+
+## Iteration methods
+
+For traversing.
+
+### forEach
+
+> `forEach(fn)`
+
+Loops through each item. Supports both arrays and objects.
+
+If the item found is an object, it will be returned as a `scour` instance.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+scour(users).each((user, key) => {
+  console.log(user.get('name'))
+})
+```
+
+The values passed onto the function are:
+
+- `item` - the value; always a scour object.
+- `key` - the key.
+
+The value being passed onto the function is going to be a `scour` object.
+Use `item.value` or `this` to access the raw values.
+
+### each
+
+> `each(fn)`
+
+Alias for [forEach](#foreach).
+
+### map
+
+> `map(fn)`
+
+Loops through each item and returns an array based on the iterator's
+return values. Supports both arrays and objects.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+names = scour(users).map((user, key) => user.get('name'))
+// => [ 'steve', 'bill' ]
+
+```
 <!--api:end-->
+
+[scour]: #scour
+[get()]: #get
