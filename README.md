@@ -52,7 +52,7 @@ scour(data)
 
 ### scour
 
-> `Scour(data, options)`
+> `scour(data, options)`
 
 scour:
 Returns a scour instance.

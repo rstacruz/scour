@@ -1,3 +1,4 @@
+/* eslint-disable new-cap */
 'use strict'
 
 const assign = require('object-assign')
@@ -18,8 +19,8 @@ const define = require('./lib/define_property')
  *    s.keypath          // => array (string)
  */
 
-function Scour (data, options) {
-  if (!(this instanceof Scour)) return new Scour(data, options)
+function scour (data, options) {
+  if (!(this instanceof scour)) return new scour(data, options)
   define(this, 'data', data)
   define(this, 'root', options && options.root || this)
   define(this, 'keypath', options && options.keypath || [])
@@ -32,7 +33,7 @@ function Scour (data, options) {
   })
 }
 
-Scour.prototype = {
+scour.prototype = {
   /**
    * Returns data. If the given data is an object, it returns a scour instance.
    * Otherwise, it returns the data itself.
@@ -122,7 +123,7 @@ Scour.prototype = {
    */
 
   spawn (data, options) {
-    return new Scour(data || this.data, {
+    return new scour(data || this.data, {
       root: options && options.root || this.root,
       keypath: options && options.keypath || this.keypath,
       extensions: this.extensions.concat(options && options.extensions || [])
@@ -275,4 +276,4 @@ Scour.prototype = {
   }
 }
 
-module.exports = Scour
+module.exports = scour
