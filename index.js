@@ -6,15 +6,15 @@ const each = require('./lib/each')
 const define = require('./lib/define_property')
 
 /*
+ * scour:
  * Returns a scour instance.
  *
  *    scour(obj)
- *    scour(obj, { root })
  *
  * Has the following properties:
  *
  *    s = scour(obj)
- *    s.root             // => scour
+ *    s.root             // => <scour>
  *    s.keypath          // => array (string)
  */
 
@@ -36,17 +36,45 @@ Scour.prototype = {
   /**
    * Returns data. If the given data is an object, it returns a scour instance.
    * Otherwise, it returns the data itself.
+   *
+   *     data =
+   *       { users:
+   *         { 12: { name: 'steve' },
+   *           23: { name: 'bill' } } }
+   *
+   *     scour(data).get('users')                    // => <scour instance>
+   *     scour(data).get('users', '12', 'name')      // => 'steve'
+   *     scour(data).get('users', '23').get('name')  // => 'steve'
    */
 
-  get () {
-    var result = this.data
-    var keypath = [].slice.apply(arguments).map((k) => '' + k)
-
-    keypath.forEach((spec) => {
-      if (result) result = result[spec]
-    })
-
+  get (keypath) {
+    keypath = [].slice.apply(arguments).map((k) => '' + k)
+    const result = this.rget.apply(this, keypath)
     return this._get(result, keypath)
+  },
+
+  /**
+   * Returns raw data. Works just like `.get()`, but doesn't transform objects
+   * into `scour` instances.
+   *
+   *     data =
+   *       { users:
+   *         { 12: { name: 'steve' },
+   *           23: { name: 'bill' } } }
+   *
+   *     scour(data).rget('users')   // => same as data.users
+   */
+
+  rget (keypath) {
+    var result = this.data
+    keypath = [].slice.apply(arguments)
+
+    for (let i = 0, len = arguments.length; i < len; i++) {
+      result = result[arguments[i]]
+      if (!result) return
+    }
+
+    return result
   },
 
   /**
@@ -55,9 +83,8 @@ Scour.prototype = {
 
   _get (result, keypath) {
     if (typeof result === 'object') {
-      return new Scour(result, {
-        root: this.root,
-        keypath: this.keypath.concat(keypath)
+      return this.spawn(result, {
+        keypath: this.keypath.concat(keypath),
       })
     } else {
       return result
@@ -66,7 +93,14 @@ Scour.prototype = {
 
   /**
    * Returns the item at `index`. This differs from `get` as this searches by
-   * index.
+   * index, not by key.
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     scour(users).at(0)         // => { name: 'steve' }
+   *     scour(users).get(12).data  // => { name: 'steve' }
    */
 
   at (index) {
@@ -75,7 +109,7 @@ Scour.prototype = {
   },
 
   /**
-   * Sets data
+   * Sets data. (To be implemented)
    */
 
   set (keypath, value) {
@@ -83,36 +117,66 @@ Scour.prototype = {
   },
 
   /**
-   * Returns a clone of the instance.
+   * (Internal) Returns a clone of the instance extended with the given `data`
+   * and `options`.
    */
 
-  clone (options) {
-    return new Scour(this.data, assign({
-      root: this.root,
-      keypath: this.keypath,
+  spawn (data, options) {
+    return new Scour(data || this.data, {
+      root: options && options.root || this.root,
+      keypath: options && options.keypath || this.keypath,
       extensions: this.extensions.concat(options && options.extensions || [])
-    }, options || {}))
+    })
   },
 
   /**
-   * Loops
+   * Loops through each item. Supports both arrays and objects.
+   *
+   * If the item found is an object, it will be returned as a `scour` instance.
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     scour(users).each((user, key) => {
+   *       console.log(user.get('name'))
+   *     })
    */
 
   each (fn) {
-    each(this.data, fn)
+    each(this.data, (val, key) => {
+      fn(this._get(val, [key]), key, val)
+    })
     return this
   },
 
+  /**
+   * Loops through each item and returns an array based on the iterator's
+   * return values. Supports both arrays and objects.
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     names = scour(users).map((user, key) => user.get('name'))
+   *     // => [ 'steve', 'bill' ]
+   */
+
   map (fn) {
-    let result = []
-    each(this.data, (val, key) => {
-      result.push(fn(val, key))
-    })
+    const result = []
+    this.each((val, key, raw) => { result.push(fn(val, key, raw)) })
     return result
   },
 
   /**
-   * Returns the length
+   * Returns the length of the object or array. For objects, it returns the
+   * number of keys.
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     names = scour(users).len()  // => 2
    */
 
   len () {
@@ -122,6 +186,13 @@ Scour.prototype = {
 
   /**
    * Returns an array. If the data is an object, it returns the values.
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     names = scour(users).toArray()
+   *     // => [ {name: 'steve'}, {name: 'bill'} ]
    */
 
   toArray () {
@@ -138,7 +209,7 @@ Scour.prototype = {
   },
 
   /**
-   * Returns keys.
+   * Returns keys. If the data is an array, returns the array's indices.
    */
 
   keys () {
@@ -182,10 +253,25 @@ Scour.prototype = {
 
   /**
    * Extends functionality with some prototype.
+   *
+   *     users =
+   *       { 12: { name: 'steve', surname: 'jobs' },
+   *         23: { name: 'bill', surname: 'gates' } }
+   *
+   *     methods = {
+   *       fullname () {
+   *         return this.get('name') + ' ' + this.get('surname')
+   *       }
+   *     }
+   *
+   *     scour(users)
+   *       .get(12)
+   *       .extend(methods)
+   *       .fullname()       // => 'bill gates'
    */
 
   extend (props) {
-    return this.clone({ extensions: [props] })
+    return this.spawn(this.data, { extensions: [props] })
   }
 }
 

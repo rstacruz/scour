@@ -68,13 +68,21 @@ describe('index', function () {
   })
 
   describe('.extend()', function () {
-    it('works', function () {
-      let extension = {
-        fullname () { return 'Mr. ' + this.get('name') }
-      }
+    const extension = {
+      fullname () { return 'Mr. ' + this.get('name') }
+    }
 
+    it('works', function () {
       let user = scour(data).get('users', 1)
         .extend(extension)
+
+      expect(user.fullname()).toEqual('Mr. john')
+    })
+
+    it('gets carried over', function () {
+      let user = scour(data)
+        .extend(extension)
+        .get('users', 1)
 
       expect(user.fullname()).toEqual('Mr. john')
     })
@@ -85,7 +93,7 @@ describe('index', function () {
       const results = []
 
       scour(data).get('users').each((val, key) => {
-        results.push([val, key])
+        results.push([ val.data, key ])
       })
 
       expect(results[0]).toEqual([ { name: 'john' }, '1' ])
@@ -178,7 +186,7 @@ describe('index', function () {
     it('works', function () {
       const results =
         scour(data).get('users').map((val, key) => {
-          return [val, key]
+          return [val.data, key]
         })
 
       expect(results[0]).toEqual([ { name: 'john' }, '1' ])
@@ -204,7 +212,7 @@ describe('index', function () {
     })
 
     it('.map()', function () {
-      expect(this.root.map((f) => f.name)).toEqual(['apple', 'banana'])
+      expect(this.root.map((f) => f.get('name'))).toEqual(['apple', 'banana'])
     })
   })
 

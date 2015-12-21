@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "prepublish": "make -B update"
   },
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
   "license": "MIT",
   "devDependencies": {
     "expect": "1.13.4",
+    "mdx": "0.2.2",
     "mocha": "2.3.4"
   },
   "dependencies": {

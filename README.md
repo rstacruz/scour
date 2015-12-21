@@ -45,3 +45,235 @@ scour(data)
   .where({ confirmed: true })
   .at(0)
 ```
+
+## API
+
+<!--api-->
+
+### scour
+
+> `Scour(data, options)`
+
+scour:
+Returns a scour instance.
+
+```js
+scour(obj)
+```
+
+Has the following properties:
+
+```js
+s = scour(obj)
+s.root             // => <scour>
+s.keypath          // => array (string)
+```
+
+### get
+
+> `get(keypath)`
+
+Returns data. If the given data is an object, it returns a scour instance.
+Otherwise, it returns the data itself.
+
+```js
+data =
+  { users:
+    { 12: { name: 'steve' },
+      23: { name: 'bill' } } }
+
+scour(data).get('users')                    // => <scour instance>
+scour(data).get('users', '12', 'name')      // => 'steve'
+scour(data).get('users', '23').get('name')  // => 'steve'
+
+```
+
+### rget
+
+> `rget(keypath)`
+
+Returns raw data. Works just like `.get()`, but doesn't transform objects
+into `scour` instances.
+
+```js
+data =
+  { users:
+    { 12: { name: 'steve' },
+      23: { name: 'bill' } } }
+
+scour(data).rget('users')   // => same as data.users
+
+```
+
+### _get
+
+> `_get(result, keypath)`
+
+(Internal)
+
+### at
+
+> `at(index)`
+
+Returns the item at `index`. This differs from `get` as this searches by
+index, not by key.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+scour(users).at(0)         // => { name: 'steve' }
+scour(users).get(12).data  // => { name: 'steve' }
+
+```
+
+### set
+
+> `set(keypath, value)`
+
+Sets data. (To be implemented)
+
+### spawn
+
+> `spawn(data, options)`
+
+(Internal) Returns a clone of the instance extended with the given `data`
+and `options`.
+
+### each
+
+> `each(fn)`
+
+Loops through each item. Supports both arrays and objects.
+
+If the item found is an object, it will be returned as a `scour` instance.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+scour(users).each((user, key) => {
+  console.log(user.get('name'))
+})
+
+```
+
+### map
+
+> `map(fn)`
+
+Loops through each item and returns an array based on the iterator's
+return values. Supports both arrays and objects.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+names = scour(users).map((user, key) => user.get('name'))
+// => [ 'steve', 'bill' ]
+
+```
+
+### len
+
+> `len()`
+
+Returns the length of the object or array. For objects, it returns the
+number of keys.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+names = scour(users).len()  // => 2
+
+```
+
+### toArray
+
+> `toArray()`
+
+Returns an array. If the data is an object, it returns the values.
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+names = scour(users).toArray()
+// => [ {name: 'steve'}, {name: 'bill'} ]
+
+```
+
+### values
+
+> `values()`
+
+Alias for `toArray()`.
+
+### keys
+
+> `keys()`
+
+Returns keys. If the data is an array, returns the array's indices.
+
+### where
+
+> `where(conditions)`
+
+Sifts through the values and returns a set that matches given `conditions`.
+Supports MongoDB-style queries.
+
+For reference, see [MongoDB Query Operators][query-ops].
+
+[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+
+```js
+scour(data).where({ name: 'john' })
+scour(data).where({ name: { $in: ['moe', 'larry'] })
+```
+
+### find
+
+> `find(conditions)`
+
+Returns the first value that matches `conditions`.
+Supports MongoDB-style queries.
+
+For reference, see [MongoDB Query Operators][query-ops].
+
+[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+
+```js
+scour(data).find({ name: 'john' })
+scour(data).find({ name: { $in: ['moe', 'larry'] })
+```
+
+### extend
+
+> `extend(props)`
+
+Extends functionality with some prototype.
+
+```js
+users =
+  { 12: { name: 'steve', surname: 'jobs' },
+    23: { name: 'bill', surname: 'gates' } }
+
+methods = {
+  fullname () {
+    return this.get('name') + ' ' + this.get('surname')
+  }
+}
+
+scour(users)
+  .get(12)
+  .extend(methods)
+  .fullname()       // => 'bill gates'
+
+```
+<!--api:end-->
