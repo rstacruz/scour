@@ -1,5 +1,7 @@
 # scour
 
+<!-- {.massive-header.-with-tagline} -->
+
 > Traverse objects and arrays immutably
 
 Scour can be used to solve many problems. You can use it to:
