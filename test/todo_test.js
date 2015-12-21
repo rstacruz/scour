@@ -5,9 +5,10 @@ describe('todo', function () {
   it('.set')
   it('.extend')
   it('.sortBy')
+  it('.get() no args')
+  it('always return scour objects', done)
 
   describe('collections', function () {
-    it('.filter / .select')
     it('.reject')
     it('.reduce / .reduceRight')
     it('.every / .all')

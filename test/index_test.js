@@ -43,9 +43,9 @@ describe('index', function () {
       .toEqual(['users', '1'])
     })
 
-    it('fails when traversing to a string', function () {
-      expect(scour(data).go('users', '1', 'name'))
-        .toEqual(undefined)
+    it('allows traversing to strings', function () {
+      expect(scour(data).go('users', '1', 'name').data)
+        .toEqual('john')
     })
   })
 
@@ -230,7 +230,7 @@ describe('index', function () {
     })
 
     it('.map()', function () {
-      expect(this.root.map((n) => n)).toEqual(['h', 'e', 'y'])
+      expect(this.root.map((n) => n.data)).toEqual(['h', 'e', 'y'])
     })
   })
 
