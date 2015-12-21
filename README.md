@@ -4,8 +4,8 @@
 
 > Traverse objects and arrays immutably
 
-Scour is a general-purpose library for dealing with JSON trees. As a simple
-utility with a broad purpose, it can be used to solve many problems. You can use it to:
+Scour is a general-purpose library for dealing with JSON trees.<br>
+As a simple utility with a broad purpose, it can be used to solve many problems. Use it to:
 
 - Manage your [Redux] datastore.
 - Provide a model layer to access data in your single-page app.
@@ -15,12 +15,14 @@ utility with a broad purpose, it can be used to solve many problems. You can use
 
 ## Install
 
-```
-$ npm install --save-exact rstacruz/scour
+```sh
+npm install --save-exact rstacruz/scour
 ```
 
 ```js
-require('scourjs')
+window.scour                       // non commonjs
+const scour = require('scourjs')   // commonjs/node
+import scour from 'scourjs'        // es6 modules
 ```
 
 ## Features
@@ -194,6 +196,24 @@ admins.root     // => db
 
 These attributes are available to [scour] instances.
 
+### value
+
+> `value`
+
+The raw value being wrapped. You can use this to terminate a chained call.
+
+```js
+users =
+  [ { name: 'john', admin: true },
+    { name: 'kyle', admin: false } ]
+
+scour(users)
+  .where({ admin: true })
+  .value
+// => [ { name: 'john', admin: true } ]
+
+```
+
 ### root
 
 > `root`
@@ -239,15 +259,10 @@ user.keypath             // => ['users', 'admins', '23']
 
 ```
 
-### value
-
-> `value`
-
-The raw value being wrapped.
-
 ## Traversal methods
 
-For traversing.
+For traversing. All these methods return [scour] instances,
+making them suitable for chaining.
 
 ### go
 
