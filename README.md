@@ -2,9 +2,10 @@
 
 Traverse objects and arrays.
 
-## Usage
+## Features
 
-Calling `scour(obj)` returns a wrapper that you can use to traverse `obj`.
+Calling `scour(object)` returns a wrapper that you can use to traverse `object`.
+Use [go()](#go) and [get()](#get) to dig into the structure.
 
 ```js
 const data = {
@@ -14,7 +15,9 @@ const data = {
     3: { name: 'barry', confirmed: true }
   }
 }
+```
 
+```js
 scour(data).get('users', '1', 'name')   // => 'john'
 
 scour(data).go('users')                   // => [scour object]
@@ -22,8 +25,11 @@ scour(data).go('users', '1')              // => [scour object]
 scour(data).go('users', '1').get('name')  // => 'john'
 ```
 
-Use it to set values. Scout treats all data as immutable, so this doesn't
-modify your original `data`, but gets you a new one with the modifications made.
+### Immutable modifications
+
+Use [set()](#set) to update values. Scout treats all data as immutable, so this
+doesn't modify your original `data`, but gets you a new one with the
+modifications made.
 
 ```js
 data = scour(data)
@@ -37,14 +43,59 @@ data = scour(data)
 ```
 
 
-Use it to traverse collections.
+### Advanced traversing
+
+Use [where()](#where) to filter results with advanced querying.
 
 ```js
-scour(data)
-  .go('users')
+users = scour(data).go('users')
+
+users
   .where({ confirmed: true })
   .at(0)
   .get('name')   // => 'shane'
+```
+
+### Models
+
+Use [extend()](#extend) to add your own methods to certain keypaths. This makes them behave like models.
+
+```js
+db = scour(data)
+  .extend({
+    '': {
+      artists () {
+        return this.go('artists')
+      }
+    },
+    'artists.*': {
+      fullname () {
+        return this.get('first_name') + ' ' + this.get('last_name')
+      }
+      albums () {
+        return this.root.go('albums')
+          .where({ artist_id: this.get('id') })
+      }
+    }
+  })
+```
+
+```js
+data =
+  { artists:
+    { 1: { first_name: 'Louie', last_name: 'Armstrong' },
+      2: { first_name: 'Miles', last_name: 'Davis' } },
+    albums:
+    { 32: { artist_id: 1, title: 'Kind of Blue' },
+      35: { artist_id: 2, title: 'Struttin' } } }
+```
+
+```js
+db.artists().find({ name: 'Miles' }).fullname()
+//=> 'Miles Davis'
+
+db.artists().find({ name: 'Miles' }).albums().at(0).get('title')
+// => 'Kind of Blue'
 ```
 
 ## API
