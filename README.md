@@ -131,7 +131,29 @@ Has the following properties:
 ```js
 s = scour(obj)
 s.root             // => [scour object]
-s.keypath          // => array (string)
+s.data             // => raw data (that is, `obj`)
+s.keypath          // => string array
+```
+
+You can access the raw data using `.data`.
+
+```js
+db = scour(data)
+db.data               // => same as `data`
+db.go('users').data   // => same as `data.users`
+```
+
+When you traverse down using [go()](#go), `root` will point to the root
+scour instance, and `keypath` will be updated accordingly.
+
+```js
+db = scour(data)
+admins = db.go('users').go('admins')
+```
+
+```js
+admins.keypath  // => ['users', 'admins']
+admins.root     // => db
 ```
 
 ### go
@@ -143,10 +165,11 @@ Navigates down to a given `keypath`.
 ```js
 data =
   { users:
-    { 12: { name: 'steve' },
-      23: { name: 'bill' } } }
+    { 12: { name: 'steve', last: 'jobs' },
+      23: { name: 'bill', last: 'gates' } } }
 
-scour(data).go('users')                    // => <scour instance>
+scour(data).go('users')                    // => [scour (users)]
+scour(data).go('users', '23')              // => [scour (name, last)]
 scour(data).go('users', '23').get('name')  // => 'steve'
 
 ```

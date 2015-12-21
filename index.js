@@ -16,7 +16,23 @@ const assign = require('object-assign')
  *
  *    s = scour(obj)
  *    s.root             // => [scour object]
- *    s.keypath          // => array (string)
+ *    s.data             // => raw data (that is, `obj`)
+ *    s.keypath          // => string array
+ *
+ * You can access the raw data using `.data`.
+ *
+ *    db = scour(data)
+ *    db.data               // => same as `data`
+ *    db.go('users').data   // => same as `data.users`
+ *
+ * When you traverse down using [go()](#go), `root` will point to the root
+ * scour instance, and `keypath` will be updated accordingly.
+ *
+ *    db = scour(data)
+ *    admins = db.go('users').go('admins')
+ *
+ *    admins.keypath  // => ['users', 'admins']
+ *    admins.root     // => db
  */
 
 function scour (data, options) {
