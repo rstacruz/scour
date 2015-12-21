@@ -160,7 +160,7 @@ admins.root     // => db
 
 > `go(keypath)`
 
-Navigates down to a given `keypath`.
+Navigates down to a given `keypath`. Always returns a `scour` instance.
 
 ```js
 data =
@@ -169,9 +169,19 @@ data =
       23: { name: 'bill', last: 'gates' } } }
 
 scour(data).go('users')                    // => [scour (users)]
-scour(data).go('users', '23')              // => [scour (name, last)]
-scour(data).go('users', '23').get('name')  // => 'steve'
+scour(data).go('users', '12')              // => [scour (name, last)]
+scour(data).go('users', '12').get('name')  // => 'steve'
+```
 
+If you use it on a non-object or non-array value, it will still be
+returned as a scour instance. This is not likely what you want; use
+[get()](#get) instead.
+
+```js
+attr = scour(data).go('users', '12', 'name')
+attr           // => [scour object]
+attr.data      // => 'steve'
+attr.keypath   // => ['users', '12', 'name']
 ```
 
 ### get
@@ -193,7 +203,7 @@ scour(data).go('users').data   // => same as data.users
 
 ### _get
 
-> `_get(result, keypath, strict)`
+> `_get(result, keypath)`
 
 (Internal)
 
@@ -227,9 +237,9 @@ Sets data. (To be implemented)
 (Internal) Returns a clone of the instance extended with the given `data`
 and `options`.
 
-### each
+### forEach
 
-> `each(fn)`
+> `forEach(fn)`
 
 Loops through each item. Supports both arrays and objects.
 
@@ -243,8 +253,21 @@ users =
 scour(users).each((user, key) => {
   console.log(user.get('name'))
 })
-
 ```
+
+The values passed onto the function are:
+
+- `val` - the value; always a scour object.
+- `key` - the key.
+
+The value being passed onto the function is going to be a `scour` object.
+Use `val.data` to access the raw data.
+
+### each
+
+> `each(fn)`
+
+Alias for [forEach](#foreach).
 
 ### map
 
