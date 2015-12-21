@@ -11,5 +11,8 @@
   "devDependencies": {
     "expect": "1.13.4",
     "mocha": "2.3.4"
+  },
+  "dependencies": {
+    "object-assign": "4.0.1"
   }
 }

@@ -10,7 +10,7 @@ describe('index', function () {
     }
   }
 
-  describe('get', function () {
+  describe('.get()', function () {
     it('works', function () {
       const users = scour(data).get('users')
       expect(users.data).toBeAn('object')
@@ -18,8 +18,40 @@ describe('index', function () {
       expect(Object.keys(users.data)).toInclude('2')
     })
 
+    it('gives keypath', function () {
+      expect(scour(data).get('users').keypath).toEqual(['users'])
+    })
+
+    it('gives keypath (multiple keys)', function () {
+      expect(scour(data).get('users', '1').keypath)
+      .toEqual(['users', '1'])
+    })
+
+    it('stringifies keypaths', function () {
+      expect(scour(data).get('users', 1).keypath)
+      .toEqual(['users', '1'])
+    })
+
+    it('gives keypath (recursive)', function () {
+      expect(scour(data).get('users').get('1').keypath)
+      .toEqual(['users', '1'])
+    })
+
     it('returns scalars', function () {
       expect(scour(data).get('users', '1', 'name')).toEqual('john')
+    })
+  })
+
+  describe('.extend()', function () {
+    it('works', function () {
+      let extension = {
+        fullname () { return 'Mr. ' + this.get('name') }
+      }
+
+      let user = scour(data).get('users', 1)
+        .extend(extension)
+
+      expect(user.fullname()).toEqual('Mr. john')
     })
   })
 })
