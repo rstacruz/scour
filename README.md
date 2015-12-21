@@ -43,4 +43,5 @@ Use it to traverse collections.
 scour(data)
   .get('users')
   .where({ confirmed: true })
+  .at(0)
 ```

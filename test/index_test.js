@@ -110,10 +110,37 @@ describe('index', function () {
       this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
     })
 
+    it('has results', function () {
+      expect(this.results.get(1).data).toEqual({ name: 'john' })
+      expect(this.results.get(2).data).toEqual({ name: 'jake' })
+      expect(this.results.get(3)).toEqual(undefined)
+    })
+
+  })
+
+  describe('.where() again', function () {
+    beforeEach(function () {
+      this.results = scour(data).get('users').where({ name: { $regex: /^a/ } })
+    })
+
+    it('has results indexed by id', function () {
+      expect(this.results.get(3).data).toEqual({ name: 'ara' })
+    })
+
+    it('has proper keypaths', function () {
+      expect(this.results.get(3).keypath).toEqual([ 'users', '3' ])
+    })
+  })
+
+  describe('.where()', function () {
+    beforeEach(function () {
+      this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
+    })
+
     it('works', function () {
-      expect(this.results.get(0).data).toEqual({ name: 'john' })
-      expect(this.results.get(1).data).toEqual({ name: 'jake' })
-      expect(this.results.get(2)).toEqual(undefined)
+      expect(this.results.get(1).data).toEqual({ name: 'john' })
+      expect(this.results.get(2).data).toEqual({ name: 'jake' })
+      expect(this.results.get(3)).toEqual(undefined)
     })
   })
 

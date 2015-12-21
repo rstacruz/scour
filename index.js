@@ -65,7 +65,8 @@ Scour.prototype = {
   },
 
   /**
-   * Returns the item at `index`.
+   * Returns the item at `index`. This differs from `get` as this searches by
+   * index.
    */
 
   at (index) {
@@ -157,8 +158,7 @@ Scour.prototype = {
    */
 
   where (conditions) {
-    // TODO: this should return an object.
-    const results = sift(conditions, this.toArray())
+    const results = sift(conditions, this.data)
     return this._get(results, [])
   },
 
@@ -175,10 +175,9 @@ Scour.prototype = {
    */
 
   find (conditions) {
-    const keys = this.keys()
-    const idx = sift.indexOf(conditions, this.toArray())
-    if (idx === -1) return
-    return this._get(this.data[keys[idx]], [idx])
+    const key = sift.keyOf(conditions, this.data)
+    if (typeof key === 'undefined') return
+    return this._get(this.data[key], [key])
   },
 
   /**
