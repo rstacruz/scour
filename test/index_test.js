@@ -6,7 +6,8 @@ describe('index', function () {
   const data = {
     users: {
       1: { name: 'john' },
-      2: { name: 'jake' }
+      2: { name: 'jake' },
+      3: { name: 'ara' }
     }
   }
 
@@ -87,10 +88,42 @@ describe('index', function () {
         results.push([val, key])
       })
 
-      expect(results).toEqual([
-        [ { name: 'john' }, '1' ],
-        [ { name: 'jake' }, '2' ]
-      ])
+      expect(results[0]).toEqual([ { name: 'john' }, '1' ])
+      expect(results[1]).toEqual([ { name: 'jake' }, '2' ])
+    })
+  })
+
+  describe('.where()', function () {
+    beforeEach(function () {
+      this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
+    })
+
+    it('works', function () {
+      expect(this.results.get(0).data).toEqual({ name: 'john' })
+      expect(this.results.get(1).data).toEqual({ name: 'jake' })
+      expect(this.results.get(2)).toEqual(undefined)
+    })
+  })
+
+  describe('.len()', function () {
+    it('works for objects', function () {
+      expect(scour(data).len())
+        .toEqual(Object.keys(data).length)
+    })
+
+    it('works for arrays', function () {
+      expect(scour(list).len())
+        .toEqual(list.length)
+    })
+  })
+
+  describe('.where() empty', function () {
+    beforeEach(function () {
+      this.results = scour(data).get('users').where({ abc: 'def' })
+    })
+
+    it('works', function () {
+      expect(this.results.len()).toEqual(0)
     })
   })
 
@@ -101,10 +134,8 @@ describe('index', function () {
           return [val, key]
         })
 
-      expect(results).toEqual([
-        [ { name: 'john' }, '1' ],
-        [ { name: 'jake' }, '2' ]
-      ])
+      expect(results[0]).toEqual([ { name: 'john' }, '1' ])
+      expect(results[1]).toEqual([ { name: 'jake' }, '2' ])
     })
   })
 

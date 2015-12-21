@@ -1,7 +1,9 @@
 'use strict'
 
-const each = require('./lib/each')
 const assign = require('object-assign')
+const sift = require('sift')
+const each = require('./lib/each')
+const define = require('./lib/define_property')
 
 /*
  * Returns a scour instance.
@@ -18,10 +20,10 @@ const assign = require('object-assign')
 
 function Scour (data, options) {
   if (!(this instanceof Scour)) return new Scour(data, options)
-  this.data = data
-  this.root = options && options.root || this
-  this.keypath = options && options.keypath || []
-  this.extensions = options && options.extensions || []
+  define(this, 'data', data)
+  define(this, 'root', options && options.root || this)
+  define(this, 'keypath', options && options.keypath || [])
+  define(this, 'extensions', options && options.extensions || [])
 
   this.extensions.forEach((ext) => {
     each(ext, (val, key) => {
@@ -67,7 +69,7 @@ Scour.prototype = {
    */
 
   at (index) {
-    const key = Object.keys(this.data)[index]
+    const key = this.keys()[index]
     return this._get(this.data[key], [ key ])
   },
 
@@ -106,6 +108,57 @@ Scour.prototype = {
       result.push(fn(val, key))
     })
     return result
+  },
+
+  /**
+   * Returns the length
+   */
+
+  len () {
+    if (Array.isArray(this.data)) return this.data.length
+    return this.keys().length
+  },
+
+  /**
+   * Returns an array. If the data is an object, it returns the values.
+   */
+
+  toArray () {
+    if (Array.isArray(this.data)) return this.data
+    return this.map((val) => val)
+  },
+
+  /**
+   * Alias for `toArray()`.
+   */
+
+  values () {
+    return this.toArray()
+  },
+
+  /**
+   * Returns keys.
+   */
+
+  keys () {
+    return Object.keys(this.data)
+  },
+
+  /**
+   * Sifts through the values and returns a set that matches given `conditions`.
+   * Supports MongoDB-style queries.
+   *
+   * For reference, see [MongoDB Query Operators][query-ops].
+   *
+   * [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+   *
+   *     scour(data).where({ name: 'john' })
+   *     scour(data).where({ name: { $in: ['moe', 'larry'] })
+   */
+
+  where (conditions) {
+    const results = sift(conditions, this.toArray())
+    return this._get(results, [])
   },
 
   /**

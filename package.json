@@ -13,6 +13,7 @@
     "mocha": "2.3.4"
   },
   "dependencies": {
-    "object-assign": "4.0.1"
+    "object-assign": "4.0.1",
+    "sift": "3.0.0"
   }
 }
