@@ -12,6 +12,8 @@ Scour can be used to solve many problems. You can use it to:
 
 [Redux]: http://rackt.github.io/redux
 
+[![Status](https://travis-ci.org/rstacruz/scour.svg?branch=master)](https://travis-ci.org/rstacruz/scour "See test builds")
+
 ## Features
 
 Calling `scour(object)` returns a wrapper that you can use to traverse `object`.
