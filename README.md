@@ -326,4 +326,17 @@ scour(users)
   .fullname()       // => 'bill gates'
 
 ```
+
+### toJSON
+
+> `toJSON()`
+
+Returns the value for serialization. This allows `JSON.stringify()` to
+work with `scour`-wrapped objects.
+
+The name of this method is a bit confusing, as it doesn't actually return
+a JSON string — but I'm afraid that it's the way that the JavaScript API
+for [JSON.stringify] works.
+
+[JSON.stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior
 <!--api:end-->

@@ -233,4 +233,11 @@ describe('index', function () {
       expect(this.root.map((n) => n)).toEqual(['h', 'e', 'y'])
     })
   })
+
+  describe('.toJSON()', function () {
+    it('works', function () {
+      expect(JSON.stringify(scour(data)))
+        .toEqual(JSON.stringify(data))
+    })
+  })
 })
