@@ -24,6 +24,8 @@
     "expect": "1.13.4",
     "mdx": "0.2.2",
     "mocha": "2.3.4",
+    "mocha-standard": "1.0.0",
+    "standard": "5.4.1",
     "uglifyjs": "2.4.10",
     "watchify": "3.6.1"
   },

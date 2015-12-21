@@ -16,46 +16,46 @@ describe('index', function () {
     { name: 'banana' }
   ]
 
-  describe('.get()', function () {
+  describe('.go()', function () {
     it('works', function () {
-      const users = scour(data).get('users')
+      const users = scour(data).go('users')
       expect(users.data).toBeAn('object')
       expect(Object.keys(users.data)).toInclude('1')
       expect(Object.keys(users.data)).toInclude('2')
     })
 
     it('gives keypath', function () {
-      expect(scour(data).get('users').keypath).toEqual(['users'])
+      expect(scour(data).go('users').keypath).toEqual(['users'])
     })
 
     it('gives keypath (multiple keys)', function () {
-      expect(scour(data).get('users', '1').keypath)
+      expect(scour(data).go('users', '1').keypath)
       .toEqual(['users', '1'])
     })
 
     it('stringifies keypaths', function () {
-      expect(scour(data).get('users', 1).keypath)
+      expect(scour(data).go('users', 1).keypath)
       .toEqual(['users', '1'])
     })
 
     it('gives keypath (recursive)', function () {
-      expect(scour(data).get('users').get('1').keypath)
+      expect(scour(data).go('users').go('1').keypath)
       .toEqual(['users', '1'])
     })
 
     it('returns scalars', function () {
-      expect(scour(data).get('users', '1', 'name')).toEqual('john')
+      expect(scour(data).go('users', '1', 'name')).toEqual('john')
     })
   })
 
   describe('.at()', function () {
     it('works', function () {
-      expect(scour(data).get('users').at(0).get('name'))
+      expect(scour(data).go('users').at(0).go('name'))
         .toEqual('john')
     })
 
     it('works for arrays', function () {
-      expect(scour(list).at(0).get('name'))
+      expect(scour(list).at(0).go('name'))
         .toEqual('apple')
     })
   })
@@ -63,17 +63,17 @@ describe('index', function () {
   describe('.root', function () {
     it('is accessible', function () {
       const root = scour(data)
-      expect(root.get('users', 1).root).toEqual(root)
+      expect(root.go('users', 1).root).toEqual(root)
     })
   })
 
   describe('.extend()', function () {
     const extension = {
-      fullname () { return 'Mr. ' + this.get('name') }
+      fullname () { return 'Mr. ' + this.go('name') }
     }
 
     it('works', function () {
-      let user = scour(data).get('users', 1)
+      let user = scour(data).go('users', 1)
         .extend(extension)
 
       expect(user.fullname()).toEqual('Mr. john')
@@ -82,7 +82,7 @@ describe('index', function () {
     it('gets carried over', function () {
       let user = scour(data)
         .extend(extension)
-        .get('users', 1)
+        .go('users', 1)
 
       expect(user.fullname()).toEqual('Mr. john')
     })
@@ -92,7 +92,7 @@ describe('index', function () {
     it('works', function () {
       const results = []
 
-      scour(data).get('users').each((val, key) => {
+      scour(data).go('users').each((val, key) => {
         results.push([ val.data, key ])
       })
 
@@ -115,46 +115,45 @@ describe('index', function () {
 
   describe('.where()', function () {
     beforeEach(function () {
-      this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
+      this.results = scour(data).go('users').where({ name: { $regex: /^j/ } })
     })
 
     it('has results', function () {
-      expect(this.results.get(1).data).toEqual({ name: 'john' })
-      expect(this.results.get(2).data).toEqual({ name: 'jake' })
-      expect(this.results.get(3)).toEqual(undefined)
+      expect(this.results.go(1).data).toEqual({ name: 'john' })
+      expect(this.results.go(2).data).toEqual({ name: 'jake' })
+      expect(this.results.go(3)).toEqual(undefined)
     })
-
   })
 
   describe('.where() again', function () {
     beforeEach(function () {
-      this.results = scour(data).get('users').where({ name: { $regex: /^a/ } })
+      this.results = scour(data).go('users').where({ name: { $regex: /^a/ } })
     })
 
     it('has results indexed by id', function () {
-      expect(this.results.get(3).data).toEqual({ name: 'ara' })
+      expect(this.results.go(3).data).toEqual({ name: 'ara' })
     })
 
     it('has proper keypaths', function () {
-      expect(this.results.get(3).keypath).toEqual([ 'users', '3' ])
+      expect(this.results.go(3).keypath).toEqual([ 'users', '3' ])
     })
   })
 
   describe('.where()', function () {
     beforeEach(function () {
-      this.results = scour(data).get('users').where({ name: { $regex: /^j/ } })
+      this.results = scour(data).go('users').where({ name: { $regex: /^j/ } })
     })
 
     it('works', function () {
-      expect(this.results.get(1).data).toEqual({ name: 'john' })
-      expect(this.results.get(2).data).toEqual({ name: 'jake' })
-      expect(this.results.get(3)).toEqual(undefined)
+      expect(this.results.go(1).data).toEqual({ name: 'john' })
+      expect(this.results.go(2).data).toEqual({ name: 'jake' })
+      expect(this.results.go(3)).toEqual(undefined)
     })
   })
 
   describe('.where() empty', function () {
     beforeEach(function () {
-      this.results = scour(data).get('users').where({ abc: 'def' })
+      this.results = scour(data).go('users').where({ abc: 'def' })
     })
 
     it('works', function () {
@@ -164,7 +163,7 @@ describe('index', function () {
 
   describe('.find()', function () {
     beforeEach(function () {
-      this.result = scour(data).get('users').find({ name: { $regex: /^j/ } })
+      this.result = scour(data).go('users').find({ name: { $regex: /^j/ } })
     })
 
     it('works', function () {
@@ -174,7 +173,7 @@ describe('index', function () {
 
   describe('.find() empty', function () {
     beforeEach(function () {
-      this.result = scour(data).get('users').find({ abc: 'def' })
+      this.result = scour(data).go('users').find({ abc: 'def' })
     })
 
     it('works', function () {
@@ -185,7 +184,7 @@ describe('index', function () {
   describe('.map()', function () {
     it('works', function () {
       const results =
-        scour(data).get('users').map((val, key) => {
+        scour(data).go('users').map((val, key) => {
           return [val.data, key]
         })
 
@@ -199,12 +198,12 @@ describe('index', function () {
       this.root = scour(list)
     })
 
-    it('.get()', function () {
-      expect(this.root.get('0').data).toEqual({ name: 'apple' })
+    it('.go()', function () {
+      expect(this.root.go('0').data).toEqual({ name: 'apple' })
     })
 
-    it('.get(...)', function () {
-      expect(this.root.get('0', 'name')).toEqual('apple')
+    it('.go(...)', function () {
+      expect(this.root.go('0', 'name')).toEqual('apple')
     })
 
     it('.data', function () {
@@ -212,7 +211,7 @@ describe('index', function () {
     })
 
     it('.map()', function () {
-      expect(this.root.map((f) => f.get('name'))).toEqual(['apple', 'banana'])
+      expect(this.root.map((f) => f.go('name'))).toEqual(['apple', 'banana'])
     })
   })
 
@@ -221,8 +220,8 @@ describe('index', function () {
       this.root = scour('hey')
     })
 
-    it('.get()', function () {
-      expect(this.root.get('0')).toEqual('h')
+    it('.go()', function () {
+      expect(this.root.go('0')).toEqual('h')
     })
 
     it('.data', function () {

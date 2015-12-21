@@ -17,9 +17,9 @@ const data = {
 
 scour(data).get('users', '1', 'name')   // => 'john'
 
-scour(data).get('users')                // => scour object
-scour(data).get('users', '1')           // => scour object
-scour(data).get('users', '1').data      // => { name: 'john' }
+scour(data).go('users')                   // => [scour object]
+scour(data).go('users', '1')              // => [scour object]
+scour(data).go('users', '1').get('name')  // => 'john'
 ```
 
 Use it to set values. Scout treats all data as immutable, so this doesn't
@@ -41,9 +41,10 @@ Use it to traverse collections.
 
 ```js
 scour(data)
-  .get('users')
+  .go('users')
   .where({ confirmed: true })
   .at(0)
+  .get('name')   // => 'shane'
 ```
 
 ## API
@@ -69,12 +70,28 @@ s.root             // => <scour>
 s.keypath          // => array (string)
 ```
 
+### go
+
+> `go(keypath)`
+
+Navigates down to a given `keypath`.
+
+```js
+data =
+  { users:
+    { 12: { name: 'steve' },
+      23: { name: 'bill' } } }
+
+scour(data).go('users')                    // => <scour instance>
+scour(data).go('users', '23').get('name')  // => 'steve'
+
+```
+
 ### get
 
 > `get(keypath)`
 
-Returns data. If the given data is an object, it returns a scour instance.
-Otherwise, it returns the data itself.
+Returns data in a given `keypath`.
 
 ```js
 data =
@@ -82,26 +99,8 @@ data =
     { 12: { name: 'steve' },
       23: { name: 'bill' } } }
 
-scour(data).get('users')                    // => <scour instance>
-scour(data).get('users', '12', 'name')      // => 'steve'
-scour(data).get('users', '23').get('name')  // => 'steve'
-
-```
-
-### rget
-
-> `rget(keypath)`
-
-Returns raw data. Works just like `.get()`, but doesn't transform objects
-into `scour` instances.
-
-```js
-data =
-  { users:
-    { 12: { name: 'steve' },
-      23: { name: 'bill' } } }
-
-scour(data).rget('users')   // => same as data.users
+scour(data).get('users')       // => same as data.users
+scour(data).go('users').data   // => same as data.users
 
 ```
 

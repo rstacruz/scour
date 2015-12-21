@@ -1,7 +1,6 @@
 /* eslint-disable new-cap */
 'use strict'
 
-const assign = require('object-assign')
 const sift = require('sift')
 const each = require('./lib/each')
 const define = require('./lib/define_property')
@@ -35,38 +34,36 @@ function scour (data, options) {
 
 scour.prototype = {
   /**
-   * Returns data. If the given data is an object, it returns a scour instance.
-   * Otherwise, it returns the data itself.
+   * Navigates down to a given `keypath`.
    *
    *     data =
    *       { users:
    *         { 12: { name: 'steve' },
    *           23: { name: 'bill' } } }
    *
-   *     scour(data).get('users')                    // => <scour instance>
-   *     scour(data).get('users', '12', 'name')      // => 'steve'
-   *     scour(data).get('users', '23').get('name')  // => 'steve'
+   *     scour(data).go('users')                    // => <scour instance>
+   *     scour(data).go('users', '23').get('name')  // => 'steve'
    */
 
-  get (keypath) {
+  go (keypath) {
     keypath = [].slice.apply(arguments).map((k) => '' + k)
-    const result = this.rget.apply(this, keypath)
+    const result = this.get.apply(this, keypath)
     return this._get(result, keypath)
   },
 
   /**
-   * Returns raw data. Works just like `.get()`, but doesn't transform objects
-   * into `scour` instances.
+   * Returns data in a given `keypath`.
    *
    *     data =
    *       { users:
    *         { 12: { name: 'steve' },
    *           23: { name: 'bill' } } }
    *
-   *     scour(data).rget('users')   // => same as data.users
+   *     scour(data).get('users')       // => same as data.users
+   *     scour(data).go('users').data   // => same as data.users
    */
 
-  rget (keypath) {
+  get (keypath) {
     var result = this.data
     keypath = [].slice.apply(arguments)
 
@@ -85,7 +82,7 @@ scour.prototype = {
   _get (result, keypath) {
     if (typeof result === 'object') {
       return this.spawn(result, {
-        keypath: this.keypath.concat(keypath),
+        keypath: this.keypath.concat(keypath)
       })
     } else {
       return result
