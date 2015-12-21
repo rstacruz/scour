@@ -187,15 +187,54 @@ These attributes are available to [scour] instances.
 
 ### root
 
-> `.root`
+> `root`
 
 A reference to the root [scour] instance.
+Everytime you traverse using [go()], a new [scour] object is spawned that's
+scoped to a keypath.  Each of these [scour] objects have a `root` attribute
+that's a reference to the top-level [scour] object.
+
+```js
+data = scour(...)
+
+photos = data.go('photos')
+photos.root    // => same as `data`
+```
+
+This allows you to return to the root when needed.
+
+```js
+artist = scour(...).go('artists', '9328')
+artist.root.go('albums').find({ artist_id: artist.get('id') })
+```
 
 ### keypath
 
-> `.keypath`
+> `keypath`
 
-The keypath.
+An array of strings representing each step in how deep the current scope is
+relative to the root. Each time you traverse using [go()], a new [scour]
+object is spawned.
+
+```js
+data = scour(...)
+
+users = data.go('users')
+users.keypath            // => ['users']
+
+admins = users.go('admins')
+admins.keypath           // => ['users', 'admins']
+
+user = admins.go('23')
+user.keypath             // => ['users', 'admins', '23']
+
+```
+
+### value
+
+> `value`
+
+The raw value being wrapped.
 
 ## Traversal methods
 
@@ -451,3 +490,4 @@ names = scour(users).map((user, key) => user.get('name'))
 
 [scour]: #scour
 [get()]: #get
+[go()]: #go
