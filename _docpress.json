@@ -66,6 +66,11 @@
                 "title": "keypath",
                 "depth": 3,
                 "id": "keypath"
+              },
+              {
+                "title": "value",
+                "depth": 3,
+                "id": "value"
               }
             ]
           },
@@ -247,6 +252,11 @@
               "title": "keypath",
               "depth": 3,
               "id": "keypath"
+            },
+            {
+              "title": "value",
+              "depth": 3,
+              "id": "value"
             }
           ]
         },
