@@ -4,7 +4,6 @@
 const sift = require('sift')
 const each = require('./lib/each')
 const define = require('./lib/define_property')
-const assign = require('object-assign')
 
 /*
  * scour:
@@ -135,11 +134,6 @@ scour.prototype = {
 
     if (this.root !== this) {
       return this.root.set(this.keypath.concat(keypath), value)
-    }
-
-    var root = this.data
-
-    for (let i = 0, len = keypath.length; i < len; i++) {
     }
 
     // TODO
