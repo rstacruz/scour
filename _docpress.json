@@ -63,6 +63,11 @@
             "id": "attributes",
             "headings": [
               {
+                "title": "value",
+                "depth": 3,
+                "id": "value"
+              },
+              {
                 "title": "root",
                 "depth": 3,
                 "id": "root"
@@ -71,11 +76,6 @@
                 "title": "keypath",
                 "depth": 3,
                 "id": "keypath"
-              },
-              {
-                "title": "value",
-                "depth": 3,
-                "id": "value"
               }
             ]
           },
@@ -259,6 +259,11 @@
           "id": "attributes",
           "headings": [
             {
+              "title": "value",
+              "depth": 3,
+              "id": "value"
+            },
+            {
               "title": "root",
               "depth": 3,
               "id": "root"
@@ -267,11 +272,6 @@
               "title": "keypath",
               "depth": 3,
               "id": "keypath"
-            },
-            {
-              "title": "value",
-              "depth": 3,
-              "id": "value"
             }
           ]
         },

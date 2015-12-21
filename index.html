@@ -27,8 +27,8 @@
 <blockquote>
 <p>Traverse objects and arrays immutably</p>
 </blockquote>
-<p>Scour is a general-purpose library for dealing with JSON trees. As a simple
-utility with a broad purpose, it can be used to solve many problems. You can use it to:</p>
+<p>Scour is a general-purpose library for dealing with JSON trees.<br>
+As a simple utility with a broad purpose, it can be used to solve many problems. Use it to:</p>
 <ul>
 <li>Manage your <a href="http://rackt.github.io/redux">Redux</a> datastore.</li>
 <li>Provide a model layer to access data in your single-page app.</li>
@@ -36,9 +36,11 @@ utility with a broad purpose, it can be used to solve many problems. You can use
 </ul>
 <p><a href="https://travis-ci.org/rstacruz/scour" title="See test builds"><img src="https://travis-ci.org/rstacruz/scour.svg?branch=master" alt="Status"></a></p>
 <h2 id="install">Install</h2>
-<pre><code>$ npm install --save-exact rstacruz/scour
+<pre><code class="lang-sh">npm install --save-exact rstacruz/scour
 </code></pre>
-<pre><code class="lang-js"><span class="pl-c1">require</span>(<span class="pl-s">&apos;scourjs&apos;</span>)
+<pre><code class="lang-js"><span class="pl-c1">window</span>.scour                       <span class="pl-c">// non commonjs</span>
+<span class="pl-k">const</span> scour = <span class="pl-c1">require</span>(<span class="pl-s">&apos;scourjs&apos;</span>)   <span class="pl-c">// commonjs/node</span>
+<span class="pl-k">import</span> scour <span class="pl-k">from</span> <span class="pl-s">&apos;scourjs&apos;</span>        // es6 modules
 </code></pre>
 <h2 id="features">Features</h2>
 <p>Calling <code>scour(object)</code> returns a wrapper that you can use to traverse <code>object</code>.
@@ -158,6 +160,21 @@ admins.root     <span class="pl-c">// =&gt; db</span>
 </code></pre>
 <h2 id="attributes">Attributes</h2>
 <p>These attributes are available to <a href="#scour">scour</a> instances.</p>
+<h3 id="value">value</h3>
+<blockquote>
+<p><code>value</code></p>
+</blockquote>
+<p>The raw value being wrapped. You can use this to terminate a chained call.</p>
+<pre><code class="lang-js">users =
+  [ { name: <span class="pl-s">&apos;john&apos;</span>, admin: <span class="pl-c1">true</span> },
+    { name: <span class="pl-s">&apos;kyle&apos;</span>, admin: <span class="pl-c1">false</span> } ]
+
+scour(users)
+  .where({ admin: <span class="pl-c1">true</span> })
+  .value
+<span class="pl-c">// =&gt; [ { name: &apos;john&apos;, admin: true } ]</span>
+
+</code></pre>
 <h3 id="root">root</h3>
 <blockquote>
 <p><code>root</code></p>
@@ -194,13 +211,9 @@ user = admins.go(<span class="pl-s">&apos;23&apos;</span>)
 user.keypath             <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;, &apos;23&apos;]</span>
 
 </code></pre>
-<h3 id="value">value</h3>
-<blockquote>
-<p><code>value</code></p>
-</blockquote>
-<p>The raw value being wrapped.</p>
 <h2 id="traversal-methods">Traversal methods</h2>
-<p>For traversing.</p>
+<p>For traversing. All these methods return <a href="#scour">scour</a> instances,
+making them suitable for chaining.</p>
 <h3 id="go">go</h3>
 <blockquote>
 <p><code>go(keypath)</code></p>
@@ -439,11 +452,11 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
             </li>
             <li class="menu-item -level-1 -parent"><a href="#attributes" class="link title link-attributes">Attributes</a>
               <ul class="submenu">
+                <li class="menu-item -level-2"><a href="#value" class="link title link-value">value</a>
+                </li>
                 <li class="menu-item -level-2"><a href="#root" class="link title link-root">root</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#keypath" class="link title link-keypath">keypath</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#value" class="link title link-value">value</a>
                 </li>
               </ul>
             </li>
