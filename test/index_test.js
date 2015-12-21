@@ -1,6 +1,6 @@
 'use strict'
 
-var scour = require('../index')
+var scour = require('../lib/index')
 
 describe('index', function () {
   const data = {
