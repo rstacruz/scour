@@ -5,24 +5,37 @@ Traverse objects and arrays.
 ## Features
 
 Calling `scour(object)` returns a wrapper that you can use to traverse `object`.
-Use [go()](#go) and [get()](#get) to dig into the structure.
+Use [get()](#get) to retrieve values.
 
 ```js
-const data = {
-  users: {
-    1: { name: 'john' },
-    2: { name: 'shane', confirmed: true },
-    3: { name: 'barry', confirmed: true }
-  }
-}
+data =
+  { users:
+    { 1: { name: 'john' },
+      2: { name: 'shane', confirmed: true },
+      3: { name: 'barry', confirmed: true } } }
 ```
 
 ```js
 scour(data).get('users', '1', 'name')   // => 'john'
+```
 
-scour(data).go('users')                   // => [scour object]
-scour(data).go('users', '1')              // => [scour object]
-scour(data).go('users', '1').get('name')  // => 'john'
+### Traversal
+Use [go()](#go) to dig into the structure. It will return another `scour`
+wrapper scoped to that object.
+
+```js
+data =
+  { users:
+    { admins:
+      { bob: { logged_in: true },
+        sue: { logged_in: false } } } }
+```
+
+```js
+users  = scour(data).go('users')            // => [scour (admins)]
+admins = scour(data).go('users', 'admins')  // => [scour (bob, sue)]
+
+admins.go('bob').get('logged_in')           // => true
 ```
 
 ### Immutable modifications

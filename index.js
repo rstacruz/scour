@@ -4,6 +4,7 @@
 const sift = require('sift')
 const each = require('./lib/each')
 const define = require('./lib/define_property')
+const assign = require('object-assign')
 
 /*
  * scour:
@@ -38,10 +39,11 @@ scour.prototype = {
    *
    *     data =
    *       { users:
-   *         { 12: { name: 'steve' },
-   *           23: { name: 'bill' } } }
+   *         { 12: { name: 'steve', last: 'jobs' },
+   *           23: { name: 'bill', last: 'gates' } } }
    *
-   *     scour(data).go('users')                    // => <scour instance>
+   *     scour(data).go('users')                    // => [scour (users)]
+   *     scour(data).go('users', '23')              // => [scour (name, last)]
    *     scour(data).go('users', '23').get('name')  // => 'steve'
    */
 
@@ -113,6 +115,17 @@ scour.prototype = {
    */
 
   set (keypath, value) {
+    if (!Array.isArray(keypath)) keypath = [keypath]
+
+    if (this.root !== this) {
+      return this.root.set(this.keypath.concat(keypath), value)
+    }
+
+    var root = this.data
+
+    for (let i = 0, len = keypath.length; i < len; i++) {
+    }
+
     // TODO
   },
 
