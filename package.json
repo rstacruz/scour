@@ -4,8 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "expect": "1.13.4",
+    "mocha": "2.3.4"
+  }
 }
