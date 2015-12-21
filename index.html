@@ -139,11 +139,11 @@ s.keypath          <span class="pl-c">// =&gt; string array</span>
 </code></pre>
 <p>You can access the raw data using <code>.value</code>.</p>
 <pre><code class="lang-js">db = scour(data)
-db.value              <span class="pl-c">// =&gt; same as `data`</span>
+db.value               <span class="pl-c">// =&gt; same as `data`</span>
 db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">// =&gt; same as `data.users`</span>
 </code></pre>
-<p>When you traverse down using <a href="#go">go()</a>, <code>root</code> will point to the root
-scour instance, and <code>keypath</code> will be updated accordingly.</p>
+<p>When you traverse down using <a href="#go">go()</a>, [root] will point to the root
+scour instance, and [keypath] will be updated accordingly.</p>
 <pre><code class="lang-js">db = scour(data)
 admins = db.go(<span class="pl-s">&apos;users&apos;</span>).go(<span class="pl-s">&apos;admins&apos;</span>)
 </code></pre>
@@ -235,24 +235,30 @@ scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">
 <blockquote>
 <p><code>where(conditions)</code></p>
 </blockquote>
-<p>Sifts through the values and returns a set that matches given <code>conditions</code>.
-Supports MongoDB-style queries.</p>
-<p>For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
+<p>Sifts through the values and returns a set that matches given
+<code>conditions</code>. Supports functions, simple objects, and MongoDB-style
+queries.</p>
 <pre><code class="lang-js">scour(data).where({ name: <span class="pl-s">&apos;john&apos;</span> })
 scour(data).where({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
+</code></pre>
+<p>MongoDB-style queries are supported as provided by <a href="https://www.npmjs.com/package/sift">sift.js</a>.  For
+reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
+<pre><code class="lang-js">scour(products).where({ price: { $gt: <span class="hljs-number">200</span> })
+scour(articles).where({ published_at: { $not: <span class="pl-c1">null</span> }})
 </code></pre>
 <h3 id="find">find</h3>
 <blockquote>
 <p><code>find(conditions)</code></p>
 </blockquote>
-<p>Returns the first value that matches <code>conditions</code>.
-Supports MongoDB-style queries.</p>
-<p>For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
+<p>Returns the first value that matches <code>conditions</code>.  Supports MongoDB-style
+queries. For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>. Also
+see <a href="#where">where()</a>, as this is functionally-equivalent to the first result of
+<code>where()</code>.</p>
 <pre><code class="lang-js">scour(data).find({ name: <span class="pl-s">&apos;john&apos;</span> })
 scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
 </code></pre>
 <h2 id="reading-methods">Reading methods</h2>
-<p>for retrieving data.</p>
+<p>For retrieving data.</p>
 <h3 id="get">get</h3>
 <blockquote>
 <p><code>get(keypath)</code></p>
@@ -311,7 +317,7 @@ names = scour(users).toArray()
 <p><code>set(keypath, value)</code></p>
 </blockquote>
 <p>Sets values. (To be implemented)</p>
-<h2 id="utilities">Utilities</h2>
+<h2 id="utility-methods">Utility methods</h2>
 <p>For stuff.</p>
 <h3 id="extend">extend</h3>
 <blockquote>
@@ -347,10 +353,10 @@ for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/G
 <p>For traversing.</p>
 <h3 id="foreach">forEach</h3>
 <blockquote>
-<p><code>forEach(fn)</code></p>
+<p><code>forEach(function(item, key))</code></p>
 </blockquote>
-<p>Loops through each item. Supports both arrays and objects.</p>
-<p>If the item found is an object, it will be returned as a <code>scour</code> instance.</p>
+<p>Loops through each item. Supports both arrays and objects. The <code>item</code>s
+passed to the function will be returned as a <a href="#scour">scour</a> instance.</p>
 <pre><code class="lang-js">users =
   { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
@@ -364,7 +370,7 @@ scour(users).each((user, key) =&gt; {
 <li><code>item</code> - the value; always a scour object.</li>
 <li><code>key</code> - the key.</li>
 </ul>
-<p>The value being passed onto the function is going to be a <code>scour</code> object.
+<p>The value being passed onto the function is going to be a <a href="#scour">scour</a> object.
 Use <code>item.value</code> or <code>this</code> to access the raw values.</p>
 <h3 id="each">each</h3>
 <blockquote>
@@ -373,10 +379,11 @@ Use <code>item.value</code> or <code>this</code> to access the raw values.</p>
 <p>Alias for <a href="#foreach">forEach</a>.</p>
 <h3 id="map">map</h3>
 <blockquote>
-<p><code>map(fn)</code></p>
+<p><code>map(function(item, key))</code></p>
 </blockquote>
 <p>Loops through each item and returns an array based on the iterator&#x2019;s
-return values. Supports both arrays and objects.</p>
+return values. Supports both arrays and objects. The <code>item</code>s passed to
+the function will be returned as a <a href="#scour">scour</a> instance.</p>
 <pre><code class="lang-js">users =
   { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
@@ -386,6 +393,14 @@ names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;nam
 
 </code></pre>
 <!--api:end-->
+<h2 id="thanks">Thanks</h2>
+<p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
+Authored and maintained by Rico Sta. Cruz with help from contributors (<a href="http://github.com/rstacruz/scour/contributors">list</a>).</p>
+<blockquote>
+<p><a href="http://ricostacruz.com">ricostacruz.com</a> &#xA0;&#xB7;&#xA0;
+GitHub <a href="https://github.com/rstacruz">@rstacruz</a> &#xA0;&#xB7;&#xA0;
+Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
+</blockquote>
 
         </div>
       </div>
@@ -456,7 +471,7 @@ names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;nam
                 </li>
               </ul>
             </li>
-            <li class="menu-item -level-1 -parent"><a href="#utilities" class="link title link-utilities">Utilities</a>
+            <li class="menu-item -level-1 -parent"><a href="#utility-methods" class="link title link-utility-methods">Utility methods</a>
               <ul class="submenu">
                 <li class="menu-item -level-2"><a href="#extend" class="link title link-extend">extend</a>
                 </li>
@@ -473,6 +488,8 @@ names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;nam
                 <li class="menu-item -level-2"><a href="#map" class="link title link-map">map</a>
                 </li>
               </ul>
+            </li>
+            <li class="menu-item -level-1"><a href="#thanks" class="link title link-thanks">Thanks</a>
             </li>
           </ul>
         </li>

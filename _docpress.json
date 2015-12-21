@@ -146,9 +146,9 @@
             ]
           },
           {
-            "title": "Utilities",
+            "title": "Utility methods",
             "depth": 2,
-            "id": "utilities",
+            "id": "utility-methods",
             "headings": [
               {
                 "title": "extend",
@@ -183,6 +183,11 @@
                 "id": "map"
               }
             ]
+          },
+          {
+            "title": "Thanks",
+            "depth": 2,
+            "id": "thanks"
           }
         ]
       }
@@ -332,9 +337,9 @@
           ]
         },
         {
-          "title": "Utilities",
+          "title": "Utility methods",
           "depth": 2,
-          "id": "utilities",
+          "id": "utility-methods",
           "headings": [
             {
               "title": "extend",
@@ -369,6 +374,11 @@
               "id": "map"
             }
           ]
+        },
+        {
+          "title": "Thanks",
+          "depth": 2,
+          "id": "thanks"
         }
       ]
     }
