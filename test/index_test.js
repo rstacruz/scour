@@ -43,19 +43,21 @@ describe('index', function () {
       .toEqual(['users', '1'])
     })
 
-    it('returns scalars', function () {
-      expect(scour(data).go('users', '1', 'name')).toEqual('john')
+    it('fails when traversing to a string', function () {
+      expect(function () {
+        scour(data).go('users', '1', 'name')
+      }).toThrow(/object not found/)
     })
   })
 
   describe('.at()', function () {
     it('works', function () {
-      expect(scour(data).go('users').at(0).go('name'))
+      expect(scour(data).go('users').at(0).get('name'))
         .toEqual('john')
     })
 
     it('works for arrays', function () {
-      expect(scour(list).at(0).go('name'))
+      expect(scour(list).at(0).get('name'))
         .toEqual('apple')
     })
   })
@@ -69,7 +71,7 @@ describe('index', function () {
 
   describe('.extend()', function () {
     const extension = {
-      fullname () { return 'Mr. ' + this.go('name') }
+      fullname () { return 'Mr. ' + this.get('name') }
     }
 
     it('works', function () {
@@ -198,12 +200,12 @@ describe('index', function () {
       this.root = scour(list)
     })
 
-    it('.go()', function () {
+    it('.get()', function () {
       expect(this.root.go('0').data).toEqual({ name: 'apple' })
     })
 
-    it('.go(...)', function () {
-      expect(this.root.go('0', 'name')).toEqual('apple')
+    it('.get(...)', function () {
+      expect(this.root.get('0', 'name')).toEqual('apple')
     })
 
     it('.data', function () {
@@ -211,7 +213,7 @@ describe('index', function () {
     })
 
     it('.map()', function () {
-      expect(this.root.map((f) => f.go('name'))).toEqual(['apple', 'banana'])
+      expect(this.root.map((f) => f.get('name'))).toEqual(['apple', 'banana'])
     })
   })
 
@@ -221,7 +223,7 @@ describe('index', function () {
     })
 
     it('.go()', function () {
-      expect(this.root.go('0')).toEqual('h')
+      expect(this.root.get('0')).toEqual('h')
     })
 
     it('.data', function () {

@@ -48,7 +48,7 @@ scour.prototype = {
   go (keypath) {
     keypath = [].slice.apply(arguments).map((k) => '' + k)
     const result = this.get.apply(this, keypath)
-    return this._get(result, keypath)
+    return this._get(result, keypath, true)
   },
 
   /**
@@ -79,12 +79,13 @@ scour.prototype = {
    * (Internal)
    */
 
-  _get (result, keypath) {
+  _get (result, keypath, strict) {
     if (typeof result === 'object') {
       return this.spawn(result, {
         keypath: this.keypath.concat(keypath)
       })
     } else {
+      if (strict && result) throw new Error(`object not found in '${keypath}'`)
       return result
     }
   },
