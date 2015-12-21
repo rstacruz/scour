@@ -27,13 +27,19 @@
 <blockquote>
 <p>Traverse objects and arrays immutably</p>
 </blockquote>
-<p>Scour can be used to solve many problems. You can use it to:</p>
+<p>Scour is a general-purpose library for dealing with JSON trees. As a simple
+utility with a broad purpose, it can be used to solve many problems. You can use it to:</p>
 <ul>
 <li>Manage your <a href="http://rackt.github.io/redux">Redux</a> datastore.</li>
 <li>Provide a model layer to access data in your single-page app.</li>
 <li>Navigate a large JSON tree easily.</li>
 </ul>
 <p><a href="https://travis-ci.org/rstacruz/scour" title="See test builds"><img src="https://travis-ci.org/rstacruz/scour.svg?branch=master" alt="Status"></a></p>
+<h2 id="install">Install</h2>
+<pre><code>$ npm install --save-exact rstacruz/scour
+</code></pre>
+<pre><code class="lang-js"><span class="pl-c1">require</span>(<span class="pl-s">&apos;scourjs&apos;</span>)
+</code></pre>
 <h2 id="features">Features</h2>
 <p>Calling <code>scour(object)</code> returns a wrapper that you can use to traverse <code>object</code>.
 Use <a href="#get">get()</a> to retrieve values.</p>
@@ -142,8 +148,8 @@ s.keypath          <span class="pl-c">// =&gt; string array</span>
 db.value               <span class="pl-c">// =&gt; same as `data`</span>
 db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">// =&gt; same as `data.users`</span>
 </code></pre>
-<p>When you traverse down using <a href="#go">go()</a>, [root] will point to the root
-scour instance, and [keypath] will be updated accordingly.</p>
+<p>When you traverse down using <a href="#go">go()</a>, <a href="#root">root</a> will point to the root
+scour instance, and <a href="#keypath">keypath</a> will be updated accordingly.</p>
 <pre><code class="lang-js">db = scour(data)
 admins = db.go(<span class="pl-s">&apos;users&apos;</span>).go(<span class="pl-s">&apos;admins&apos;</span>)
 </code></pre>
@@ -408,6 +414,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
         <li class="menu-item -level-0 -parent">
           <ul class="submenu">
             <li class="menu-item -level-1"><a href="index.html" class="link title -active link-index">scour</a>
+            </li>
+            <li class="menu-item -level-1"><a href="#install" class="link title link-install">Install</a>
             </li>
             <li class="menu-item -level-1 -parent"><a href="#features" class="link title link-features">Features</a>
               <ul class="submenu">
