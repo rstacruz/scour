@@ -16,7 +16,7 @@ describe('index', function () {
     { name: 'banana' }
   ]
 
-  describe('.go()', function () {
+  describe('.go() and .get()', function () {
     it('works', function () {
       const users = scour(data).go('users')
       expect(users.data).toBeAn('object')
@@ -26,6 +26,10 @@ describe('index', function () {
 
     it('gives keypath', function () {
       expect(scour(data).go('users').keypath).toEqual(['users'])
+    })
+
+    it('allows calling .get() with nothing', function () {
+      expect(scour(data).get()).toEqual(data)
     })
 
     it('gives keypath (multiple keys)', function () {

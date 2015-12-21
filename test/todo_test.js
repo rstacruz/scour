@@ -5,7 +5,7 @@ describe('todo', function () {
   it('.set')
   it('.extend')
   it('.sortBy')
-  it('.get() no args')
+  it('.get() no args', done)
   it('always return scour objects', done)
 
   describe('collections', function () {
