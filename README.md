@@ -10,6 +10,7 @@ As a simple utility with a broad purpose, it can be used to solve many problems.
 - Manage your [Redux] datastore.
 - Provide a model layer to access data in your single-page app.
 - Navigate a large JSON tree easily.
+- Rejoice in having a lightweight alternative to [Immutable.js].
 
 [![Status](https://travis-ci.org/rstacruz/scour.svg?branch=master)](https://travis-ci.org/rstacruz/scour "See test builds")
 
@@ -527,6 +528,7 @@ names = scour(users).map((user, key) => user.get('name'))
 [keypath]: #keypath
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
+[Immutable.js]: http://facebook.github.io/immutable-js/
 
 ## Thanks
 
