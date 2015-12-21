@@ -54,4 +54,33 @@ describe('index', function () {
       expect(user.fullname()).toEqual('Mr. john')
     })
   })
+
+  describe('.each()', function () {
+    it('works', function () {
+      const results = []
+
+      scour(data).get('users').each((val, key) => {
+        results.push([val, key])
+      })
+
+      expect(results).toEqual([
+        [ { name: 'john' }, '1' ],
+        [ { name: 'jake' }, '2' ]
+      ])
+    })
+  })
+
+  describe('.map()', function () {
+    it('works', function () {
+      const results =
+        scour(data).get('users').map((val, key) => {
+          return [val, key]
+        })
+
+      expect(results).toEqual([
+        [ { name: 'john' }, '1' ],
+        [ { name: 'jake' }, '2' ]
+      ])
+    })
+  })
 })

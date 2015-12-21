@@ -67,6 +67,23 @@ Scour.prototype = {
   },
 
   /**
+   * Loops
+   */
+
+  each (fn) {
+    each(this.data, fn)
+    return this
+  },
+
+  map (fn) {
+    let result = []
+    each(this.data, (val, key) => {
+      result.push(fn(val, key))
+    })
+    return result
+  },
+
+  /**
    * Extends functionality with some prototype.
    */
 
