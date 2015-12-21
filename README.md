@@ -4,15 +4,24 @@
 
 > Traverse objects and arrays immutably
 
-Scour can be used to solve many problems. You can use it to:
+Scour is a general-purpose library for dealing with JSON trees. As a simple
+utility with a broad purpose, it can be used to solve many problems. You can use it to:
 
 - Manage your [Redux] datastore.
 - Provide a model layer to access data in your single-page app.
 - Navigate a large JSON tree easily.
 
-[Redux]: http://rackt.github.io/redux
-
 [![Status](https://travis-ci.org/rstacruz/scour.svg?branch=master)](https://travis-ci.org/rstacruz/scour "See test builds")
+
+## Install
+
+```
+$ npm install --save-exact rstacruz/scour
+```
+
+```js
+require('scourjs')
+```
 
 ## Features
 
@@ -499,7 +508,10 @@ names = scour(users).map((user, key) => user.get('name'))
 [get()]: #get
 [go()]: #go
 [where()]: #where
+[root]: #root
+[keypath]: #keypath
 [sift.js]: https://www.npmjs.com/package/sift
+[Redux]: http://rackt.github.io/redux
 
 ## Thanks
 
