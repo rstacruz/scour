@@ -1,21 +1,51 @@
 {
   "name": "scour",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "mocha",
-    "prepublish": "make -B update"
-  },
+  "description": "Traverse objects and arrays",
+  "version": "0.1.0",
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
-  "license": "MIT",
-  "devDependencies": {
-    "expect": "1.13.4",
-    "mdx": "0.2.2",
-    "mocha": "2.3.4"
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "browser": "scour.min.js",
+  "bugs": {
+    "url": "https://github.com/rstacruz/scour/issues"
   },
   "dependencies": {
     "object-assign": "4.0.1",
     "sift": "https://github.com/rstacruz/sift.js/tarball/feature/sift-by-object"
+  },
+  "devDependencies": {
+    "babel": "6.3.13",
+    "babel-preset-es2015": "6.3.13",
+    "babelify": "7.2.0",
+    "browserify": "12.0.1",
+    "expect": "1.13.4",
+    "mdx": "0.2.2",
+    "mocha": "2.3.4",
+    "uglifyjs": "2.4.10",
+    "watchify": "3.6.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "homepage": "https://github.com/rstacruz/scour#readme",
+  "keywords": [
+    "array",
+    "immutable",
+    "object"
+  ],
+  "license": "MIT",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rstacruz/scour.git"
+  },
+  "scripts": {
+    "build": "browserify -t babelify --bare -s scour index.js | uglifyjs -cm > scour.min.js",
+    "prepublish": "npm run build",
+    "test": "mocha",
+    "watch": "watchify -v -t babelify --bare -s scour index.js -o 'uglifyjs -cm > scour.min.js'"
   }
 }
