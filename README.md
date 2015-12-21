@@ -1,6 +1,14 @@
 # scour
 
-Traverse objects and arrays.
+> Traverse objects and arrays immutably
+
+Scour can be used to solve many problems. You can use it to:
+
+- Manage your [Redux] datastore.
+- Provide a model layer to access data in your single-page app.
+- Navigate a large JSON tree easily.
+
+[Redux]: http://rackt.github.io/redux
 
 ## Features
 
@@ -38,6 +46,21 @@ admins = scour(data).go('users', 'admins')  // => [scour (bob, sue)]
 admins.go('bob').get('logged_in')           // => true
 ```
 
+### Chaining
+
+`scour()` provides a wrapper that can be used to chain methods. This is inspired by [Underscore] and [Lodash].
+
+```js
+scour(data)
+  .go('users')
+  .filter({ admin: true })
+  .get()
+```
+
+[Underscore]: http://underscorejs.org/
+[Lodash]: http://lodash.com/
+
+
 ### Immutable modifications
 
 Use [set()](#set) to update values. Scout treats all data as immutable, so this
@@ -47,14 +70,13 @@ modifications made.
 ```js
 data = scour(data)
   .set(['users', '1', 'updated_at'], +new Date())
-  .data
+  .value
 
 // => { users:
 //      { 1: { name: 'john', updated_at: 1450667171188 },
 //        2: { name: 'shane', confirmed: true },
 //        3: { name: 'barry', confirmed: true } } }
 ```
-
 
 ### Advanced traversing
 
@@ -117,7 +139,7 @@ db.artists().find({ name: 'Miles' }).albums().at(0).get('title')
 
 ### scour
 
-> `scour(data, options)`
+> `scour(value, options)`
 
 scour:
 Returns a scour instance.
@@ -131,16 +153,16 @@ Has the following properties:
 ```js
 s = scour(obj)
 s.root             // => [scour object]
-s.data             // => raw data (that is, `obj`)
+s.value            // => raw data (that is, `obj`)
 s.keypath          // => string array
 ```
 
-You can access the raw data using `.data`.
+You can access the raw data using `.value`.
 
 ```js
 db = scour(data)
-db.data               // => same as `data`
-db.go('users').data   // => same as `data.users`
+db.value              // => same as `data`
+db.go('users').value   // => same as `data.users`
 ```
 
 When you traverse down using [go()](#go), `root` will point to the root
@@ -180,7 +202,7 @@ returned as a scour instance. This is not likely what you want; use
 ```js
 attr = scour(data).go('users', '12', 'name')
 attr           // => [scour object]
-attr.data      // => 'steve'
+attr.value     // => 'steve'
 attr.keypath   // => ['users', '12', 'name']
 ```
 
@@ -197,7 +219,7 @@ data =
       23: { name: 'bill' } } }
 
 scour(data).get('users')       // => same as data.users
-scour(data).go('users').data   // => same as data.users
+scour(data).go('users').value  // => same as data.users
 
 ```
 
@@ -219,8 +241,8 @@ users =
   { 12: { name: 'steve' },
     23: { name: 'bill' } }
 
-scour(users).at(0)         // => { name: 'steve' }
-scour(users).get(12).data  // => { name: 'steve' }
+scour(users).at(0)          // => { name: 'steve' }
+scour(users).get(12).value  // => { name: 'steve' }
 
 ```
 
@@ -228,13 +250,13 @@ scour(users).get(12).data  // => { name: 'steve' }
 
 > `set(keypath, value)`
 
-Sets data. (To be implemented)
+Sets values. (To be implemented)
 
 ### spawn
 
-> `spawn(data, options)`
+> `spawn(value, options)`
 
-(Internal) Returns a clone of the instance extended with the given `data`
+(Internal) Returns a clone of the instance extended with the given `value`
 and `options`.
 
 ### forEach
@@ -257,11 +279,11 @@ scour(users).each((user, key) => {
 
 The values passed onto the function are:
 
-- `val` - the value; always a scour object.
+- `item` - the value; always a scour object.
 - `key` - the key.
 
 The value being passed onto the function is going to be a `scour` object.
-Use `val.data` to access the raw data.
+Use `item.value` or `this` to access the raw values.
 
 ### each
 
@@ -269,9 +291,7 @@ Use `val.data` to access the raw data.
 
 Alias for [forEach](#foreach).
 
-### map
-
-> `map(fn)`
+### map: collections.map,
 
 Loops through each item and returns an array based on the iterator's
 return values. Supports both arrays and objects.
@@ -306,7 +326,8 @@ names = scour(users).len()  // => 2
 
 > `toArray()`
 
-Returns an array. If the data is an object, it returns the values.
+Returns an array. If the the value is an object, it returns the values of
+that object.
 
 ```js
 users =
@@ -328,7 +349,7 @@ Alias for `toArray()`.
 
 > `keys()`
 
-Returns keys. If the data is an array, returns the array's indices.
+Returns keys. If the value is an array, this returns the array's indices.
 
 ### where
 

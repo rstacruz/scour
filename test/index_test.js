@@ -19,9 +19,9 @@ describe('index', function () {
   describe('.go() and .get()', function () {
     it('works', function () {
       const users = scour(data).go('users')
-      expect(users.data).toBeAn('object')
-      expect(Object.keys(users.data)).toInclude('1')
-      expect(Object.keys(users.data)).toInclude('2')
+      expect(users.value).toBeAn('object')
+      expect(Object.keys(users.value)).toInclude('1')
+      expect(Object.keys(users.value)).toInclude('2')
     })
 
     it('gives keypath', function () {
@@ -48,7 +48,7 @@ describe('index', function () {
     })
 
     it('allows traversing to strings', function () {
-      expect(scour(data).go('users', '1', 'name').data)
+      expect(scour(data).go('users', '1', 'name').value)
         .toEqual('john')
     })
   })
@@ -98,7 +98,7 @@ describe('index', function () {
       const results = []
 
       scour(data).go('users').each((val, key) => {
-        results.push([ val.data, key ])
+        results.push([ val.value, key ])
       })
 
       expect(results[0]).toEqual([ { name: 'john' }, '1' ])
@@ -124,8 +124,8 @@ describe('index', function () {
     })
 
     it('has results', function () {
-      expect(this.results.go(1).data).toEqual({ name: 'john' })
-      expect(this.results.go(2).data).toEqual({ name: 'jake' })
+      expect(this.results.go(1).value).toEqual({ name: 'john' })
+      expect(this.results.go(2).value).toEqual({ name: 'jake' })
       expect(this.results.go(3)).toEqual(undefined)
     })
   })
@@ -136,7 +136,7 @@ describe('index', function () {
     })
 
     it('has results indexed by id', function () {
-      expect(this.results.go(3).data).toEqual({ name: 'ara' })
+      expect(this.results.go(3).value).toEqual({ name: 'ara' })
     })
 
     it('has proper keypaths', function () {
@@ -150,8 +150,8 @@ describe('index', function () {
     })
 
     it('works', function () {
-      expect(this.results.go(1).data).toEqual({ name: 'john' })
-      expect(this.results.go(2).data).toEqual({ name: 'jake' })
+      expect(this.results.go(1).value).toEqual({ name: 'john' })
+      expect(this.results.go(2).value).toEqual({ name: 'jake' })
       expect(this.results.go(3)).toEqual(undefined)
     })
   })
@@ -172,7 +172,7 @@ describe('index', function () {
     })
 
     it('works', function () {
-      expect(this.result.data).toEqual({ name: 'john' })
+      expect(this.result.value).toEqual({ name: 'john' })
     })
   })
 
@@ -190,7 +190,7 @@ describe('index', function () {
     it('works', function () {
       const results =
         scour(data).go('users').map((val, key) => {
-          return [val.data, key]
+          return [val.value, key]
         })
 
       expect(results[0]).toEqual([ { name: 'john' }, '1' ])
@@ -204,15 +204,15 @@ describe('index', function () {
     })
 
     it('.get()', function () {
-      expect(this.root.go('0').data).toEqual({ name: 'apple' })
+      expect(this.root.go('0').value).toEqual({ name: 'apple' })
     })
 
     it('.get(...)', function () {
       expect(this.root.get('0', 'name')).toEqual('apple')
     })
 
-    it('.data', function () {
-      expect(this.root.data).toEqual(list)
+    it('.value', function () {
+      expect(this.root.value).toEqual(list)
     })
 
     it('.map()', function () {
@@ -229,12 +229,12 @@ describe('index', function () {
       expect(this.root.get('0')).toEqual('h')
     })
 
-    it('.data', function () {
-      expect(this.root.data).toEqual('hey')
+    it('.value', function () {
+      expect(this.root.value).toEqual('hey')
     })
 
     it('.map()', function () {
-      expect(this.root.map((n) => n.data)).toEqual(['h', 'e', 'y'])
+      expect(this.root.map((n) => n.value)).toEqual(['h', 'e', 'y'])
     })
   })
 
