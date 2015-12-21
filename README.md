@@ -164,12 +164,12 @@ You can access the raw data using `.value`.
 
 ```js
 db = scour(data)
-db.value              // => same as `data`
+db.value               // => same as `data`
 db.go('users').value   // => same as `data.users`
 ```
 
-When you traverse down using [go()](#go), `root` will point to the root
-scour instance, and `keypath` will be updated accordingly.
+When you traverse down using [go()], [root] will point to the root
+scour instance, and [keypath] will be updated accordingly.
 
 ```js
 db = scour(data)
@@ -289,10 +289,9 @@ scour(users).get(12)        // => [scour { name: 'steve' }]
 
 > `where(conditions)`
 
-Sifts through the values and returns a set that matches given `conditions`.
-Supports MongoDB-style queries.
-
-For reference, see [MongoDB Query Operators][query-ops].
+Sifts through the values and returns a set that matches given
+`conditions`. Supports functions, simple objects, and MongoDB-style
+queries.
 
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
@@ -301,14 +300,22 @@ scour(data).where({ name: 'john' })
 scour(data).where({ name: { $in: ['moe', 'larry'] })
 ```
 
+MongoDB-style queries are supported as provided by [sift.js].  For
+reference, see [MongoDB Query Operators][query-ops].
+
+```js
+scour(products).where({ price: { $gt: 200 })
+scour(articles).where({ published_at: { $not: null }})
+```
+
 ### find
 
 > `find(conditions)`
 
-Returns the first value that matches `conditions`.
-Supports MongoDB-style queries.
-
-For reference, see [MongoDB Query Operators][query-ops].
+Returns the first value that matches `conditions`.  Supports MongoDB-style
+queries. For reference, see [MongoDB Query Operators][query-ops]. Also
+see [where()], as this is functionally-equivalent to the first result of
+`where()`.
 
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
@@ -319,7 +326,7 @@ scour(data).find({ name: { $in: ['moe', 'larry'] })
 
 ## Reading methods
 
-for retrieving data.
+For retrieving data.
 
 ### get
 
@@ -393,7 +400,7 @@ for writing data.
 
 Sets values. (To be implemented)
 
-## Utilities
+## Utility methods
 
 For stuff.
 
@@ -440,11 +447,10 @@ For traversing.
 
 ### forEach
 
-> `forEach(fn)`
+> `forEach(function(item, key))`
 
-Loops through each item. Supports both arrays and objects.
-
-If the item found is an object, it will be returned as a `scour` instance.
+Loops through each item. Supports both arrays and objects. The `item`s
+passed to the function will be returned as a [scour] instance.
 
 ```js
 users =
@@ -461,7 +467,7 @@ The values passed onto the function are:
 - `item` - the value; always a scour object.
 - `key` - the key.
 
-The value being passed onto the function is going to be a `scour` object.
+The value being passed onto the function is going to be a [scour] object.
 Use `item.value` or `this` to access the raw values.
 
 ### each
@@ -472,10 +478,11 @@ Alias for [forEach](#foreach).
 
 ### map
 
-> `map(fn)`
+> `map(function(item, key))`
 
 Loops through each item and returns an array based on the iterator's
-return values. Supports both arrays and objects.
+return values. Supports both arrays and objects. The `item`s passed to
+the function will be returned as a [scour] instance.
 
 ```js
 users =
@@ -491,3 +498,17 @@ names = scour(users).map((user, key) => user.get('name'))
 [scour]: #scour
 [get()]: #get
 [go()]: #go
+[where()]: #where
+[sift.js]: https://www.npmjs.com/package/sift
+
+## Thanks
+
+**scour** © 2015+, Rico Sta. Cruz. Released under the [MIT] License.<br>
+Authored and maintained by Rico Sta. Cruz with help from contributors ([list][contributors]).
+
+> [ricostacruz.com](http://ricostacruz.com) &nbsp;&middot;&nbsp;
+> GitHub [@rstacruz](https://github.com/rstacruz) &nbsp;&middot;&nbsp;
+> Twitter [@rstacruz](https://twitter.com/rstacruz)
+
+[MIT]: http://mit-license.org/
+[contributors]: http://github.com/rstacruz/scour/contributors
