@@ -20,7 +20,7 @@ const define = require('./lib/define_property')
 
 function scour (data, options) {
   if (!(this instanceof scour)) return new scour(data, options)
-  define(this, 'data', data)
+  this.data = data
   define(this, 'root', options && options.root || this)
   define(this, 'keypath', options && options.keypath || [])
   define(this, 'extensions', options && options.extensions || [])
