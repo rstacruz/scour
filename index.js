@@ -44,6 +44,14 @@ Scour.prototype = {
       if (result) result = result[spec]
     })
 
+    return this._get(result, keypath)
+  },
+
+  /**
+   * (Internal)
+   */
+
+  _get (result, keypath) {
     if (typeof result === 'object') {
       return new Scour(result, {
         root: this.root,
@@ -52,6 +60,23 @@ Scour.prototype = {
     } else {
       return result
     }
+  },
+
+  /**
+   * Returns the item at `index`.
+   */
+
+  at (index) {
+    const key = Object.keys(this.data)[index]
+    return this._get(this.data[key], [ key ])
+  },
+
+  /**
+   * Sets data
+   */
+
+  set (keypath, value) {
+    // TODO
   },
 
   /**

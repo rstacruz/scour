@@ -10,6 +10,11 @@ describe('index', function () {
     }
   }
 
+  const list = [
+    { name: 'apple' },
+    { name: 'banana' }
+  ]
+
   describe('.get()', function () {
     it('works', function () {
       const users = scour(data).get('users')
@@ -39,6 +44,25 @@ describe('index', function () {
 
     it('returns scalars', function () {
       expect(scour(data).get('users', '1', 'name')).toEqual('john')
+    })
+  })
+
+  describe('.at()', function () {
+    it('works', function () {
+      expect(scour(data).get('users').at(0).get('name'))
+        .toEqual('john')
+    })
+
+    it('works for arrays', function () {
+      expect(scour(list).at(0).get('name'))
+        .toEqual('apple')
+    })
+  })
+
+  describe('.root', function () {
+    it('is accessible', function () {
+      const root = scour(data)
+      expect(root.get('users', 1).root).toEqual(root)
     })
   })
 
@@ -81,6 +105,46 @@ describe('index', function () {
         [ { name: 'john' }, '1' ],
         [ { name: 'jake' }, '2' ]
       ])
+    })
+  })
+
+  describe('arrays', function () {
+    beforeEach(function () {
+      this.root = scour(list)
+    })
+
+    it('.get()', function () {
+      expect(this.root.get('0').data).toEqual({ name: 'apple' })
+    })
+
+    it('.get(...)', function () {
+      expect(this.root.get('0', 'name')).toEqual('apple')
+    })
+
+    it('.data', function () {
+      expect(this.root.data).toEqual(list)
+    })
+
+    it('.map()', function () {
+      expect(this.root.map((f) => f.name)).toEqual(['apple', 'banana'])
+    })
+  })
+
+  describe('edge cases: strings', function () {
+    beforeEach(function () {
+      this.root = scour('hey')
+    })
+
+    it('.get()', function () {
+      expect(this.root.get('0')).toEqual('h')
+    })
+
+    it('.data', function () {
+      expect(this.root.data).toEqual('hey')
+    })
+
+    it('.map()', function () {
+      expect(this.root.map((n) => n)).toEqual(['h', 'e', 'y'])
     })
   })
 })
