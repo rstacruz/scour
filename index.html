@@ -89,11 +89,11 @@ modifications made.</p>
 <span class="pl-c">//        3: { name: &apos;barry&apos;, confirmed: true } } }</span>
 </code></pre>
 <h3 id="advanced-traversing">Advanced traversing</h3>
-<p>Use <a href="#where">where()</a> to filter results with advanced querying.</p>
+<p>Use <a href="#filter">filter()</a> to filter results with advanced querying.</p>
 <pre><code class="lang-js">users = scour(data).go(<span class="pl-s">&apos;users&apos;</span>)
 
 users
-  .where({ confirmed: <span class="pl-c1">true</span> })
+  .filter({ confirmed: <span class="pl-c1">true</span> })
   .at(<span class="hljs-number">0</span>)
   .get(<span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;shane&apos;</span>
 </code></pre>
@@ -112,7 +112,7 @@ users
       }
       albums () {
         <span class="pl-k">return</span> <span class="pl-k">this</span>.root.go(<span class="pl-s">&apos;albums&apos;</span>)
-          .where({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
+          .filter({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
       }
     }
   })
@@ -171,7 +171,7 @@ admins.root     <span class="pl-c">// =&gt; db</span>
     { name: <span class="pl-s">&apos;kyle&apos;</span>, admin: <span class="pl-c1">false</span> } ]
 
 scour(users)
-  .where({ admin: <span class="pl-c1">true</span> })
+  .filter({ admin: <span class="pl-c1">true</span> })
   .value
 <span class="pl-c">// =&gt; [ { name: &apos;john&apos;, admin: true } ]</span>
 
@@ -184,13 +184,14 @@ scour(users)
 Everytime you traverse using <a href="#go">go()</a>, a new <a href="#scour">scour</a> object is spawned that&#x2019;s
 scoped to a keypath.  Each of these <a href="#scour">scour</a> objects have a <code>root</code> attribute
 that&#x2019;s a reference to the top-level <a href="#scour">scour</a> object.</p>
-<pre><code class="lang-js">data = scour(...)
+<pre><code class="lang-js">db = scour(...)
 
-photos = data.go(<span class="pl-s">&apos;photos&apos;</span>)
-photos.root    <span class="pl-c">// =&gt; same as `data`</span>
+photos = db.go(<span class="pl-s">&apos;photos&apos;</span>)
+photos.root    <span class="pl-c">// =&gt; same as `db`</span>
 </code></pre>
 <p>This allows you to return to the root when needed.</p>
-<pre><code class="lang-js">artist = scour(...).go(<span class="pl-s">&apos;artists&apos;</span>, <span class="pl-s">&apos;9328&apos;</span>)
+<pre><code class="lang-js">db = scour(...)
+artist = db.go(<span class="pl-s">&apos;artists&apos;</span>, <span class="pl-s">&apos;9328&apos;</span>)
 artist.root.go(<span class="pl-s">&apos;albums&apos;</span>).find({ artist_id: artist.get(<span class="pl-s">&apos;id&apos;</span>) })
 </code></pre>
 <h3 id="keypath">keypath</h3>
@@ -200,9 +201,9 @@ artist.root.go(<span class="pl-s">&apos;albums&apos;</span>).find({ artist_id: a
 <p>An array of strings representing each step in how deep the current scope is
 relative to the root. Each time you traverse using <a href="#go">go()</a>, a new <a href="#scour">scour</a>
 object is spawned.</p>
-<pre><code class="lang-js">data = scour(...)
+<pre><code class="lang-js">db = scour(...)
 
-users = data.go(<span class="pl-s">&apos;users&apos;</span>)
+users = db.go(<span class="pl-s">&apos;users&apos;</span>)
 users.keypath            <span class="pl-c">// =&gt; [&apos;users&apos;]</span>
 
 admins = users.go(<span class="pl-s">&apos;admins&apos;</span>)
@@ -251,20 +252,20 @@ scour(users).at(<span class="hljs-number">0</span>)          <span class="pl-c">
 scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
 
 </code></pre>
-<h3 id="where">where</h3>
+<h3 id="filter">filter</h3>
 <blockquote>
-<p><code>where(conditions)</code></p>
+<p><code>filter(conditions)</code></p>
 </blockquote>
 <p>Sifts through the values and returns a set that matches given
 <code>conditions</code>. Supports functions, simple objects, and MongoDB-style
 queries.</p>
-<pre><code class="lang-js">scour(data).where({ name: <span class="pl-s">&apos;john&apos;</span> })
-scour(data).where({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
+<pre><code class="lang-js">scour(data).filter({ name: <span class="pl-s">&apos;john&apos;</span> })
+scour(data).filter({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
 </code></pre>
 <p>MongoDB-style queries are supported as provided by <a href="https://www.npmjs.com/package/sift">sift.js</a>.  For
 reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
-<pre><code class="lang-js">scour(products).where({ price: { $gt: <span class="hljs-number">200</span> })
-scour(articles).where({ published_at: { $not: <span class="pl-c1">null</span> }})
+<pre><code class="lang-js">scour(products).filter({ price: { $gt: <span class="hljs-number">200</span> })
+scour(articles).filter({ published_at: { $not: <span class="pl-c1">null</span> }})
 </code></pre>
 <h3 id="find">find</h3>
 <blockquote>
@@ -272,8 +273,8 @@ scour(articles).where({ published_at: { $not: <span class="pl-c1">null</span> }}
 </blockquote>
 <p>Returns the first value that matches <code>conditions</code>.  Supports MongoDB-style
 queries. For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>. Also
-see <a href="#where">where()</a>, as this is functionally-equivalent to the first result of
-<code>where()</code>.</p>
+see <a href="#filter">filter()</a>, as this is functionally-equivalent to the first result of
+<code>filter()</code>.</p>
 <pre><code class="lang-js">scour(data).find({ name: <span class="pl-s">&apos;john&apos;</span> })
 scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
 </code></pre>
@@ -467,7 +468,7 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 </li>
                 <li class="menu-item -level-2"><a href="#at" class="link title link-at">at</a>
                 </li>
-                <li class="menu-item -level-2"><a href="#where" class="link title link-where">where</a>
+                <li class="menu-item -level-2"><a href="#filter" class="link title link-filter">filter</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#find" class="link title link-find">find</a>
                 </li>

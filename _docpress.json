@@ -95,9 +95,9 @@
                 "id": "at"
               },
               {
-                "title": "where",
+                "title": "filter",
                 "depth": 3,
-                "id": "where"
+                "id": "filter"
               },
               {
                 "title": "find",
@@ -291,9 +291,9 @@
               "id": "at"
             },
             {
-              "title": "where",
+              "title": "filter",
               "depth": 3,
-              "id": "where"
+              "id": "filter"
             },
             {
               "title": "find",
