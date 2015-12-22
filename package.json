@@ -49,9 +49,9 @@
   },
   "scripts": {
     "build": "browserify -t babelify --bare -s scour scour.js | uglifyjs -cm > scour.min.js",
+    "coverage": "istanbul cover _mocha -- -R spec",
     "prepublish": "make -B update && npm run build",
     "test": "mocha",
-    "watch": "watchify -v -t babelify --bare -s scour scour.js -o 'uglifyjs -cm > scour.min.js'",
-    "coverage": "istanbul cover _mocha -- -R spec"
+    "watch": "watchify -v -t babelify --bare -s scour scour.js -o 'uglifyjs -cm > scour.min.js'"
   }
 }
