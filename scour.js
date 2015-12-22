@@ -174,7 +174,7 @@ scour.prototype = {
 
   at (index) {
     const key = this.keys()[index]
-    return this._get(this.value[key], [ key ])
+    return this._get(this.value[key], [ '' + key ])
   },
 
   /**
