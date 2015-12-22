@@ -4,6 +4,10 @@
 
 If all your reducers are going to be using scour, you can set your `state` as a scour-wrapped object.
 
+### Defining your store
+
+We're going to use a scour-wrapped object as the `initialState` for `createStore()`.
+
 ```js
 import { createStore } from 'redux'
 
