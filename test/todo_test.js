@@ -13,8 +13,9 @@ describe('todo', function () {
   it('.len() for undefined?')
 
   describe('array', function () {
-    it('.initial')
+    it('.gather')
     it('.slice')
+    it('.initial')
   })
 
   describe('collections', function () {

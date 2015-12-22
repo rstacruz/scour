@@ -776,6 +776,8 @@ This is also available as `require('scourjs/utilities/map')`.
 <!--api:end-->
 
 [at()]: #at
+[del()]: #del
+[extend()]: #extend
 [filter()]: #filter
 [get()]: #get
 [go()]: #go
