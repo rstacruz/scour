@@ -293,7 +293,7 @@ scour(data).go('users', '12')
 scour(data).go(['users', '12'])
 ```
 
-__Non objects:__
+__Non-objects:__
 If you use it on a non-object or non-array value, it will still be
 returned as a [scour] instance. This is not likely what you want; use
 [get()] instead.
@@ -619,8 +619,9 @@ data = { users: { bob: { name: 'john' } } }
 
 result = set(data, ['users', 'bob', 'name'], 'robert')
 // => { users: { bob: { name: 'robert' } } }
-
 ```
+
+This functionality is also available as `require('scourjs/utilities/set')`.
 
 ### scour.del
 
@@ -633,8 +634,9 @@ data = { users: { bob: { name: 'robert' } } }
 result = del(data, ['users', 'bob', 'name'])
 
 // => { users: { bob: {} } }
-
 ```
+
+This functionality is also available as `require('scourjs/utilities/del')`.
 
 ### scour.each
 
@@ -642,6 +644,8 @@ result = del(data, ['users', 'bob', 'name'])
 
 Iterates through `iterable`, either an object or an array. This is an
 implementation of `Array.forEach` that also works for objects.
+
+This functionality is also available as `require('scourjs/utilities/each')`.
 <!--api:end-->
 
 [filter()]: #filter

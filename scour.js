@@ -132,7 +132,7 @@ scour.prototype = {
    *     scour(data).go('users', '12')
    *     scour(data).go(['users', '12'])
    *
-   * __Non objects:__
+   * __Non-objects:__
    * If you use it on a non-object or non-array value, it will still be
    * returned as a [scour] instance. This is not likely what you want; use
    * [get()] instead.
@@ -519,6 +519,8 @@ scour.prototype = {
  *
  *     result = set(data, ['users', 'bob', 'name'], 'robert')
  *     // => { users: { bob: { name: 'robert' } } }
+ *
+ * This functionality is also available as `require('scourjs/utilities/set')`.
  */
 
 scour.set = require('./utilities/set')
@@ -531,6 +533,8 @@ scour.set = require('./utilities/set')
  *     result = del(data, ['users', 'bob', 'name'])
  *
  *     // => { users: { bob: {} } }
+ *
+ * This functionality is also available as `require('scourjs/utilities/del')`.
  */
 
 scour.del = require('./utilities/del')
@@ -539,6 +543,8 @@ scour.del = require('./utilities/del')
  * scour.each : scour.each(iterable, fn)
  * Iterates through `iterable`, either an object or an array. This is an
  * implementation of `Array.forEach` that also works for objects.
+ *
+ * This functionality is also available as `require('scourjs/utilities/each')`.
  */
 
 scour.each = require('./utilities/each')
