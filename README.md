@@ -424,15 +424,21 @@ for writing data.
 
 > `set(keypath, value)`
 
-Sets values. (To be implemented)
+Sets values.
+
+### del
+
+> `del(keypath)`
+
+Deletes values.
 
 ## Utility methods
 
 For stuff.
 
-### extend
+### use
 
-> `extend(props)`
+> `use(props)`
 
 Extends functionality with some prototype.
 
@@ -449,7 +455,7 @@ methods = {
 
 scour(users)
   .get(12)
-  .extend(methods)
+  .use(methods)
   .fullname()       // => 'bill gates'
 
 ```
