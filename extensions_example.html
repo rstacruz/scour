@@ -45,16 +45,16 @@ be applied to certain keypaths.</p>
 <pre><code class="lang-js">db = scour(data)
   .use({
     <span class="pl-s">&apos;&apos;</span>: {
-      artists() { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>) },
-      albums() { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;albums&apos;</span>) }
+      artists () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>) },
+      albums () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;albums&apos;</span>) }
     },
 
     <span class="pl-s">&apos;artists.*&apos;</span>: {
       <span class="pl-c">// Defines a has-many relationship</span>
-      albums() {
-        <span class="pl-k">return</span> <span class="pl-k">this</span>.root.albums().where({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
+      albums () {
+        <span class="pl-k">return</span> <span class="pl-k">this</span>.root.albums().filter({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
       }
-    }
+    },
 
     <span class="pl-s">&apos;albums.*&apos;</span>: {
       <span class="pl-c">// Defines a belongs-to relationship</span>

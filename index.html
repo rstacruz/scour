@@ -487,6 +487,24 @@ some examples:</p>
 <li><code>users.*.photos</code> - will match <code>users.1.photos</code></li>
 <li><code>**</code> will match anything</li>
 </ul>
+<p><strong>When using outside root:</strong>
+Any extensions in a scoped object (ie, made with <a href="#go">go()</a>) will be used relative
+to it. For instance, if you define an extension to <code>admins.*</code> inside
+<code>.go(&apos;users&apos;)</code>, it will affect `users.</p>
+<pre><code class="lang-js">data = { users: { john: { } }
+db = scour(data)
+
+users = db.go(<span class="pl-s">&apos;users&apos;</span>)
+  .use({ <span class="pl-s">&apos;*&apos;</span>: { hasName () { <span class="pl-k">return</span> !!<span class="pl-k">this</span>.get(<span class="pl-s">&apos;name&apos;</span>) } })
+
+users.go(<span class="pl-s">&apos;john&apos;</span>).hasName()      <span class="pl-c">// works</span>
+</code></pre>
+<p>While this is supported, it is <em>not</em> recommended: these extensions will not
+propagate back to the root, and any objects taken from the root will not
+have those extensions applied to them.</p>
+<pre><code class="lang-js">users.go(<span class="pl-s">&apos;john&apos;</span>).hasName()              <span class="pl-c">// works</span>
+db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <span class="pl-c">// doesn&apos;t work</span>
+</code></pre>
 <h3 id="tojson">toJSON</h3>
 <blockquote>
 <p><code>toJSON()</code></p>
