@@ -458,7 +458,8 @@ data, but rather spawn new objects with the modifications done on them.
 
 > `set(keypath, value)`
 
-Sets values immutably.
+Sets values immutably. Returns a copy of the same object ([scour]-wrapped)
+with the modifications applied.
 
 ```js
 data = { bob: { name: 'Bob' } }
@@ -467,6 +468,7 @@ db.set([ 'bob', 'name' ], 'Robert')
 // db.value == { bob: { name: 'Robert' } }
 ```
 
+__Immutability:__
 This is an immutable function, and will return a new object. It won't
 modify your original object.
 
@@ -480,7 +482,9 @@ profile.value   // => { name: 'John' }
 profile2.value  // => { name: 'John', email: 'john@gmail.com' }
 ```
 
-When used within a scope, it will return a new object with a new root.
+__Using within a scope:__
+When used within a scope (ie, using with [go()]), it will return a new object
+with a new [root]. You can then get this root using `.root`.
 
 ```js
 data = { book: { title: 'What if?' } }
@@ -496,6 +500,7 @@ db          // => [scour { book: { title: 'What if?' } }]
 book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
 ```
 
+__Dot notation:__
 Like [go()] and [get()], the keypath can be given in dot notation or an
 array.
 
@@ -508,7 +513,8 @@ scour(data).set(['menu', 'left', 'visible'], true)
 
 > `del(keypath)`
 
-Deletes values. (todo)
+Deletes values immutably. Returns a copy of the same object
+([scour]-wrapped) with the modifications applied.
 
 Like [set()], the keypath can be given in dot notation or an
 array.
@@ -681,7 +687,7 @@ result = set(data, ['users', 'bob', 'name'], 'robert')
 // => { users: { bob: { name: 'robert' } } }
 ```
 
-This functionality is also available as `require('scourjs/utilities/set')`.
+This is also available as `require('scourjs/utilities/set')`.
 
 ### scour.del
 
@@ -696,7 +702,7 @@ result = del(data, ['users', 'bob', 'name'])
 // => { users: { bob: {} } }
 ```
 
-This functionality is also available as `require('scourjs/utilities/del')`.
+This is also available as `require('scourjs/utilities/del')`.
 
 ### scour.each
 
@@ -705,7 +711,15 @@ This functionality is also available as `require('scourjs/utilities/del')`.
 Iterates through `iterable`, either an object or an array. This is an
 implementation of `Array.forEach` that also works for objects.
 
-This functionality is also available as `require('scourjs/utilities/each')`.
+This is also available as `require('scourjs/utilities/each')`.
+
+### scour.map
+
+> `scour.map(iterable, fn)`
+
+Works like Array#map, but also works on objects.
+
+This is also available as `require('scourjs/utilities/map')`.
 <!--api:end-->
 
 [at()]: #at
