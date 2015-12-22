@@ -5,7 +5,6 @@ const sift = require('sift')
 const assign = require('object-assign')
 const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
-const getv = require('./lib/getv')
 
 /**
  * scour : scour(object)
@@ -379,7 +378,7 @@ scour.prototype = {
     }
 
     const result = scour.set(this.value, keypath, value)
-    return this.spawn(result, { keypath: [], root: null })
+    return this.replace(result, { root: null })
   },
 
   /**
@@ -404,7 +403,7 @@ scour.prototype = {
     }
 
     const result = scour.del(this.value, keypath)
-    return this.spawn(result, { keypath: [], root: null })
+    return this.replace(result, { root: null })
   },
 
   /**
@@ -430,7 +429,7 @@ scour.prototype = {
       if (typeof arguments[i] !== 'object') return
       assign(result, arguments[i])
     }
-    return this.spawn(result)
+    return this.replace(result)
   },
 
   /**
@@ -495,7 +494,7 @@ scour.prototype = {
   use (spec) {
     const extensions = buildExtensions(this.keypath, spec)
 
-    return this.spawn(this.value, { extensions })
+    return this.replace(this.value, { extensions })
   },
 
   /**
@@ -583,23 +582,32 @@ scour.prototype = {
 
   _get (result, keypath) {
     if (typeof result === 'undefined' || result === null) return result
-    return this.spawn(result, {
+    return this.replace(result, {
       keypath: this.keypath.concat(keypath)
     })
   },
 
   /**
-   * Internal: Returns a clone of the instance extended with the given `value`
-   * and `options`.
+   * Internal: Returns a clone with the `value` replaced. The new instance will
+   * retain the same properties, so things like [use()] extensions are carried
+   * over. You may pass additional `options`.
+   *
+   *     db = scour(data)
+   *     db = db.replace(newData)
+   *
+   * I don't think this will be useful outside internal use.
    */
 
-  spawn (value, options) {
+  replace (value, options) {
+    const op = options || {}
     return new scour(value || this.value, {
-      root: getv(options, 'root', this.root),
-      keypath: getv(options, 'keypath', this.keypath),
-      extensions: (!options || typeof options.extensions === 'undefined')
-        ? this.extensions
-        : this.extensions.concat(options.extensions)
+      root:
+        typeof op.root !== 'undefined' ? op.root : this.root,
+      keypath:
+        typeof op.keypath !== 'undefined' ? op.keypath : this.keypath,
+      extensions: typeof op.extensions !== 'undefined'
+        ? this.extensions.concat(op.extensions)
+        : this.extensions
     })
   },
 
