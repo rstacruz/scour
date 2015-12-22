@@ -43,6 +43,8 @@ data =
 scour(data).get('users', '1', 'name')   // => 'john'
 ```
 
+<br>
+
 ### Traversal
 Use [go()](#go) to dig into the structure. It will return another `scour`
 wrapper scoped to that object.
@@ -62,6 +64,8 @@ admins = scour(data).go('users', 'admins')  // => [scour (bob, sue)]
 admins.go('bob').get('logged_in')           // => true
 ```
 
+<br>
+
 ### Chaining
 
 `scour()` provides a wrapper that can be used to chain methods. This is inspired by [Underscore] and [Lodash].
@@ -76,6 +80,7 @@ scour(data)
 [Underscore]: http://underscorejs.org/
 [Lodash]: http://lodash.com/
 
+<br>
 
 ### Immutable modifications
 
@@ -94,6 +99,8 @@ data = scour(data)
 //        3: { name: 'barry', confirmed: true } } }
 ```
 
+<br>
+
 ### Advanced traversing
 
 Use [filter()] to filter results with advanced querying.
@@ -106,6 +113,8 @@ users
   .at(0)
   .get('name')   // => 'shane'
 ```
+
+<br>
 
 ### Models
 
@@ -152,6 +161,8 @@ db = scour(data)
 db.artists().find({ name: 'Miles' }).fullname()
 //=> 'Miles Davis'
 ```
+
+<br>
 
 ## API
 

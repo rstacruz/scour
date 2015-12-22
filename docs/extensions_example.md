@@ -36,18 +36,14 @@ Root = {
   artists () { return this.go('artists') },
   albums () { return this.go('albums') }
 }
-```
 
-```js
 Artist = {
   // Defines a has-many relationship
   albums () {
     return this.root.albums().filter({ artist_id: this.get('id') })
   }
 }
-```
 
-```js
 Album = {
   // Defines a belongs-to relationship
   artist () {
