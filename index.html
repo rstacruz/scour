@@ -140,24 +140,35 @@ db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).albums(
 <p>Returns a scour instance wrapping <code>object</code>.</p>
 <pre><code class="lang-js">scour(obj)
 </code></pre>
-<p>Has the following properties:</p>
+<p>It can be called on any Object or Array. (In fact, it can be called on
+anything, but is only generally useful for Objects and Arrays.)</p>
+<pre><code class="lang-js">data = { menu: { visible: <span class="pl-c1">true</span>, position: <span class="pl-s">&apos;left&apos;</span> } }
+scour(data).get(<span class="pl-s">&apos;menu.visible&apos;</span>)
+
+list = [ { id: <span class="hljs-number">2</span> }, { id: <span class="hljs-number">5</span> }, { id: <span class="hljs-number">12</span> } ]
+scour(list).get(<span class="pl-s">&apos;0.id&apos;</span>)
+</code></pre>
+<p><strong>Chaining</strong>:
+You can use it to start method chains. In fact, the intended use is to keep
+your root <a href="#scour">scour</a> object around, and chain from this.</p>
+<pre><code class="lang-js">db = scour({ menu: { visible: <span class="pl-c1">true</span>, position: <span class="pl-s">&apos;left&apos;</span> } })
+
+<span class="pl-c">// Elsewhere:</span>
+menu = db.go(<span class="pl-s">&apos;menu&apos;</span>)
+menu.get(<span class="pl-s">&apos;visible&apos;</span>)
+</code></pre>
+<p><strong>Properties</strong>:
+It the <a href="#root">root</a>, <a href="#value">value</a> and <a href="#keypath">keypath</a> properties.</p>
 <pre><code class="lang-js">s = scour(obj)
 s.root             <span class="pl-c">// =&gt; [scour object]</span>
 s.value            <span class="pl-c">// =&gt; raw data (that is, `obj`)</span>
 s.keypath          <span class="pl-c">// =&gt; string array</span>
 </code></pre>
-<p>You can access the raw data using <code>.value</code>.</p>
+<p><strong>Accessing the value:</strong>
+You can access the raw data using <a href="#value">value</a>.</p>
 <pre><code class="lang-js">db = scour(data)
 db.value               <span class="pl-c">// =&gt; same as `data`</span>
 db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">// =&gt; same as `data.users`</span>
-</code></pre>
-<p>When you traverse down using <a href="#go">go()</a>, <a href="#root">root</a> will point to the root
-scour instance, and <a href="#keypath">keypath</a> will be updated accordingly.</p>
-<pre><code class="lang-js">db = scour(data)
-admins = db.go(<span class="pl-s">&apos;users&apos;</span>).go(<span class="pl-s">&apos;admins&apos;</span>)
-</code></pre>
-<pre><code class="lang-js">admins.keypath  <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;]</span>
-admins.root     <span class="pl-c">// =&gt; db</span>
 </code></pre>
 <h2 id="attributes">Attributes</h2>
 <p>These attributes are available to <a href="#scour">scour</a> instances.</p>
@@ -363,30 +374,35 @@ data, but rather spawn new objects with the modifications done on them.</p>
 <blockquote>
 <p><code>set(keypath, value)</code></p>
 </blockquote>
-<p>Sets values immutably.</p>
+<p>Sets values immutably. Returns a copy of the same object (<a href="#scour">scour</a>-wrapped)
+with the modifications applied.</p>
 <pre><code class="lang-js">data = { bob: { name: <span class="pl-s">&apos;Bob&apos;</span> } }
 db = scour(data)
 db.set([ <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span> ], <span class="pl-s">&apos;Robert&apos;</span>)
 <span class="pl-c">// db.value == { bob: { name: &apos;Robert&apos; } }</span>
 </code></pre>
-<p>This is an immutable function, and will return a new object. It won&#x2019;t
+<p><strong>Immutability:</strong>
+This is an immutable function, and will return a new object. It won&#x2019;t
 modify your original object.</p>
 <pre><code class="lang-js">profile = scour({ name: <span class="pl-s">&apos;John&apos;</span> })
 profile2 = profile.set([ <span class="pl-s">&apos;email&apos;</span> ], <span class="pl-s">&apos;john@gmail.com&apos;</span>)
-</code></pre>
-<pre><code class="lang-js">profile.value   <span class="pl-c">// =&gt; { name: &apos;John&apos; }</span>
+
+profile.value   <span class="pl-c">// =&gt; { name: &apos;John&apos; }</span>
 profile2.value  <span class="pl-c">// =&gt; { name: &apos;John&apos;, email: &apos;john@gmail.com&apos; }</span>
 </code></pre>
-<p>When used within a scope, it will return a new object with a new root.</p>
+<p><strong>Using within a scope:</strong>
+When used within a scope (ie, using with <a href="#go">go()</a>), it will return a new object
+with a new <a href="#root">root</a>. You can then get this root using <code>.root</code>.</p>
 <pre><code class="lang-js">data = { book: { title: <span class="pl-s">&apos;What if?&apos;</span> } }
 db = scour(data)
-</code></pre>
-<pre><code class="lang-js">book = db.go(<span class="pl-s">&apos;book&apos;</span>).set([<span class="pl-s">&apos;id&apos;</span>], <span class="hljs-number">23</span>)
-</code></pre>
-<pre><code class="lang-js">db          <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos; } }]</span>
+
+book = db.go(<span class="pl-s">&apos;book&apos;</span>).set([<span class="pl-s">&apos;id&apos;</span>], <span class="hljs-number">23</span>)
+
+db          <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos; } }]</span>
 book.root   <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos;, id: 23 } }]</span>
 </code></pre>
-<p>Like <a href="#go">go()</a> and <a href="#get">get()</a>, the keypath can be given in dot notation or an
+<p><strong>Dot notation:</strong>
+Like <a href="#go">go()</a> and <a href="#get">get()</a>, the keypath can be given in dot notation or an
 array.</p>
 <pre><code class="lang-js">scour(data).set(<span class="pl-s">&apos;menu.left.visible&apos;</span>, <span class="pl-c1">true</span>)
 scour(data).set([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>], <span class="pl-c1">true</span>)
@@ -395,12 +411,14 @@ scour(data).set([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">
 <blockquote>
 <p><code>del(keypath)</code></p>
 </blockquote>
-<p>Deletes values. (todo)</p>
+<p>Deletes values immutably. Returns a copy of the same object
+(<a href="#scour">scour</a>-wrapped) with the modifications applied.</p>
 <p>Like <a href="#set">set()</a>, the keypath can be given in dot notation or an
 array.</p>
 <pre><code class="lang-js">scour(data).del(<span class="pl-s">&apos;menu.left.visible&apos;</span>)
 scour(data).del([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>])
 </code></pre>
+<p>See <a href="#set">set()</a> for more information on working with immutables.</p>
 <h3 id="extend">extend</h3>
 <blockquote>
 <p><code>extend()</code></p>
@@ -413,6 +431,7 @@ data2 = scour(data).extend({ c: <span class="hljs-number">3</span> })
 <pre><code class="lang-js">data2  <span class="pl-c">// =&gt; [scour { a: 1, b: 2, c: 3 }]</span>
 data2.value   <span class="pl-c">// =&gt; { a: 1, b: 2, c: 3 }</span>
 </code></pre>
+<p>See <a href="#set">set()</a> for more information on working with immutables.</p>
 <h2 id="utility-methods">Utility methods</h2>
 <p>For stuff.</p>
 <h3 id="use">use</h3>
@@ -684,6 +703,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="comparison.html" class="link title  link-comparison">Comparison with others</a>
                 </li>
                 <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
+                </li>
+                <li class="menu-item -level-2"><a href="redux_example.html" class="link title  link-redux_example">Redux example</a>
                 </li>
               </ul>
             </li>

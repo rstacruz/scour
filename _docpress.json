@@ -286,6 +286,12 @@
                 "id": "traversing-relationships"
               }
             ]
+          },
+          {
+            "title": "Redux example",
+            "source": "docs/redux_example.md",
+            "url": "redux_example.html",
+            "slug": "redux_example"
           }
         ]
       }
@@ -570,12 +576,18 @@
           "id": "traversing-relationships"
         }
       ]
+    },
+    "redux_example.html": {
+      "source": "docs/redux_example.md",
+      "title": "Redux example",
+      "slug": "redux_example"
     }
   },
   "sources": {
     "README.md": "index.html",
     "docs/comparison.md": "comparison.html",
     "docs/extensions_example.md": "extensions_example.html",
+    "docs/redux_example.md": "redux_example.html",
     "docs/docpress.json": "docpress.json"
   }
 }

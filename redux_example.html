@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/style.css?t=a44c9e9d">
+    <link rel="stylesheet" href="http://ricostacruz.com/docpress-rsc/style.css">
+    <script src="assets/script.js?t=2bcc4b59"></script>
+    <title>Redux example</title>
+    <meta name="viewport" content="width=device-width">
+    <script>
+      if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
+        (function(d,o,c,p,r,e,s){d['GoogleAnalyticsObject']=r;d[r]=d[r]||function(){(d[r].q=d[r].q||[]).push(arguments)},d[r].l=1*new Date();e=o.createElement(c),s=o.getElementsByTagName(c)[0];e.async=1;e.src=p;s.parentNode.insertBefore(e,s)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create',"UA-20473929-1",'auto')
+      }
+    </script>
+  </head>
+  <body class="-menu-visible">
+    <div class="doc-layout">
+      <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="body page-redux_example">
+        <div class="header-nav">
+          <div class="right"><a href="https://github.com/rstacruz/scour" data-title="rstacruz/scour" class="iconlink">
+              <!-- span.title Open in GitHub--><span class="icon -github"></span></a>
+          </div>
+        </div>
+        <div class="markdown-body"><h1 id="redux-example">Redux example</h1>
+<p>(I&#x2019;ll explain later.)</p>
+<pre><code class="lang-js"><span class="pl-k">import</span> { createStore } <span class="pl-k">from</span> <span class="pl-s">&apos;redux&apos;</span>
+
+function reducer (state, action) {
+  // state is a scour-wrapped object.
+  switch (action.type) {
+    case <span class="pl-s">&apos;RESET&apos;</span>:
+      return state.set(action.data)
+
+    case <span class="pl-s">&apos;PLAY&apos;</span>:
+      return state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;playing&apos;</span>)
+
+    case <span class="pl-s">&apos;STOP&apos;</span>:
+      return state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;stopped&apos;</span>)
+
+    case <span class="pl-s">&apos;PLAY_TRACK&apos;</span>:
+      var track = state.go(<span class="pl-s">&apos;tracks&apos;</span>, action.trackId)
+      return state.set(<span class="pl-s">&apos;audio.current_track&apos;</span>, track)
+  }
+}
+
+createStore(reducer, scour({}))
+</code></pre>
+
+        </div>
+        <div class="footer-nav">
+          <div class="left"><a href="extensions_example.html"><span class="title">Extensions example</span></a></div>
+        </div>
+      </div>
+      <div class="menu toc-menu">
+        <li class="menu-item -level-0 -parent">
+          <ul class="submenu">
+            <li class="menu-item -level-1"><a href="index.html" class="link title  link-index">scour.js</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="comparison.html" class="link title  link-comparison">Comparison with others</a>
+                </li>
+                <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
+                </li>
+                <li class="menu-item -level-2"><a href="redux_example.html" class="link title -active link-redux_example">Redux example</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </div>
+  </body>
+</html>
