@@ -272,17 +272,17 @@
             "headings": [
               {
                 "title": "Defining extensions",
-                "depth": 3,
+                "depth": 2,
                 "id": "defining-extensions"
               },
               {
                 "title": "Root extensions",
-                "depth": 3,
+                "depth": 2,
                 "id": "root-extensions"
               },
               {
                 "title": "Traversing relationships",
-                "depth": 3,
+                "depth": 2,
                 "id": "traversing-relationships"
               }
             ]
@@ -579,17 +579,17 @@
       "headings": [
         {
           "title": "Defining extensions",
-          "depth": 3,
+          "depth": 2,
           "id": "defining-extensions"
         },
         {
           "title": "Root extensions",
-          "depth": 3,
+          "depth": 2,
           "id": "root-extensions"
         },
         {
           "title": "Traversing relationships",
-          "depth": 3,
+          "depth": 2,
           "id": "traversing-relationships"
         }
       ]

@@ -27,6 +27,7 @@
 <p>Here&#x2019;s a simple data set which would be common with data that comes from SQL
 sources. Notice that it has foreign key relations in it: objects in <code>albums</code>
 have the <code>artist_id</code> property that maps to the ID&#x2019;s in <code>artists</code>.</p>
+<h5 class="file-heading" id="sample-data">Sample data</h5>
 <pre><code class="lang-js">data =
   { artists:
     { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, name: <span class="pl-s">&apos;Ella Fitzgerald&apos;</span> },
@@ -38,10 +39,11 @@ have the <code>artist_id</code> property that maps to the ID&#x2019;s in <code>a
       <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, name: <span class="pl-s">&apos;Come Fly With Me&apos;</span>, genre: <span class="pl-s">&apos;Jazz&apos;</span>, artist_id: <span class="hljs-number">2</span> },
       <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, name: <span class="pl-s">&apos;1984&apos;</span>, genre: <span class="pl-s">&apos;Pop&apos;</span>, artist_id: <span class="hljs-number">4</span> } } }
 </code></pre>
-<h3 id="defining-extensions">Defining extensions</h3>
+<h2 id="defining-extensions">Defining extensions</h2>
 <p>You can define extensions to traverse this intelligently, like ActiveRecord.
 Here, we&#x2019;ll use <a href="index.html#use">use()</a> to define extra methods that will
 be applied to certain keypaths.</p>
+<h5 class="file-heading" id="models">Models</h5>
 <pre><code class="lang-js">Root = {
   artists () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>) },
   albums () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;albums&apos;</span>) }
@@ -61,6 +63,7 @@ be applied to certain keypaths.</p>
   }
 }
 </code></pre>
+<h5 class="file-heading" id="using-with-scour">Using with scour</h5>
 <pre><code class="lang-js">db = scour(data)
   .use({
     <span class="pl-s">&apos;&apos;</span>: Root,
@@ -68,19 +71,21 @@ be applied to certain keypaths.</p>
     <span class="pl-s">&apos;albums.*&apos;</span>: Album
   })
 </code></pre>
-<h3 id="root-extensions">Root extensions</h3>
+<h2 id="root-extensions">Root extensions</h2>
 <p>With the extensions to the root (<code>&apos;&apos;</code>), it defined an alias to <code>go(&apos;albums&apos;)</code>
 as <code>albums()</code>.</p>
 <pre><code class="lang-js">albums = db.albums().filter({ genre: <span class="pl-s">&apos;Jazz&apos;</span> })
 </code></pre>
-<h3 id="traversing-relationships">Traversing relationships</h3>
+<h2 id="traversing-relationships">Traversing relationships</h2>
 <p>Combined with the extensions to <code>artists.*</code> and <code>albums.*</code>, we can use it to
 traverse back-and-forth along &#x201C;models&#x201D;.</p>
+<h5 class="file-heading" id="chaining-example">Chaining example</h5>
 <pre><code class="lang-js">db
   .artists()
   .find({ name: <span class="pl-s">&apos;Taylor Swift&apos;</span> })
   .albums()
 </code></pre>
+<h5 class="file-heading" id="another-example">Another example</h5>
 <pre><code class="lang-js">albums.each((album) =&gt; {
   <span class="pl-c1">console</span>.log(album.artist().get(<span class="pl-s">&apos;name&apos;</span>))
 })
@@ -103,11 +108,11 @@ traverse back-and-forth along &#x201C;models&#x201D;.</p>
                 </li>
                 <li class="menu-item -level-2"><a href="extensions_example.html" class="link title -active link-extensions_example">Extensions example</a>
                   <ul class="headings heading-list">
-                    <li class="heading-item -depth-3"><a href="#defining-extensions" class="hlink link-defining-extensions">Defining extensions</a>
+                    <li class="heading-item -depth-2"><a href="#defining-extensions" class="hlink link-defining-extensions">Defining extensions</a>
                     </li>
-                    <li class="heading-item -depth-3"><a href="#root-extensions" class="hlink link-root-extensions">Root extensions</a>
+                    <li class="heading-item -depth-2"><a href="#root-extensions" class="hlink link-root-extensions">Root extensions</a>
                     </li>
-                    <li class="heading-item -depth-3"><a href="#traversing-relationships" class="hlink link-traversing-relationships">Traversing relationships</a>
+                    <li class="heading-item -depth-2"><a href="#traversing-relationships" class="hlink link-traversing-relationships">Traversing relationships</a>
                     </li>
                   </ul>
                 </li>
