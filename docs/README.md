@@ -1,6 +1,6 @@
 # Table of contents
 
 * __[scour.js](../README.md)__
-* [Comparison with others](comparison.md)
-* Examples
+* Appendix
+  * [Comparison with others](comparison.md)
   * [Extensions example](extensions_example.md)
