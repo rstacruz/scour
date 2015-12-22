@@ -13,27 +13,39 @@ const getv = require('./lib/getv')
  *
  *    scour(obj)
  *
- * Has the following properties:
+ * It can be called on any Object or Array. (In fact, it can be called on
+ * anything, but is only generally useful for Objects and Arrays.)
+ *
+ *     data = { menu: { visible: true, position: 'left' } }
+ *     scour(data).get('menu.visible')
+ *
+ *     list = [ { id: 2 }, { id: 5 }, { id: 12 } ]
+ *     scour(list).get('0.id')
+ *
+ * __Chaining__:
+ * You can use it to start method chains. In fact, the intended use is to keep
+ * your root [scour] object around, and chain from this.
+ *
+ *     db = scour({ menu: { visible: true, position: 'left' } })
+ *
+ *     // Elsewhere:
+ *     menu = db.go('menu')
+ *     menu.get('visible')
+ *
+ * __Properties__:
+ * It the [root], [value] and [keypath] properties.
  *
  *    s = scour(obj)
  *    s.root             // => [scour object]
  *    s.value            // => raw data (that is, `obj`)
  *    s.keypath          // => string array
  *
- * You can access the raw data using `.value`.
+ * __Accessing the value:__
+ * You can access the raw data using [value].
  *
  *    db = scour(data)
  *    db.value               // => same as `data`
  *    db.go('users').value   // => same as `data.users`
- *
- * When you traverse down using [go()], [root] will point to the root
- * scour instance, and [keypath] will be updated accordingly.
- *
- *    db = scour(data)
- *    admins = db.go('users').go('admins')
- *
- *    admins.keypath  // => ['users', 'admins']
- *    admins.root     // => db
  */
 
 function scour (value, options) {
@@ -323,39 +335,39 @@ scour.prototype = {
    * Sets values immutably. Returns a copy of the same object ([scour]-wrapped)
    * with the modifications applied.
    *
-   *    data = { bob: { name: 'Bob' } }
-   *    db = scour(data)
-   *    db.set([ 'bob', 'name' ], 'Robert')
-   *    // db.value == { bob: { name: 'Robert' } }
+   *     data = { bob: { name: 'Bob' } }
+   *     db = scour(data)
+   *     db.set([ 'bob', 'name' ], 'Robert')
+   *     // db.value == { bob: { name: 'Robert' } }
    *
    * __Immutability:__
    * This is an immutable function, and will return a new object. It won't
    * modify your original object.
    *
-   *    profile = scour({ name: 'John' })
-   *    profile2 = profile.set([ 'email' ], 'john@gmail.com')
+   *     profile = scour({ name: 'John' })
+   *     profile2 = profile.set([ 'email' ], 'john@gmail.com')
    *
-   *    profile.value   // => { name: 'John' }
-   *    profile2.value  // => { name: 'John', email: 'john@gmail.com' }
+   *     profile.value   // => { name: 'John' }
+   *     profile2.value  // => { name: 'John', email: 'john@gmail.com' }
    *
    * __Using within a scope:__
    * When used within a scope (ie, using with [go()]), it will return a new object
    * with a new [root]. You can then get this root using `.root`.
    *
-   *    data = { book: { title: 'What if?' } }
-   *    db = scour(data)
+   *     data = { book: { title: 'What if?' } }
+   *     db = scour(data)
    *
-   *    book = db.go('book').set(['id'], 23)
+   *     book = db.go('book').set(['id'], 23)
    *
-   *    db          // => [scour { book: { title: 'What if?' } }]
-   *    book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
+   *     db          // => [scour { book: { title: 'What if?' } }]
+   *     book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
    *
    * __Dot notation:__
    * Like [go()] and [get()], the keypath can be given in dot notation or an
    * array.
    *
-   *    scour(data).set('menu.left.visible', true)
-   *    scour(data).set(['menu', 'left', 'visible'], true)
+   *     scour(data).set('menu.left.visible', true)
+   *     scour(data).set(['menu', 'left', 'visible'], true)
    */
 
   set (keypath, value) {
@@ -379,6 +391,8 @@ scour.prototype = {
    *
    *    scour(data).del('menu.left.visible')
    *    scour(data).del(['menu', 'left', 'visible'])
+   *
+   * See [set()] for more information on working with immutables.
    */
 
   del (keypath) {
@@ -402,6 +416,8 @@ scour.prototype = {
    *
    *    data2  // => [scour { a: 1, b: 2, c: 3 }]
    *    data2.value   // => { a: 1, b: 2, c: 3 }
+   *
+   * See [set()] for more information on working with immutables.
    */
 
   extend () {

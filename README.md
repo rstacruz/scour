@@ -731,6 +731,7 @@ This is also available as `require('scourjs/utilities/map')`.
 [root]: #root
 [scour]: #scour
 [set()]: #set
+[value]: #value
 [use()]: #use
 
 [sift.js]: https://www.npmjs.com/package/sift
