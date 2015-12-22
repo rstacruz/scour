@@ -294,6 +294,11 @@
             "slug": "redux_example",
             "headings": [
               {
+                "title": "Defining your store",
+                "depth": 3,
+                "id": "defining-your-store"
+              },
+              {
                 "title": "Dispatching events",
                 "depth": 3,
                 "id": "dispatching-events"
@@ -594,6 +599,11 @@
       "title": "Redux example",
       "slug": "redux_example",
       "headings": [
+        {
+          "title": "Defining your store",
+          "depth": 3,
+          "id": "defining-your-store"
+        },
         {
           "title": "Dispatching events",
           "depth": 3,

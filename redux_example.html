@@ -26,6 +26,8 @@
         <div class="markdown-body"><h1 id="redux-example">Redux example</h1>
 <p>(I&#x2019;ll explain more later.)</p>
 <p>If all your reducers are going to be using scour, you can set your <code>state</code> as a scour-wrapped object.</p>
+<h3 id="defining-your-store">Defining your store</h3>
+<p>We&#x2019;re going to use a scour-wrapped object as the <code>initialState</code> for <code>createStore()</code>.</p>
 <pre><code class="lang-js"><span class="pl-k">import</span> { createStore } <span class="pl-k">from</span> <span class="pl-s">&apos;redux&apos;</span>
 
 function reducer (state, action) {
@@ -83,6 +85,8 @@ store.dispatch({ type: <span class="pl-s">&apos;PLAY&apos;</span> })
                 </li>
                 <li class="menu-item -level-2"><a href="redux_example.html" class="link title -active link-redux_example">Redux example</a>
                   <ul class="headings heading-list">
+                    <li class="heading-item -depth-3"><a href="#defining-your-store" class="hlink link-defining-your-store">Defining your store</a>
+                    </li>
                     <li class="heading-item -depth-3"><a href="#dispatching-events" class="hlink link-dispatching-events">Dispatching events</a>
                     </li>
                     <li class="heading-item -depth-3"><a href="#using-with-react" class="hlink link-using-with-react">Using with React</a>
