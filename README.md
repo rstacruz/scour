@@ -8,9 +8,9 @@ Scour is a general-purpose library for dealing with JSON trees.<br>
 As a simple utility with a broad purpose, it can be used to solve many problems. Use it to:
 
 - Manage your [Redux] datastore.
-- Provide a model layer to access data in your single-page app.
+- Provide a model layer to access data in your single-page app. [→](#models)
 - Navigate a large JSON tree easily.
-- Rejoice in having a lightweight alternative to [Immutable.js].
+- Rejoice in having a lightweight alternative to [Immutable.js]. ([Compare](docs/comparison.md))
 
 [![Status](https://travis-ci.org/rstacruz/scour.svg?branch=master)](https://travis-ci.org/rstacruz/scour "See test builds")
 
@@ -109,11 +109,11 @@ users
 
 ### Models
 
-Use [extend()](#extend) to add your own methods to certain keypaths. This makes them behave like models.
+Use [use()](#use) to add your own methods to certain keypaths. This makes them behave like models. See [a detailed example](docs/extensions_example.md) of this.
 
 ```js
 db = scour(data)
-  .extend({
+  .use({
     '': {
       artists () {
         return this.go('artists')
@@ -717,6 +717,7 @@ This functionality is also available as `require('scourjs/utilities/each')`.
 [root]: #root
 [scour]: #scour
 [set()]: #set
+[use()]: #use
 
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
