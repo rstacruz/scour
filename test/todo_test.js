@@ -11,6 +11,11 @@ describe('todo', function () {
   it('dot notation', done)
   it('always return scour objects', done)
 
+  describe('array', function () {
+    it('.initial')
+    it('.slice')
+  })
+
   describe('collections', function () {
     it('.reject')
     it('.reduce / .reduceRight')

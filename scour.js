@@ -207,6 +207,24 @@ scour.prototype = {
   },
 
   /**
+   * Returns the first result as a [scour]-wrapped object. This is equivalent
+   * to [at(0)](#at).
+   */
+
+  first () {
+    return this.at(0)
+  },
+
+  /**
+   * Returns the first result as a [scour]-wrapped object. This is equivalent
+   * to `at(len() - 1)`: see [at()] and [len()].
+   */
+
+  last () {
+    return this.at(this.len() - 1)
+  },
+
+  /**
    * Reading methods:
    * (Section) For retrieving data.
    */

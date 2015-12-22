@@ -361,6 +361,20 @@ scour(data).find({ name: 'john' })
 scour(data).find({ name: { $in: ['moe', 'larry'] })
 ```
 
+### first
+
+> `first()`
+
+Returns the first result as a [scour]-wrapped object. This is equivalent
+to [at(0)](#at).
+
+### last
+
+> `last()`
+
+Returns the first result as a [scour]-wrapped object. This is equivalent
+to `at(len() - 1)`: see [at()] and [len()].
+
 ## Reading methods
 
 For retrieving data.
@@ -648,10 +662,12 @@ implementation of `Array.forEach` that also works for objects.
 This functionality is also available as `require('scourjs/utilities/each')`.
 <!--api:end-->
 
+[at()]: #at
 [filter()]: #filter
 [get()]: #get
 [go()]: #go
 [keypath]: #keypath
+[len()]: #len
 [root]: #root
 [scour]: #scour
 [set()]: #set
