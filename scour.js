@@ -523,7 +523,7 @@ scour.prototype = {
       // Spawn a new `root` with the extensions applied
       return this.root
         .replace(this.root.value, { extensions, root: null })
-        .go(this.keypath)
+        .replace(this.value, { keypath: this.keypath })
     }
   },
 
