@@ -424,13 +424,19 @@ for writing data.
 
 > `set(keypath, value)`
 
-Sets values.
+Sets values. (todo)
 
 ### del
 
 > `del(keypath)`
 
-Deletes values.
+Deletes values. (todo)
+
+### extend
+
+> `extend(keypath)`
+
+Extends values. (todo)
 
 ## Utility methods
 

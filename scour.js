@@ -281,7 +281,7 @@ scour.prototype = {
    */
 
   /**
-   * Sets values.
+   * Sets values. (todo)
    */
 
   set (keypath, value) {
@@ -299,10 +299,18 @@ scour.prototype = {
   },
 
   /**
-   * Deletes values.
+   * Deletes values. (todo)
    */
 
   del (keypath) {
+    // TODO
+  },
+
+  /**
+   * Extends values. (todo)
+   */
+
+  extend (keypath) {
     // TODO
   },
 
