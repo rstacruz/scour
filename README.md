@@ -1,4 +1,4 @@
-# scour
+# scour.js
 
 <!-- {.massive-header.-with-tagline} -->
 
