@@ -4,7 +4,7 @@
 
 If all your reducers are going to be using scour, you can set your `state` as a scour-wrapped object.
 
-### Defining your store
+## Defining your store
 
 We're going to use a scour-wrapped object as the `initialState` for `createStore()`.
 
@@ -32,7 +32,7 @@ function reducer (state, action) {
 store = createStore(reducer, scour({}))
 ```
 
-### Dispatching events
+## Dispatching events
 
 Here's an example.
 
@@ -50,6 +50,6 @@ store.dispatch({ type: 'SELECT_TRACK', 3 })
 store.dispatch({ type: 'PLAY' })
 ```
 
-### Using with React
+## Using with React
 
 Hmm... I'll explain later.
