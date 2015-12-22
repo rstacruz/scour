@@ -520,9 +520,20 @@ scour(data).del(['menu', 'left', 'visible'])
 
 ### extend
 
-> `extend(keypath)`
+> `extend()`
 
-Extends values. (todo)
+Extends the data with more values. Returns a [scour]-wrapped object. Only
+supports objects; arrays and non-objects will return undefined.
+
+```js
+data  = { a: 1, b: 2 }
+data2 = scour(data).extend({ c: 3 })
+```
+
+```js
+data2  // => [scour { a: 1, b: 2, c: 3 }]
+data2.value   // => { a: 1, b: 2, c: 3 }
+```
 
 ## Utility methods
 
@@ -530,24 +541,27 @@ For stuff.
 
 ### use
 
-> `use(props)`
+> `use(spec)`
 
 Extends functionality with some prototype.
 
 ```js
-users =
-  { 12: { name: 'steve', surname: 'jobs' },
-    23: { name: 'bill', surname: 'gates' } }
+data =
+  { users:
+    { 12: { name: 'steve', surname: 'jobs' },
+      23: { name: 'bill', surname: 'gates' } } }
 
-methods = {
-  fullname () {
-    return this.get('name') + ' ' + this.get('surname')
+extensions = {
+  'users.*': {
+    fullname () {
+      return this.get('name') + ' ' + this.get('surname')
+    }
   }
 }
 
-scour(users)
-  .get(12)
-  .use(methods)
+scour(data)
+  .use(extensions)
+  .get('users', 12)
   .fullname()       // => 'bill gates'
 
 ```

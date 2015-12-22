@@ -41,12 +41,7 @@ function scour (value, options) {
   define(this, 'root', options && options.root || this)
   define(this, 'keypath', options && options.keypath || [])
   define(this, 'extensions', options && options.extensions || [])
-
-  this.extensions.forEach((ext) => {
-    scour.each(ext, (val, key) => {
-      this[key] = val
-    })
-  })
+  this.applyExtensions()
 }
 
 /**
@@ -418,24 +413,37 @@ scour.prototype = {
   /**
    * Extends functionality with some prototype.
    *
-   *     users =
-   *       { 12: { name: 'steve', surname: 'jobs' },
-   *         23: { name: 'bill', surname: 'gates' } }
+   *     data =
+   *       { users:
+   *         { 12: { name: 'steve', surname: 'jobs' },
+   *           23: { name: 'bill', surname: 'gates' } } }
    *
-   *     methods = {
-   *       fullname () {
-   *         return this.get('name') + ' ' + this.get('surname')
+   *     extensions = {
+   *       'users.*': {
+   *         fullname () {
+   *           return this.get('name') + ' ' + this.get('surname')
+   *         }
    *       }
    *     }
    *
-   *     scour(users)
-   *       .get(12)
-   *       .use(methods)
+   *     scour(data)
+   *       .use(extensions)
+   *       .get('users', 12)
    *       .fullname()       // => 'bill gates'
    */
 
-  use (props) {
-    return this.spawn(this.value, { extensions: [props] })
+  use (spec) {
+    let prefix = this.keypath.length ? (this.keypath.join('.') + '.') : ''
+    const extensions = scour.map(spec, (properties, keypath) => {
+      keypath = new RegExp('^' + (prefix + keypath)
+        .replace(/\./g, '\\.')
+        .replace(/\*\*/g, '.+')
+        .replace(/\*/g, '[^\.]+') + '$')
+
+      return [ keypath, properties ]
+    })
+
+    return this.spawn(this.value, { extensions })
   },
 
   /**
@@ -513,7 +521,7 @@ scour.prototype = {
    *     // => [ 'steve', 'bill' ]
    */
 
-  map: collections.map,
+  map: thisify(collections.map),
 
   /**
    * Internal: spawns an instance with a given data and keypath.
@@ -538,6 +546,21 @@ scour.prototype = {
       extensions: (!options || typeof options.extensions === 'undefined')
         ? this.extensions
         : this.extensions.concat(options.extensions)
+    })
+  },
+
+  /**
+   * Internal: applies extensions
+   */
+
+  applyExtensions () {
+    if (!this.extensions) return
+
+    var path = this.keypath.join('.')
+
+    this.extensions.forEach((extension) => {
+      // extension is [ RegExp, properties object ]
+      if (extension[0].test(path)) assign(this, extension[1])
     })
   }
 }
@@ -585,6 +608,8 @@ scour.del = require('./utilities/del')
 
 scour.each = require('./utilities/each')
 
+scour.map = collections.map
+
 /**
  * Internal: Helper
  */
@@ -610,6 +635,16 @@ function normalizeKeypath (keypath, isArguments) {
   } else {
     if (isArguments) keypath = [].slice.call(keypath)
     return keypath.map((k) => '' + k)
+  }
+}
+
+/**
+ * Internal: decorates collection functions
+ */
+
+function thisify (fn) {
+  return function () {
+    return fn.bind(null, this.forEach.bind(this)).apply(this, arguments)
   }
 }
 module.exports = scour

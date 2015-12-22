@@ -168,21 +168,25 @@ describe('index', function () {
   })
 
   describe('.use()', function () {
-    const extension = {
-      fullname () { return 'Mr. ' + this.get('name') }
+    const data = { users: { 1: { name: 'john' } } }
+    const extensions = {
+      'users.*': {
+        fullname () { return 'Mr. ' + this.get('name') }
+      }
     }
 
     it('works', function () {
-      let user = scour(data).go('users', 1)
-        .use(extension)
+      let user = scour(data)
+        .use(extensions)
+        .go('users', 1)
 
       expect(user.fullname()).toEqual('Mr. john')
     })
 
     it('gets carried over', function () {
       let user = scour(data)
-        .use(extension)
-        .go('users', 1)
+        .use(extensions)
+        .go('users') .go(1)
 
       expect(user.fullname()).toEqual('Mr. john')
     })
@@ -459,6 +463,14 @@ describe('index', function () {
 
     it('fails on non-objects being passed as arguments', function () {
       expect(scour({}).extend('huh')).toEqual(undefined)
+    })
+  })
+
+  describe('scour.*', function () {
+    it('.map() works', function () {
+      const input = { a: 10, b: 20, c: 30 }
+      const output = scour.map(input, (val) => val / 10)
+      expect(output).toEqual([ 1, 2, 3 ])
     })
   })
 })
