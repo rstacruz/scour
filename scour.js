@@ -2,9 +2,9 @@
 'use strict'
 
 const sift = require('sift')
-const each = require('./lib/each')
-const define = require('./lib/define_property')
-const collections = require('./lib/collections')
+const each = require('./utilities/each')
+const define = require('./utilities/define_property')
+const collections = require('./utilities/collections')
 
 /**
  * scour : scour(object)
@@ -423,5 +423,7 @@ scour.prototype = {
     })
   }
 }
+
+scour.set = require('./utilities/set')
 
 module.exports = scour

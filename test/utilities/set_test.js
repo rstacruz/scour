@@ -1,6 +1,6 @@
 'use strict'
 
-const set = require('../../lib/set')
+const set = require('../../utilities/set')
 
 describe('set', function () {
   it('works', function () {
