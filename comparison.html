@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="assets/style.css?t=a44c9e9d">
+    <link rel="stylesheet" href="http://ricostacruz.com/docpress-rsc/style.css">
+    <script src="assets/script.js?t=2bcc4b59"></script>
+    <title>Comparison with others</title>
+    <meta name="viewport" content="width=device-width">
+    <script>
+      if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
+        (function(d,o,c,p,r,e,s){d['GoogleAnalyticsObject']=r;d[r]=d[r]||function(){(d[r].q=d[r].q||[]).push(arguments)},d[r].l=1*new Date();e=o.createElement(c),s=o.getElementsByTagName(c)[0];e.async=1;e.src=p;s.parentNode.insertBefore(e,s)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+        ga('create',"UA-20473929-1",'auto')
+      }
+    </script>
+  </head>
+  <body class="-menu-visible">
+    <div class="doc-layout">
+      <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="body page-comparison">
+        <div class="header-nav">
+          <div class="right"><a href="https://github.com/rstacruz/scour" data-title="rstacruz/scour" class="iconlink">
+              <!-- span.title Open in GitHub--><span class="icon -github"></span></a>
+          </div>
+        </div>
+        <div class="markdown-body"><h1 id="comparison">Comparison</h1>
+<h2 id="versus-lodash">Versus Lodash</h2>
+<p><a href="http://underscorejs.org/">Underscore</a> is a library of utility functions. <a href="https://lodash.com/">Lodash</a> is a more modern implementation of it.</p>
+<p>Unlike Lodash and Underscore, scour is primarily a utility to traverse deep object trees. Lodash covers many functions useful for managing objects and arrays, but very few for making immutable edits.</p>
+<p>Scour can also traverse through scopes using <a href="index.html#go">go()</a>, which allows you to manage a subtrees and navigate through it.</p>
+<p>Scour also has extensions via <a href="index.html#use">use()</a>, which allows you to navigate your data with model-like objects (<a href="extensions_example.html">example</a>).</p>
+<ul>
+<li>Features
+<ul>
+<li><strong>Lodash</strong>: includes object utilities, as well as functions, strings, and many others.</li>
+<li><strong>Scour</strong>: only utilities relevant for objects/arrays.</li>
+</ul>
+</li>
+<li>Chaining
+<ul>
+<li><strong>Lodash</strong>: supports chaining.</li>
+<li><strong>Scour</strong>: supports chaining, and scope traversal (<a href="index.html#go">go()</a>).</li>
+</ul>
+</li>
+<li>Immutable utilities
+<ul>
+<li><strong>Lodash</strong>: has a lot, but none for setting keys deep in an object tree.</li>
+<li><strong>Scour</strong>: has <a href="index.html#get">get()</a>.</li>
+</ul>
+</li>
+<li>Lazy evaluation
+<ul>
+<li><strong>Underscore</strong>: not supported.</li>
+<li><strong>Lodash</strong>: calls to <code>.map()</code>, <code>.filter()</code> (et al) can be chained and will be optimized.</li>
+<li><strong>Scour</strong>: not supported yet.</li>
+</ul>
+</li>
+<li>Size (minified and gzipped)
+<ul>
+<li><strong>Underscore</strong>: 5.7kb (as of 1.8.3)</li>
+<li><strong>Lodash</strong>: 18.4kb (as of 3.0.0)</li>
+<li><strong>Scour</strong>: 3.4kb</li>
+</ul>
+</li>
+</ul>
+<h2 id="versus-immutable.js">Versus Immutable.js</h2>
+<p><a href="http://facebook.github.io/immutable-js/">Immutable</a> is a library for dealing with data in an immutable fashion.</p>
+<p>Scour also has extensions via <a href="index.html#use">use()</a>, which allows you to navigate your data with model-like objects (<a href="extensions_example.html">example</a>).</p>
+<p>It is really hefty (like 57kb) and has a huge API surface area.</p>
+
+        </div>
+        <div class="footer-nav">
+          <div class="left"><a href="index.html"><span class="title">scour.js</span></a></div>
+          <div class="right"><a href="extensions_example.html"><span class="label">Next: </span><span class="title">Extensions example</span></a></div>
+        </div>
+      </div>
+      <div class="menu toc-menu">
+        <li class="menu-item -level-0 -parent">
+          <ul class="submenu">
+            <li class="menu-item -level-1"><a href="index.html" class="link title  link-index">scour.js</a>
+            </li>
+            <li class="menu-item -level-1"><a href="comparison.html" class="link title -active link-comparison">Comparison with others</a>
+              <ul class="headings heading-list">
+                <li class="heading-item -depth-2"><a href="#versus-lodash" class="hlink link-versus-lodash">Versus Lodash</a>
+                </li>
+                <li class="heading-item -depth-2"><a href="#versus-immutable.js" class="hlink link-versus-immutable.js">Versus Immutable.js</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><span class="title">Examples</span>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </div>
+    </div>
+  </body>
+</html>

@@ -237,6 +237,52 @@
             "id": "thanks"
           }
         ]
+      },
+      {
+        "title": "Comparison with others",
+        "source": "docs/comparison.md",
+        "url": "comparison.html",
+        "slug": "comparison",
+        "headings": [
+          {
+            "title": "Versus Lodash",
+            "depth": 2,
+            "id": "versus-lodash"
+          },
+          {
+            "title": "Versus Immutable.js",
+            "depth": 2,
+            "id": "versus-immutable.js"
+          }
+        ]
+      },
+      {
+        "title": "Examples",
+        "sections": [
+          {
+            "title": "Extensions example",
+            "source": "docs/extensions_example.md",
+            "url": "extensions_example.html",
+            "slug": "extensions_example",
+            "headings": [
+              {
+                "title": "Defining extensions",
+                "depth": 3,
+                "id": "defining-extensions"
+              },
+              {
+                "title": "Root extensions",
+                "depth": 3,
+                "id": "root-extensions"
+              },
+              {
+                "title": "Traversing relationships",
+                "depth": 3,
+                "id": "traversing-relationships"
+              }
+            ]
+          }
+        ]
       }
     ]
   },
@@ -475,10 +521,51 @@
           "id": "thanks"
         }
       ]
+    },
+    "comparison.html": {
+      "source": "docs/comparison.md",
+      "title": "Comparison with others",
+      "slug": "comparison",
+      "headings": [
+        {
+          "title": "Versus Lodash",
+          "depth": 2,
+          "id": "versus-lodash"
+        },
+        {
+          "title": "Versus Immutable.js",
+          "depth": 2,
+          "id": "versus-immutable.js"
+        }
+      ]
+    },
+    "extensions_example.html": {
+      "source": "docs/extensions_example.md",
+      "title": "Extensions example",
+      "slug": "extensions_example",
+      "headings": [
+        {
+          "title": "Defining extensions",
+          "depth": 3,
+          "id": "defining-extensions"
+        },
+        {
+          "title": "Root extensions",
+          "depth": 3,
+          "id": "root-extensions"
+        },
+        {
+          "title": "Traversing relationships",
+          "depth": 3,
+          "id": "traversing-relationships"
+        }
+      ]
     }
   },
   "sources": {
     "README.md": "index.html",
+    "docs/comparison.md": "comparison.html",
+    "docs/extensions_example.md": "extensions_example.html",
     "docs/docpress.json": "docpress.json"
   }
 }

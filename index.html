@@ -37,7 +37,7 @@ As a simple utility with a broad purpose, it can be used to solve many problems.
 </ul>
 <p><a href="https://travis-ci.org/rstacruz/scour" title="See test builds"><img src="https://travis-ci.org/rstacruz/scour.svg?branch=master" alt="Status"></a></p>
 <h2 id="install">Install</h2>
-<pre><code class="lang-sh">npm install --save-exact rstacruz/scour
+<pre><code class="lang-sh">npm install --save-exact scourjs
 </code></pre>
 <pre><code class="lang-js"><span class="pl-c1">window</span>.scour                       <span class="pl-c">// non commonjs</span>
 <span class="pl-k">const</span> scour = <span class="pl-c1">require</span>(<span class="pl-s">&apos;scourjs&apos;</span>)   <span class="pl-c">// commonjs/node</span>
@@ -417,34 +417,64 @@ data2.value   <span class="pl-c">// =&gt; { a: 1, b: 2, c: 3 }</span>
 <p>For stuff.</p>
 <h3 id="use">use</h3>
 <blockquote>
-<p><code>use(props)</code></p>
+<p><code>use(extensions)</code></p>
 </blockquote>
-<p>Extends functionality with some prototype.</p>
-<pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, surname: <span class="pl-s">&apos;jobs&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span>, surname: <span class="pl-s">&apos;gates&apos;</span> } }
+<p>Extends functionality for certain keypaths with custom methods.
+See [Extensions example] for examples.</p>
+<pre><code class="lang-js">data =
+  { users:
+    { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, surname: <span class="pl-s">&apos;jobs&apos;</span> },
+      <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span>, surname: <span class="pl-s">&apos;gates&apos;</span> } } }
 
-methods = {
-  fullname () {
-    <span class="pl-k">return</span> <span class="pl-k">this</span>.get(<span class="pl-s">&apos;name&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + <span class="pl-k">this</span>.get(<span class="pl-s">&apos;surname&apos;</span>)
+extensions = {
+  <span class="pl-s">&apos;users.*&apos;</span>: {
+    fullname () {
+      <span class="pl-k">return</span> <span class="pl-k">this</span>.get(<span class="pl-s">&apos;name&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + <span class="pl-k">this</span>.get(<span class="pl-s">&apos;surname&apos;</span>)
+    }
   }
 }
 
-scour(users)
-  .get(<span class="hljs-number">12</span>)
-  .use(methods)
+scour(data)
+  .use(extensions)
+  .get(<span class="pl-s">&apos;users&apos;</span>, <span class="hljs-number">12</span>)
   .fullname()       <span class="pl-c">// =&gt; &apos;bill gates&apos;</span>
-
 </code></pre>
+<p><strong>Extensions format:</strong>
+The parameter <code>extension</code> is an object, with keys being keypath globs, and
+values being properties to be extended.</p>
+<pre><code class="lang-js">.use({
+  <span class="pl-s">&apos;books.*&apos;</span>: { ... },
+  <span class="pl-s">&apos;authors.*&apos;</span>: { ... },
+  <span class="pl-s">&apos;publishers.*&apos;</span>: { ... }
+ })
+</code></pre>
+<p><strong>Extending root:</strong>
+To bind properties to the root method, use an empty string as the keypath.</p>
+<pre><code class="lang-js">.use({
+  <span class="pl-s">&apos;&apos;</span>: {
+    users() { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;users&apos;</span>) },
+    authors() { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;authors&apos;</span>) }
+  }
+})
+</code></pre>
+<p><strong>Keypath filtering:</strong>
+You can use glob-like <code>*</code> and <code>**</code> to match parts of a keypath. A <code>*</code> will
+match any one segment, and <code>**</code> will match one or many segments. Here are
+some examples:</p>
+<ul>
+<li><code>users.*</code> - will match <code>users.1</code>, but not <code>users.1.photos</code></li>
+<li><code>users.**</code> - will match <code>users.1.photos</code></li>
+<li><code>users.*.photos</code> - will match <code>users.1.photos</code></li>
+<li><code>**</code> will match anything</li>
+</ul>
 <h3 id="tojson">toJSON</h3>
 <blockquote>
 <p><code>toJSON()</code></p>
 </blockquote>
 <p>Returns the value for serialization. This allows <code>JSON.stringify()</code> to
-work with <code>scour</code>-wrapped objects.</p>
-<p>The name of this method is a bit confusing, as it doesn&#x2019;t actually return
-a JSON string &#x2014; but I&#x2019;m afraid that it&#x2019;s the way that the JavaScript API
-for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior">JSON.stringify</a> works.</p>
+work with <code>scour</code>-wrapped objects. The name of this method is a bit
+confusing, as it doesn&#x2019;t actually return a JSON string &#x2014; but I&#x2019;m afraid
+that it&#x2019;s the way that the JavaScript API for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior">JSON.stringify</a> works.</p>
 <h2 id="iteration-methods">Iteration methods</h2>
 <p>For traversing.</p>
 <h3 id="foreach">forEach</h3>
@@ -529,6 +559,9 @@ GitHub <a href="https://github.com/rstacruz">@rstacruz</a> &#xA0;&#xB7;&#xA0;
 Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
 </blockquote>
 
+        </div>
+        <div class="footer-nav">
+          <div class="right"><a href="comparison.html"><span class="label">Next: </span><span class="title">Comparison with others</span></a></div>
         </div>
       </div>
       <div class="menu toc-menu">
@@ -637,6 +670,14 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
               </ul>
             </li>
             <li class="menu-item -level-1"><a href="#thanks" class="link title link-thanks">Thanks</a>
+            </li>
+            <li class="menu-item -level-1"><a href="comparison.html" class="link title  link-comparison">Comparison with others</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><span class="title">Examples</span>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
+                </li>
+              </ul>
             </li>
           </ul>
         </li>
