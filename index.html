@@ -385,29 +385,12 @@ db.set([ <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;nam
 This is an immutable function, and will return a new object. It won&#x2019;t
 modify your original object.</p>
 <pre><code class="lang-js">profile = scour({ name: <span class="pl-s">&apos;John&apos;</span> })
-profile2 = profile.set([ <span class="pl-s">&apos;email&apos;</span> ], <span class="pl-s">&apos;john@gmail.com&apos;</span>)
+profile2 = profile.set(<span class="pl-s">&apos;email&apos;</span>, <span class="pl-s">&apos;john@gmail.com&apos;</span>)
 
 profile.value   <span class="pl-c">// =&gt; { name: &apos;John&apos; }</span>
 profile2.value  <span class="pl-c">// =&gt; { name: &apos;John&apos;, email: &apos;john@gmail.com&apos; }</span>
 </code></pre>
 <p><strong>Using within a scope:</strong>
-When used within a scope (ie, using with <a href="#go">go()</a>), it will return a new object
-with a new <a href="#root">root</a>. You can then get this root using <code>.root</code>.</p>
-<pre><code class="lang-js">data = { book: { title: <span class="pl-s">&apos;What if?&apos;</span> } }
-db = scour(data)
-
-book = db.go(<span class="pl-s">&apos;book&apos;</span>).set([<span class="pl-s">&apos;id&apos;</span>], <span class="hljs-number">23</span>)
-
-db          <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos; } }]</span>
-book.root   <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos;, id: 23 } }]</span>
-</code></pre>
-<p><strong>Dot notation:</strong>
-Like <a href="#go">go()</a> and <a href="#get">get()</a>, the keypath can be given in dot notation or an
-array.</p>
-<pre><code class="lang-js">scour(data).set(<span class="pl-s">&apos;menu.left.visible&apos;</span>, <span class="pl-c1">true</span>)
-scour(data).set([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>], <span class="pl-c1">true</span>)
-</code></pre>
-<p><strong>Updating root:</strong>
 Be aware that using all writing methods (<a href="#set">set()</a>, [del()], [extend()]) on
 scoped objects (ie, made with <a href="#go">go()</a>) will spawn a new <a href="#root">root</a> object. If
 you&#x2019;re keeping a reference to the root object, you&#x2019;ll need to update it
@@ -419,7 +402,12 @@ book.root === db       <span class="pl-c">// correct so far</span>
 book = book.set(<span class="pl-s">&apos;title&apos;</span>, <span class="pl-s">&apos;IQ84&apos;</span>)
 book = book.del(<span class="pl-s">&apos;sale_price&apos;</span>)
 book.root !== db      <span class="pl-c">// `root` has been updated</span>
-
+</code></pre>
+<p><strong>Dot notation:</strong>
+Like <a href="#go">go()</a> and <a href="#get">get()</a>, the keypath can be given in dot notation or an
+array.</p>
+<pre><code class="lang-js">scour(data).set(<span class="pl-s">&apos;menu.left.visible&apos;</span>, <span class="pl-c1">true</span>)
+scour(data).set([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>], <span class="pl-c1">true</span>)
 </code></pre>
 <h3 id="del">del</h3>
 <blockquote>
