@@ -281,16 +281,28 @@ scour.prototype = {
    */
 
   /**
-   * Sets values. (To be implemented)
+   * Sets values.
    */
 
   set (keypath, value) {
     if (!Array.isArray(keypath)) keypath = [keypath]
 
     if (this.root !== this) {
-      return this.root.set(this.keypath.concat(keypath), value)
+      const newRoot = this.root.set(this.keypath.concat(keypath), value)
+      return newRoot.go.apply(newRoot, this.keypath)
     }
 
+    const result = scour.set(this.value, keypath, value)
+    const newRoot = this.spawn(result, { keypath: [] })
+    newRoot.root = newRoot
+    return newRoot
+  },
+
+  /**
+   * Deletes values.
+   */
+
+  del (keypath) {
     // TODO
   },
 
