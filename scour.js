@@ -348,22 +348,24 @@ scour.prototype = {
    * modify your original object.
    *
    *     profile = scour({ name: 'John' })
-   *     profile2 = profile.set([ 'email' ], 'john@gmail.com')
+   *     profile2 = profile.set('email', 'john@gmail.com')
    *
    *     profile.value   // => { name: 'John' }
    *     profile2.value  // => { name: 'John', email: 'john@gmail.com' }
    *
    * __Using within a scope:__
-   * When used within a scope (ie, using with [go()]), it will return a new object
-   * with a new [root]. You can then get this root using `.root`.
+   * Be aware that using all writing methods ([set()], [del()], [extend()]) on
+   * scoped objects (ie, made with [go()]) will spawn a new [root] object. If
+   * you're keeping a reference to the root object, you'll need to update it
+   * accordingly.
    *
-   *     data = { book: { title: 'What if?' } }
    *     db = scour(data)
+   *     book = db.go('book')
+   *     book.root === db       // correct so far
    *
-   *     book = db.go('book').set(['id'], 23)
-   *
-   *     db          // => [scour { book: { title: 'What if?' } }]
-   *     book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
+   *     book = book.set('title', 'IQ84')
+   *     book = book.del('sale_price')
+   *     book.root !== db      // `root` has been updated
    *
    * __Dot notation:__
    * Like [go()] and [get()], the keypath can be given in dot notation or an

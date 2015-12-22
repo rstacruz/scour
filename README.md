@@ -515,6 +515,23 @@ scour(data).set('menu.left.visible', true)
 scour(data).set(['menu', 'left', 'visible'], true)
 ```
 
+__Updating root:__
+Be aware that using all writing methods ([set()], [del()], [extend()]) on
+scoped objects (ie, made with [go()]) will spawn a new [root] object. If
+you're keeping a reference to the root object, you'll need to update it
+accordingly.
+
+```js
+db = scour(data)
+book = db.go('book')
+book.root === db       // correct so far
+
+book = book.set('title', 'IQ84')
+book = book.del('sale_price')
+book.root !== db      // `root` has been updated
+
+```
+
 ### del
 
 > `del(keypath)`
