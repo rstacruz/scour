@@ -37,6 +37,16 @@ describe('index', function () {
       .toEqual(['users', '1'])
     })
 
+    it('allows arrays', function () {
+      expect(scour(data).go(['users', '1']).keypath)
+        .toEqual(['users', '1'])
+    })
+
+    it('allows arrays with numbers', function () {
+      expect(scour(data).go(['users', 1]).keypath)
+        .toEqual(['users', '1'])
+    })
+
     it('gives keypath (multiple keys)', function () {
       expect(scour(data).go('users', '1').keypath)
       .toEqual(['users', '1'])
@@ -67,6 +77,78 @@ describe('index', function () {
     it('works for arrays', function () {
       expect(scour(list).at(0).get('name'))
         .toEqual('apple')
+    })
+  })
+
+  describe('.first()', function () {
+    it('works for arrays', function () {
+      const data = [ 'a', 'b' ]
+      expect(scour(data).first().value).toEqual('a')
+    })
+
+    it('works for objects', function () {
+      const data = { 0: 'a', 1: 'b' }
+      expect(scour(data).first().value).toEqual('a')
+    })
+
+    it('works for empty arrays', function () {
+      const data = []
+      expect(scour(data).first()).toEqual(undefined)
+    })
+
+    it('works for empty objects', function () {
+      const data = {}
+      expect(scour(data).first()).toEqual(undefined)
+    })
+  })
+
+  describe('.last()', function () {
+    it('works for arrays', function () {
+      const data = [ 'a', 'b' ]
+      expect(scour(data).last().value).toEqual('b')
+    })
+
+    it('works for objects', function () {
+      const data = { 0: 'a', 1: 'b' }
+      expect(scour(data).last().value).toEqual('b')
+    })
+
+    it('works for empty arrays', function () {
+      const data = []
+      expect(scour(data).last()).toEqual(undefined)
+    })
+
+    it('works for empty objects', function () {
+      const data = {}
+      expect(scour(data).last()).toEqual(undefined)
+    })
+  })
+
+  describe('.toArray()', function () {
+    it('works for objects', function () {
+      expect(scour({ a: 1, b: 2 }).toArray()).toEqual([1, 2])
+    })
+
+    it('works for strings', function () {
+      expect(scour('12').toArray()).toEqual(['1', '2'])
+    })
+
+    it('works for numbers', function () {
+      expect(scour(12).toArray()).toEqual([])
+    })
+
+    it('works for undefined', function () {
+      expect(scour(undefined).toArray()).toEqual([])
+    })
+
+    it('works for null', function () {
+      expect(scour(null).toArray()).toEqual([])
+    })
+  })
+
+  describe('.toString()', function () {
+    it('works', function () {
+      expect(scour({ a: 1 }).toString()).toBeA('string')
     })
   })
 

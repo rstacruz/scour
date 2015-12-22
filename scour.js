@@ -272,6 +272,7 @@ scour.prototype = {
    */
 
   len () {
+    if (!this.value) return 0
     if (Array.isArray(this.value)) return this.value.length
     return this.keys().length
   },
@@ -290,7 +291,9 @@ scour.prototype = {
 
   toArray () {
     if (Array.isArray(this.value)) return this.value
-    return this.map((val) => val)
+    var result = []
+    scour.each(this.value, (val, key) => result.push(val))
+    return result
   },
 
   /**
@@ -586,7 +589,7 @@ function normalizeKeypath (keypath, isArguments) {
   if (typeof keypath === 'string') {
     return keypath.split('.')
   } else if (isArguments && keypath.length === 1) {
-    if (Array.isArray(keypath[0])) return keypath[0]
+    if (Array.isArray(keypath[0])) return keypath[0].map((k) => '' + k)
     if (typeof keypath[0] === 'number') return [ '' + keypath[0] ]
     return ('' + keypath[0]).split('.')
   } else {

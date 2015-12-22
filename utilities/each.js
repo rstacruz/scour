@@ -5,6 +5,8 @@
  */
 
 function each (list, fn) {
+  if (!list) return
+
   var i
   var len = list.length
   var idx
