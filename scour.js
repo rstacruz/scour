@@ -4,7 +4,6 @@
 const sift = require('sift')
 const assign = require('object-assign')
 const collections = require('./utilities/collections')
-const define = require('./lib/define_property')
 const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
 const getv = require('./lib/getv')
@@ -41,10 +40,13 @@ const getv = require('./lib/getv')
 function scour (value, options) {
   if (!(this instanceof scour)) return new scour(value, options)
   this.value = value
-  define(this, 'root', options && options.root || this)
-  define(this, 'keypath', options && options.keypath || [])
-  define(this, 'extensions', options && options.extensions || [])
-  this.applyExtensions()
+
+  this.root = options && options.root || this
+  this.keypath = options && options.keypath || []
+  this.extensions = options && options.extensions || []
+
+  // Apply any property extensions
+  if (this.extensions.length) this.applyExtensions()
 }
 
 /**
@@ -579,8 +581,6 @@ scour.prototype = {
    */
 
   applyExtensions () {
-    if (!this.extensions) return
-
     var path = this.keypath.join('.')
 
     this.extensions.forEach((extension) => {

@@ -16,14 +16,17 @@ const data =
       3: { id: 3, name: '1984', genre: 'Pop', artist_id: 4 } } }
 
 class SimpleClass {
-  constructor (data) {
+  constructor (data, options) {
     this.data = data
+    this.root = options && options.root || this
+    this.keypath = options && options.keypath || []
+    this.extensions = options && options.extensions || []
   }
 }
 
 bm('initializing', {
   'initializing root': function () {
-    scour(data)
+    new scour(data)
   },
   'initializing using a simple class': function () {
     new SimpleClass(data)
