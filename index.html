@@ -530,7 +530,7 @@ names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;nam
 result = set(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span>], <span class="pl-s">&apos;robert&apos;</span>)
 <span class="pl-c">// =&gt; { users: { bob: { name: &apos;robert&apos; } } }</span>
 </code></pre>
-<p>This functionality is also available as <code>require(&apos;scourjs/utilities/set&apos;)</code>.</p>
+<p>This is also available as <code>require(&apos;scourjs/utilities/set&apos;)</code>.</p>
 <h3 id="scour.del">scour.del</h3>
 <blockquote>
 <p><code>scour.del(object, keypath)</code></p>
@@ -541,14 +541,20 @@ result = del(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl
 
 <span class="pl-c">// =&gt; { users: { bob: {} } }</span>
 </code></pre>
-<p>This functionality is also available as <code>require(&apos;scourjs/utilities/del&apos;)</code>.</p>
+<p>This is also available as <code>require(&apos;scourjs/utilities/del&apos;)</code>.</p>
 <h3 id="scour.each">scour.each</h3>
 <blockquote>
 <p><code>scour.each(iterable, fn)</code></p>
 </blockquote>
 <p>Iterates through <code>iterable</code>, either an object or an array. This is an
 implementation of <code>Array.forEach</code> that also works for objects.</p>
-<p>This functionality is also available as <code>require(&apos;scourjs/utilities/each&apos;)</code>.</p>
+<p>This is also available as <code>require(&apos;scourjs/utilities/each&apos;)</code>.</p>
+<h3 id="scour.map">scour.map</h3>
+<blockquote>
+<p><code>scour.map(iterable, fn)</code></p>
+</blockquote>
+<p>Works like Array#map, but also works on objects.</p>
+<p>This is also available as <code>require(&apos;scourjs/utilities/map&apos;)</code>.</p>
 <!--api:end-->
 <h2 id="thanks">Thanks</h2>
 <p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
@@ -666,6 +672,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#scour.del" class="link title link-scour.del">scour.del</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#scour.each" class="link title link-scour.each">scour.each</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#scour.map" class="link title link-scour.map">scour.map</a>
                 </li>
               </ul>
             </li>

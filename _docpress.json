@@ -228,6 +228,11 @@
                 "title": "scour.each",
                 "depth": 3,
                 "id": "scour.each"
+              },
+              {
+                "title": "scour.map",
+                "depth": 3,
+                "id": "scour.map"
               }
             ]
           },
@@ -512,6 +517,11 @@
               "title": "scour.each",
               "depth": 3,
               "id": "scour.each"
+            },
+            {
+              "title": "scour.map",
+              "depth": 3,
+              "id": "scour.map"
             }
           ]
         },
