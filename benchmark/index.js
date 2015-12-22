@@ -1,66 +1,31 @@
+/* eslint-disable new-cap, no-new */
+'use strict'
 
-function bm (suitename, options) {
-  var Benchmark = require('benchmark')
-  var suite = new Benchmark.Suite(suitename)
+const bm = require('./bm')
+const scour = require('../scour.js')
 
-  for (var key in options) {
-    if (!options.hasOwnProperty(key)) continue
-    suite = suite.add(key, options[key])
+const data =
+  { artists:
+    { 1: { id: 1, name: 'Ella Fitzgerald' },
+      2: { id: 2, name: 'Frank Sinatra' },
+      3: { id: 3, name: 'Miles Davis' },
+      4: { id: 4, name: 'Taylor Swift' } },
+    albums:
+    { 1: { id: 1, name: 'Kind of Blue', genre: 'Jazz', artist_id: 3 },
+      2: { id: 2, name: 'Come Fly With Me', genre: 'Jazz', artist_id: 2 },
+      3: { id: 3, name: '1984', genre: 'Pop', artist_id: 4 } } }
+
+class SimpleClass {
+  constructor (data) {
+    this.data = data
   }
-
-  suite.on('start', function (event) {
-    console.log(suitename)
-  })
-
-  suite.on('cycle', function (event) {
-    console.log('  ' + String(event.target))
-  })
-
-  suite.on('error', function (e) {
-    console.log(e.target.error.stack)
-  })
-
-  suite.on('complete', function () {
-  })
-
-  suite.run({ async: true, maxTime: 2 })
 }
 
-keypath = ['users', '12', 'photos']
-extensions = {
-  '': {},
-  'users.*': {},
-  '*.foo': {},
-  'foo': {},
-  'cinemas': {},
-  'galleries': {}
-}
-
-keypathExprs = [
-  'users.12.photos', 'users.12.*',
-  'users.*.photos', 'users.*.*',
-  '*.12.photos', '*.12.*',
-  '*.*.photos', '*.*.*'
-]
-
-exprs = Object.keys(extensions).map((key) => {
-  return new RegExp('^' +
-    key
-    .replace(/\./g, '\\.')
-    .replace(/\*/g, '[^\.]+') + '$')
-})
-
-bm('matching', {
-  'via regexp': function () {
-    var path = keypath.join('.')
-    exprs.forEach((expr) => {
-      expr.test(path)
-    })
+bm('initializing', {
+  'initializing root': function () {
+    scour(data)
   },
-  'iteration': function () {
-    var path = keypath.join('.')
-    keypathExprs.forEach((expr) => {
-      if (extensions[keypathExprs]) { console.log('yay') }
-    })
+  'initializing using a simple class': function () {
+    new SimpleClass(data)
   }
 })
