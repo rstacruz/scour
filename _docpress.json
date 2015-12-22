@@ -152,6 +152,11 @@
                 "title": "del",
                 "depth": 3,
                 "id": "del"
+              },
+              {
+                "title": "extend",
+                "depth": 3,
+                "id": "extend"
               }
             ]
           },
@@ -370,6 +375,11 @@
               "title": "del",
               "depth": 3,
               "id": "del"
+            },
+            {
+              "title": "extend",
+              "depth": 3,
+              "id": "extend"
             }
           ]
         },
