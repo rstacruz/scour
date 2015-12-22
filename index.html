@@ -218,7 +218,7 @@ user.keypath             <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;a
 making them suitable for chaining.</p>
 <h3 id="go">go</h3>
 <blockquote>
-<p><code>go(keypath)</code></p>
+<p><code>go(keypath...)</code></p>
 </blockquote>
 <p>Navigates down to a given <code>keypath</code>. Always returns a <a href="#scour">scour</a> instance.</p>
 <pre><code class="lang-js">data =
@@ -230,7 +230,15 @@ scour(data).go(<span class="pl-s">&apos;users&apos;</span>)                    <
 scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>)              <span class="pl-c">// =&gt; [scour (name, last)]</span>
 scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>).get(<span class="pl-s">&apos;name&apos;</span>)  <span class="pl-c">// =&gt; &apos;steve&apos;</span>
 </code></pre>
-<p>If you use it on a non-object or non-array value, it will still be
+<p><strong>Dot notation:</strong>
+Keypaths can be given in dot notation or as an array. These statements are
+equivalent.</p>
+<pre><code class="lang-js">scour(data).go(<span class="pl-s">&apos;users.12&apos;</span>)
+scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>)
+scour(data).go([<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>])
+</code></pre>
+<p><strong>Non objects:</strong>
+If you use it on a non-object or non-array value, it will still be
 returned as a <a href="#scour">scour</a> instance. This is not likely what you want; use
 <a href="#get">get()</a> instead.</p>
 <pre><code class="lang-js">attr = scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
@@ -282,7 +290,7 @@ scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&a
 <p>For retrieving data.</p>
 <h3 id="get">get</h3>
 <blockquote>
-<p><code>get(keypath)</code></p>
+<p><code>get(keypath...)</code></p>
 </blockquote>
 <p>Returns data in a given <code>keypath</code>.</p>
 <pre><code class="lang-js">data =
@@ -292,7 +300,11 @@ scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&a
 
 scour(data).get(<span class="pl-s">&apos;users&apos;</span>)       <span class="pl-c">// =&gt; same as data.users</span>
 scour(data).go(<span class="pl-s">&apos;users&apos;</span>).value  <span class="pl-c">// =&gt; same as data.users</span>
-
+</code></pre>
+<p><strong>Dot notation:</strong>
+Like <a href="#go">go()</a>, the <code>keypath</code> can be given in dot notation.</p>
+<pre><code class="lang-js">scour(data).get(<span class="pl-s">&apos;books.featured.name&apos;</span>)
+scour(data).get(<span class="pl-s">&apos;books&apos;</span>, <span class="pl-s">&apos;featured&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
 </code></pre>
 <h3 id="len">len</h3>
 <blockquote>
@@ -337,12 +349,44 @@ names = scour(users).toArray()
 <blockquote>
 <p><code>set(keypath, value)</code></p>
 </blockquote>
-<p>Sets values. (todo)</p>
+<p>Sets values immutably.</p>
+<pre><code class="lang-js">data = { bob: { name: <span class="pl-s">&apos;Bob&apos;</span> } }
+db = scour(data)
+db.set([ <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span> ], <span class="pl-s">&apos;Robert&apos;</span>)
+<span class="pl-c">// db.value == { bob: { name: &apos;Robert&apos; } }</span>
+</code></pre>
+<p>This is an immutable function, and will return a new object. It won&#x2019;t
+modify your original object.</p>
+<pre><code class="lang-js">profile = scour({ name: <span class="pl-s">&apos;John&apos;</span> })
+profile2 = profile.set([ <span class="pl-s">&apos;email&apos;</span> ], <span class="pl-s">&apos;john@gmail.com&apos;</span>)
+</code></pre>
+<pre><code class="lang-js">profile.value   <span class="pl-c">// =&gt; { name: &apos;John&apos; }</span>
+profile2.value  <span class="pl-c">// =&gt; { name: &apos;John&apos;, email: &apos;john@gmail.com&apos; }</span>
+</code></pre>
+<p>When used within a scope, it will return a new object with a new root.</p>
+<pre><code class="lang-js">data = { book: { title: <span class="pl-s">&apos;What if?&apos;</span> } }
+db = scour(data)
+</code></pre>
+<pre><code class="lang-js">book = db.go(<span class="pl-s">&apos;book&apos;</span>).set([<span class="pl-s">&apos;id&apos;</span>], <span class="hljs-number">23</span>)
+</code></pre>
+<pre><code class="lang-js">db          <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos; } }]</span>
+book.root   <span class="pl-c">// =&gt; [scour { book: { title: &apos;What if?&apos;, id: 23 } }]</span>
+</code></pre>
+<p>Like <a href="#go">go()</a> and <a href="#get">get()</a>, the keypath can be given in dot notation or an
+array.</p>
+<pre><code class="lang-js">scour(data).set(<span class="pl-s">&apos;menu.left.visible&apos;</span>, <span class="pl-c1">true</span>)
+scour(data).set([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>], <span class="pl-c1">true</span>)
+</code></pre>
 <h3 id="del">del</h3>
 <blockquote>
 <p><code>del(keypath)</code></p>
 </blockquote>
 <p>Deletes values. (todo)</p>
+<p>Like <a href="#set">set()</a>, the keypath can be given in dot notation or an
+array.</p>
+<pre><code class="lang-js">scour(data).del(<span class="pl-s">&apos;menu.left.visible&apos;</span>)
+scour(data).del([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>])
+</code></pre>
 <h3 id="extend">extend</h3>
 <blockquote>
 <p><code>extend(keypath)</code></p>
@@ -458,6 +502,11 @@ implementation of <code>Array.forEach</code> that also works for objects.</p>
 <p><code>getv(object, key, defaultValue)</code></p>
 </blockquote>
 <p>Helper</p>
+<h3 id="normalizekeypath">normalizeKeypath</h3>
+<blockquote>
+<p><code>normalizeKeypath(keypath, isArguments)</code></p>
+</blockquote>
+<p>Helper</p>
 <!--api:end-->
 <h2 id="thanks">Thanks</h2>
 <p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
@@ -570,6 +619,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#scour.each" class="link title link-scour.each">scour.each</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#getv" class="link title link-getv">getv</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#normalizekeypath" class="link title link-normalizekeypath">normalizeKeypath</a>
                 </li>
               </ul>
             </li>

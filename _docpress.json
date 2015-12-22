@@ -223,6 +223,11 @@
                 "title": "getv",
                 "depth": 3,
                 "id": "getv"
+              },
+              {
+                "title": "normalizeKeypath",
+                "depth": 3,
+                "id": "normalizekeypath"
               }
             ]
           },
@@ -456,6 +461,11 @@
               "title": "getv",
               "depth": 3,
               "id": "getv"
+            },
+            {
+              "title": "normalizeKeypath",
+              "depth": 3,
+              "id": "normalizekeypath"
             }
           ]
         },
