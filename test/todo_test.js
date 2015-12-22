@@ -10,6 +10,7 @@ describe('todo', function () {
   it('.get() no args', done)
   it('dot notation', done)
   it('always return scour objects', done)
+  it('.len() for undefined?')
 
   describe('array', function () {
     it('.initial')

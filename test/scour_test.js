@@ -129,6 +129,14 @@ describe('index', function () {
       expect(scour({ a: 1, b: 2 }).toArray()).toEqual([1, 2])
     })
 
+    it('works for objects with .values()', function () {
+      expect(scour({ a: 1, b: 2 }).values()).toEqual([1, 2])
+    })
+
+    it('works for arrays', function () {
+      expect(scour(list).toArray()).toEqual(list)
+    })
+
     it('works for strings', function () {
       expect(scour('12').toArray()).toEqual(['1', '2'])
     })
@@ -202,6 +210,11 @@ describe('index', function () {
     it('works for arrays', function () {
       expect(scour(list).len())
         .toEqual(list.length)
+    })
+
+    it('works for undefined', function () {
+      expect(scour(undefined).len())
+        .toEqual(0)
     })
   })
 
