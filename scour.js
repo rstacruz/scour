@@ -173,6 +173,10 @@ scour.prototype = {
    */
 
   at (index) {
+    if (Array.isArray(this.value)) {
+      return this._get(this.value[index], [ '' + index ])
+    }
+
     const key = this.keys()[index]
     return this._get(this.value[key], [ '' + key ])
   },
