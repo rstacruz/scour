@@ -24,26 +24,36 @@ Here, we'll use [use()](../README.md#use) to define extra methods that will
 be applied to certain keypaths.
 
 ```js
+Root = {
+  artists () { return this.go('artists') },
+  albums () { return this.go('albums') }
+}
+```
+
+```js
+Artist = {
+  // Defines a has-many relationship
+  albums () {
+    return this.root.albums().filter({ artist_id: this.get('id') })
+  }
+}
+```
+
+```js
+Album = {
+  // Defines a belongs-to relationship
+  artist () {
+    return this.root.artists().go(this.get('artist_id'))
+  }
+}
+```
+
+```js
 db = scour(data)
   .use({
-    '': {
-      artists () { return this.go('artists') },
-      albums () { return this.go('albums') }
-    },
-
-    'artists.*': {
-      // Defines a has-many relationship
-      albums () {
-        return this.root.albums().filter({ artist_id: this.get('id') })
-      }
-    },
-
-    'albums.*': {
-      // Defines a belongs-to relationship
-      artist () {
-        return this.root.artists().go(this.get('artist_id'))
-      }
-    }
+    '': Root,
+    'artists.*': Artist,
+    'albums.*': Album
   })
 ```
 
