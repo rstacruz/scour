@@ -2,7 +2,7 @@ language: node_js
 node_js:
 - "4.1"
 script:
-- npm test
+- npm run coverage
 - ./node_modules/.bin/docpress build
 after_success:
 - if [ "$TRAVIS_BRANCH" = "master" -a "$TRAVIS_PULL_REQUEST" = "false" ]; then ./node_modules/.bin/git-update-ghpages -e; fi
