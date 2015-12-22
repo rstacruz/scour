@@ -42,26 +42,30 @@ have the <code>artist_id</code> property that maps to the ID&#x2019;s in <code>a
 <p>You can define extensions to traverse this intelligently, like ActiveRecord.
 Here, we&#x2019;ll use <a href="index.html#use">use()</a> to define extra methods that will
 be applied to certain keypaths.</p>
+<pre><code class="lang-js">Root = {
+  artists () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>) },
+  albums () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;albums&apos;</span>) }
+}
+</code></pre>
+<pre><code class="lang-js">Artist = {
+  <span class="pl-c">// Defines a has-many relationship</span>
+  albums () {
+    <span class="pl-k">return</span> <span class="pl-k">this</span>.root.albums().filter({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
+  }
+}
+</code></pre>
+<pre><code class="lang-js">Album = {
+  <span class="pl-c">// Defines a belongs-to relationship</span>
+  artist () {
+    <span class="pl-k">return</span> <span class="pl-k">this</span>.root.artists().go(<span class="pl-k">this</span>.get(<span class="pl-s">&apos;artist_id&apos;</span>))
+  }
+}
+</code></pre>
 <pre><code class="lang-js">db = scour(data)
   .use({
-    <span class="pl-s">&apos;&apos;</span>: {
-      artists () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>) },
-      albums () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;albums&apos;</span>) }
-    },
-
-    <span class="pl-s">&apos;artists.*&apos;</span>: {
-      <span class="pl-c">// Defines a has-many relationship</span>
-      albums () {
-        <span class="pl-k">return</span> <span class="pl-k">this</span>.root.albums().filter({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
-      }
-    },
-
-    <span class="pl-s">&apos;albums.*&apos;</span>: {
-      <span class="pl-c">// Defines a belongs-to relationship</span>
-      artist () {
-        <span class="pl-k">return</span> <span class="pl-k">this</span>.root.artists().go(<span class="pl-k">this</span>.get(<span class="pl-s">&apos;artist_id&apos;</span>))
-      }
-    }
+    <span class="pl-s">&apos;&apos;</span>: Root,
+    <span class="pl-s">&apos;artists.*&apos;</span>: Artist,
+    <span class="pl-s">&apos;albums.*&apos;</span>: Album
   })
 </code></pre>
 <h3 id="root-extensions">Root extensions</h3>
