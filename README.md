@@ -163,7 +163,31 @@ Returns a scour instance wrapping `object`.
 scour(obj)
 ```
 
-Has the following properties:
+It can be called on any Object or Array. (In fact, it can be called on
+anything, but is only generally useful for Objects and Arrays.)
+
+```js
+data = { menu: { visible: true, position: 'left' } }
+scour(data).get('menu.visible')
+
+list = [ { id: 2 }, { id: 5 }, { id: 12 } ]
+scour(list).get('0.id')
+```
+
+__Chaining__:
+You can use it to start method chains. In fact, the intended use is to keep
+your root [scour] object around, and chain from this.
+
+```js
+db = scour({ menu: { visible: true, position: 'left' } })
+
+// Elsewhere:
+menu = db.go('menu')
+menu.get('visible')
+```
+
+__Properties__:
+It the [root], [value] and [keypath] properties.
 
 ```js
 s = scour(obj)
@@ -172,25 +196,13 @@ s.value            // => raw data (that is, `obj`)
 s.keypath          // => string array
 ```
 
-You can access the raw data using `.value`.
+__Accessing the value:__
+You can access the raw data using [value].
 
 ```js
 db = scour(data)
 db.value               // => same as `data`
 db.go('users').value   // => same as `data.users`
-```
-
-When you traverse down using [go()], [root] will point to the root
-scour instance, and [keypath] will be updated accordingly.
-
-```js
-db = scour(data)
-admins = db.go('users').go('admins')
-```
-
-```js
-admins.keypath  // => ['users', 'admins']
-admins.root     // => db
 ```
 
 ## Attributes
@@ -475,9 +487,7 @@ modify your original object.
 ```js
 profile = scour({ name: 'John' })
 profile2 = profile.set([ 'email' ], 'john@gmail.com')
-```
 
-```js
 profile.value   // => { name: 'John' }
 profile2.value  // => { name: 'John', email: 'john@gmail.com' }
 ```
@@ -489,13 +499,9 @@ with a new [root]. You can then get this root using `.root`.
 ```js
 data = { book: { title: 'What if?' } }
 db = scour(data)
-```
 
-```js
 book = db.go('book').set(['id'], 23)
-```
 
-```js
 db          // => [scour { book: { title: 'What if?' } }]
 book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
 ```
@@ -524,12 +530,15 @@ scour(data).del('menu.left.visible')
 scour(data).del(['menu', 'left', 'visible'])
 ```
 
+See [set()] for more information on working with immutables.
+
 ### extend
 
-> `extend()`
+> `extend(objects...)`
 
 Extends the data with more values. Returns a [scour]-wrapped object. Only
-supports objects; arrays and non-objects will return undefined.
+supports objects; arrays and non-objects will return undefined. Just like
+[Object.assign], you may pass multiple objects to the parameters.
 
 ```js
 data  = { a: 1, b: 2 }
@@ -540,6 +549,8 @@ data2 = scour(data).extend({ c: 3 })
 data2  // => [scour { a: 1, b: 2, c: 3 }]
 data2.value   // => { a: 1, b: 2, c: 3 }
 ```
+
+See [set()] for more information on working with immutables.
 
 ## Utility methods
 
@@ -734,6 +745,7 @@ This is also available as `require('scourjs/utilities/map')`.
 [value]: #value
 [use()]: #use
 
+[Object.assign]: https://devdocs.io/javascript/global_objects/object/assign
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
 [Immutable.js]: http://facebook.github.io/immutable-js/

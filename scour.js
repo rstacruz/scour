@@ -408,8 +408,10 @@ scour.prototype = {
   },
 
   /**
+   * extend : extend(objects...)
    * Extends the data with more values. Returns a [scour]-wrapped object. Only
-   * supports objects; arrays and non-objects will return undefined.
+   * supports objects; arrays and non-objects will return undefined. Just like
+   * [Object.assign], you may pass multiple objects to the parameters.
    *
    *    data  = { a: 1, b: 2 }
    *    data2 = scour(data).extend({ c: 3 })
