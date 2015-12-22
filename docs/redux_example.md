@@ -12,7 +12,7 @@ We're going to use a scour-wrapped object as the `initialState` for `createStore
 import { createStore } from 'redux'
 
 function reducer (state, action) {
-  // `state` is a scour-wrapped object.
+  /* `state` is a scour-wrapped object. */
   switch (action.type) {
     case 'LOAD_TRACKS':
       return state.set('tracks', action.data)
@@ -27,6 +27,7 @@ function reducer (state, action) {
       var track = state.go('tracks', action.trackId)
       return state.set('audio.current_track', track)
   }
+  return state
 }
 
 store = createStore(reducer, scour({}))
