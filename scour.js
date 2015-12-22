@@ -543,8 +543,8 @@ scour.del = require('./utilities/del')
 
 scour.each = require('./utilities/each')
 
-/*
- * Helper
+/**
+ * Internal: Helper
  */
 
 function getv (object, key, defaultValue) {
@@ -553,8 +553,9 @@ function getv (object, key, defaultValue) {
     : defaultValue
 }
 
-/*
- * Helper
+/**
+ * Internal: normalizes a keypath, allowing dot syntax, and normalizing them
+ * all to strings.
  */
 
 function normalizeKeypath (keypath, isArguments) {

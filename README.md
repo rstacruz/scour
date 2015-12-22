@@ -642,18 +642,6 @@ result = del(data, ['users', 'bob', 'name'])
 
 Iterates through `iterable`, either an object or an array. This is an
 implementation of `Array.forEach` that also works for objects.
-
-### getv
-
-> `getv(object, key, defaultValue)`
-
-Helper
-
-### normalizeKeypath
-
-> `normalizeKeypath(keypath, isArguments)`
-
-Helper
 <!--api:end-->
 
 [filter()]: #filter
