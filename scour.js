@@ -3,7 +3,6 @@
 
 const sift = require('sift')
 const assign = require('object-assign')
-const collections = require('./utilities/collections')
 const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
 const getv = require('./lib/getv')
@@ -552,7 +551,7 @@ scour.prototype = {
    *     // => [ 'steve', 'bill' ]
    */
 
-  map: thisify(collections.map),
+  map: thisify(require('./utilities/map')),
 
   /**
    * Internal: spawns an instance with a given data and keypath.
@@ -608,7 +607,7 @@ scour.prototype = {
  *     result = set(data, ['users', 'bob', 'name'], 'robert')
  *     // => { users: { bob: { name: 'robert' } } }
  *
- * This functionality is also available as `require('scourjs/utilities/set')`.
+ * This is also available as `require('scourjs/utilities/set')`.
  */
 
 scour.set = require('./utilities/set')
@@ -622,7 +621,7 @@ scour.set = require('./utilities/set')
  *
  *     // => { users: { bob: {} } }
  *
- * This functionality is also available as `require('scourjs/utilities/del')`.
+ * This is also available as `require('scourjs/utilities/del')`.
  */
 
 scour.del = require('./utilities/del')
@@ -632,12 +631,19 @@ scour.del = require('./utilities/del')
  * Iterates through `iterable`, either an object or an array. This is an
  * implementation of `Array.forEach` that also works for objects.
  *
- * This functionality is also available as `require('scourjs/utilities/each')`.
+ * This is also available as `require('scourjs/utilities/each')`.
  */
 
 scour.each = require('./utilities/each')
 
-scour.map = collections.map
+/**
+ * scour.map : scour.map(iterable, fn)
+ * Works like Array#map, but also works on objects.
+ *
+ * This is also available as `require('scourjs/utilities/map')`.
+ */
+
+scour.map = require('./utilities/map')
 
 /**
  * Internal: decorates collection functions
