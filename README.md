@@ -17,7 +17,7 @@ As a simple utility with a broad purpose, it can be used to solve many problems.
 ## Install
 
 ```sh
-npm install --save-exact rstacruz/scour
+npm install --save-exact scourjs
 ```
 
 ```js
