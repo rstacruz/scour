@@ -96,13 +96,13 @@ data = scour(data)
 
 ### Advanced traversing
 
-Use [where()](#where) to filter results with advanced querying.
+Use [filter()] to filter results with advanced querying.
 
 ```js
 users = scour(data).go('users')
 
 users
-  .where({ confirmed: true })
+  .filter({ confirmed: true })
   .at(0)
   .get('name')   // => 'shane'
 ```
@@ -125,7 +125,7 @@ db = scour(data)
       }
       albums () {
         return this.root.go('albums')
-          .where({ artist_id: this.get('id') })
+          .filter({ artist_id: this.get('id') })
       }
     }
   })
@@ -209,7 +209,7 @@ users =
     { name: 'kyle', admin: false } ]
 
 scour(users)
-  .where({ admin: true })
+  .filter({ admin: true })
   .value
 // => [ { name: 'john', admin: true } ]
 
@@ -225,16 +225,17 @@ scoped to a keypath.  Each of these [scour] objects have a `root` attribute
 that's a reference to the top-level [scour] object.
 
 ```js
-data = scour(...)
+db = scour(...)
 
-photos = data.go('photos')
-photos.root    // => same as `data`
+photos = db.go('photos')
+photos.root    // => same as `db`
 ```
 
 This allows you to return to the root when needed.
 
 ```js
-artist = scour(...).go('artists', '9328')
+db = scour(...)
+artist = db.go('artists', '9328')
 artist.root.go('albums').find({ artist_id: artist.get('id') })
 ```
 
@@ -247,9 +248,9 @@ relative to the root. Each time you traverse using [go()], a new [scour]
 object is spawned.
 
 ```js
-data = scour(...)
+db = scour(...)
 
-users = data.go('users')
+users = db.go('users')
 users.keypath            // => ['users']
 
 admins = users.go('admins')
@@ -310,9 +311,9 @@ scour(users).get(12)        // => [scour { name: 'steve' }]
 
 ```
 
-### where
+### filter
 
-> `where(conditions)`
+> `filter(conditions)`
 
 Sifts through the values and returns a set that matches given
 `conditions`. Supports functions, simple objects, and MongoDB-style
@@ -321,16 +322,16 @@ queries.
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
 ```js
-scour(data).where({ name: 'john' })
-scour(data).where({ name: { $in: ['moe', 'larry'] })
+scour(data).filter({ name: 'john' })
+scour(data).filter({ name: { $in: ['moe', 'larry'] })
 ```
 
 MongoDB-style queries are supported as provided by [sift.js].  For
 reference, see [MongoDB Query Operators][query-ops].
 
 ```js
-scour(products).where({ price: { $gt: 200 })
-scour(articles).where({ published_at: { $not: null }})
+scour(products).filter({ price: { $gt: 200 })
+scour(articles).filter({ published_at: { $not: null }})
 ```
 
 ### find
@@ -339,8 +340,8 @@ scour(articles).where({ published_at: { $not: null }})
 
 Returns the first value that matches `conditions`.  Supports MongoDB-style
 queries. For reference, see [MongoDB Query Operators][query-ops]. Also
-see [where()], as this is functionally-equivalent to the first result of
-`where()`.
+see [filter()], as this is functionally-equivalent to the first result of
+`filter()`.
 
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
@@ -520,12 +521,13 @@ names = scour(users).map((user, key) => user.get('name'))
 ```
 <!--api:end-->
 
-[scour]: #scour
+[filter()]: #filter
 [get()]: #get
 [go()]: #go
-[where()]: #where
-[root]: #root
 [keypath]: #keypath
+[root]: #root
+[scour]: #scour
+
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
 [Immutable.js]: http://facebook.github.io/immutable-js/

@@ -118,9 +118,9 @@ describe('index', function () {
     })
   })
 
-  describe('.where()', function () {
+  describe('.filter()', function () {
     beforeEach(function () {
-      this.results = scour(data).go('users').where({ name: { $regex: /^j/ } })
+      this.results = scour(data).go('users').filter({ name: { $regex: /^j/ } })
     })
 
     it('has results', function () {
@@ -130,9 +130,9 @@ describe('index', function () {
     })
   })
 
-  describe('.where() again', function () {
+  describe('.filter() again', function () {
     beforeEach(function () {
-      this.results = scour(data).go('users').where({ name: { $regex: /^a/ } })
+      this.results = scour(data).go('users').filter({ name: { $regex: /^a/ } })
     })
 
     it('has results indexed by id', function () {
@@ -144,9 +144,9 @@ describe('index', function () {
     })
   })
 
-  describe('.where()', function () {
+  describe('.filter()', function () {
     beforeEach(function () {
-      this.results = scour(data).go('users').where({ name: { $regex: /^j/ } })
+      this.results = scour(data).go('users').filter({ name: { $regex: /^j/ } })
     })
 
     it('works', function () {
@@ -156,9 +156,9 @@ describe('index', function () {
     })
   })
 
-  describe('.where() empty', function () {
+  describe('.filter() empty', function () {
     beforeEach(function () {
-      this.results = scour(data).go('users').where({ abc: 'def' })
+      this.results = scour(data).go('users').filter({ abc: 'def' })
     })
 
     it('works', function () {
