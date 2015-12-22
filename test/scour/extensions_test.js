@@ -2,7 +2,7 @@
 
 const scour = require('../../scour')
 
-describe('extensions', function () {
+describe('.use()', function () {
   const data =
     { artists:
       { 1: { id: 1, name: 'Ella Fitzgerald' },

@@ -2,7 +2,7 @@
 
 const scour = require('../../scour')
 
-describe('gather', function () {
+describe('.gather()', function () {
   describe('works for objects', function () {
     const data = [
       { name: 'David' },

@@ -304,28 +304,6 @@ describe('index', function () {
     })
   })
 
-  describe('.filter()', function () {
-    beforeEach(function () {
-      this.results = scour(data).go('users').filter({ name: { $regex: /^j/ } })
-    })
-
-    it('works', function () {
-      expect(this.results.go(1).value).toEqual({ name: 'john' })
-      expect(this.results.go(2).value).toEqual({ name: 'jake' })
-      expect(this.results.go(3)).toEqual(undefined)
-    })
-  })
-
-  describe('.filter() empty', function () {
-    beforeEach(function () {
-      this.results = scour(data).go('users').filter({ abc: 'def' })
-    })
-
-    it('works', function () {
-      expect(this.results.len()).toEqual(0)
-    })
-  })
-
   describe('.find()', function () {
     beforeEach(function () {
       this.result = scour(data).go('users').find({ name: { $regex: /^j/ } })
@@ -402,87 +380,6 @@ describe('index', function () {
     it('works', function () {
       expect(JSON.stringify(scour(data)))
         .toEqual(JSON.stringify(data))
-    })
-  })
-
-  describe('.del()', function () {
-    it('works for root', function () {
-      const data = { a: { b: 'foo' } }
-      const result = scour(data).del([ 'a', 'b' ])
-
-      expect(result.value).toEqual({ a: {} })
-      expect(result.keypath).toEqual([])
-    })
-
-    it('allows dot notation', function () {
-      const data = { a: { b: 'foo' } }
-      const result = scour(data).del('a.b')
-
-      expect(result.value).toEqual({ a: {} })
-      expect(result.keypath).toEqual([])
-    })
-
-    describe('for non-root', function () {
-      var data, root, a, result
-
-      beforeEach(function () {
-        data = { a: { b: { c: 'd' } } }
-        root = scour(data)
-        a = root.go('a')
-        result = a.del('b')
-      })
-
-      it('works', function () {
-        expect(result.value).toEqual({})
-      })
-
-      it('sets a new root', function () {
-        expect(result.root.value).toEqual({ a: {} })
-      })
-    })
-  })
-
-  describe('.extend()', function () {
-    it('works', function () {
-      const data = { a: { b: 1 } }
-      const result = scour(data).extend({ c: 2 })
-      expect(result.value).toEqual({ a: { b: 1 }, c: 2 })
-    })
-
-    it('works in a scope', function () {
-      const data = { a: { b: { c: 1 } } }
-      const result = scour(data).go('a').extend({ b: 2 })
-      expect(result.value).toEqual({ b: 2 })
-    })
-
-    it('spawns a new root', function () {
-      const data = { a: { b: { c: 1 } } }
-      const result = scour(data).go('a').extend({ b: 2 })
-      expect(result.root.value).toEqual({ a: { b: 2 } })
-    })
-
-    it('overrides objects', function () {
-      const data = { a: { b: 1 } }
-      const result = scour(data).extend({ a: { c: 2 } })
-      expect(result.value).toEqual({ a: { c: 2 } })
-    })
-
-    it('is chainable', function () {
-      const data = { a: { b: 1 } }
-      const result = scour(data).extend({ c: { d: 2 } })
-      expect(result.go('c').get('d')).toEqual(2)
-    })
-
-    it('fails on non-objects', function () {
-      expect(scour('hello').extend({ a: 1 })).toEqual(undefined)
-    })
-
-    it('fails on arrays', function () {
-      expect(scour(list).extend({ a: 1 })).toEqual(undefined)
-    })
-
-    it('fails on non-objects being passed as arguments', function () {
-      expect(scour({}).extend('huh')).toEqual(undefined)
     })
   })
 
