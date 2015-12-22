@@ -190,6 +190,23 @@
             ]
           },
           {
+            "title": "Utility functions",
+            "depth": 2,
+            "id": "utility-functions",
+            "headings": [
+              {
+                "title": "scour.set",
+                "depth": 3,
+                "id": "scour.set"
+              },
+              {
+                "title": "scour.del",
+                "depth": 3,
+                "id": "scour.del"
+              }
+            ]
+          },
+          {
             "title": "Thanks",
             "depth": 2,
             "id": "thanks"
@@ -382,6 +399,23 @@
               "title": "map",
               "depth": 3,
               "id": "map"
+            }
+          ]
+        },
+        {
+          "title": "Utility functions",
+          "depth": 2,
+          "id": "utility-functions",
+          "headings": [
+            {
+              "title": "scour.set",
+              "depth": 3,
+              "id": "scour.set"
+            },
+            {
+              "title": "scour.del",
+              "depth": 3,
+              "id": "scour.del"
             }
           ]
         },

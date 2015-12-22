@@ -413,6 +413,30 @@ names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;nam
 <span class="pl-c">// =&gt; [ &apos;steve&apos;, &apos;bill&apos; ]</span>
 
 </code></pre>
+<h2 id="utility-functions">Utility functions</h2>
+<p>These are utilities that don&#x2019;t need a wrapped object.</p>
+<h3 id="scour.set">scour.set</h3>
+<blockquote>
+<p><code>scour.set(object, keypath, value)</code></p>
+</blockquote>
+<p>Sets a <code>keypath</code> into an <code>object</code> immutably.</p>
+<pre><code class="lang-js">data = { users: { bob: { name: <span class="pl-s">&apos;john&apos;</span> } } }
+
+result = set(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span>], <span class="pl-s">&apos;robert&apos;</span>)
+<span class="pl-c">// =&gt; { users: { bob: { name: &apos;robert&apos; } } }</span>
+
+</code></pre>
+<h3 id="scour.del">scour.del</h3>
+<blockquote>
+<p><code>scour.del(object, keypath)</code></p>
+</blockquote>
+<p>Deletes a <code>keypath</code> from an <code>object</code> immutably.</p>
+<pre><code class="lang-js">data = { users: { bob: { name: <span class="pl-s">&apos;robert&apos;</span> } } }
+result = del(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span>])
+
+<span class="pl-c">// =&gt; { users: { bob: {} } }</span>
+
+</code></pre>
 <!--api:end-->
 <h2 id="thanks">Thanks</h2>
 <p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
@@ -509,6 +533,14 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#each" class="link title link-each">each</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#map" class="link title link-map">map</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a href="#utility-functions" class="link title link-utility-functions">Utility functions</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="#scour.set" class="link title link-scour.set">scour.set</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#scour.del" class="link title link-scour.del">scour.del</a>
                 </li>
               </ul>
             </li>
