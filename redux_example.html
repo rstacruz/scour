@@ -24,14 +24,15 @@
           </div>
         </div>
         <div class="markdown-body"><h1 id="redux-example">Redux example</h1>
-<p>(I&#x2019;ll explain later.)</p>
+<p>(I&#x2019;ll explain more later.)</p>
+<p>If all your reducers are going to be using scour, you can set your <code>state</code> as a scour-wrapped object.</p>
 <pre><code class="lang-js"><span class="pl-k">import</span> { createStore } <span class="pl-k">from</span> <span class="pl-s">&apos;redux&apos;</span>
 
 function reducer (state, action) {
-  // state is a scour-wrapped object.
+  // `state` is a scour-wrapped object.
   switch (action.type) {
-    case <span class="pl-s">&apos;RESET&apos;</span>:
-      return state.set(action.data)
+    case <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>:
+      return state.set(<span class="pl-s">&apos;tracks&apos;</span>, action.data)
 
     case <span class="pl-s">&apos;PLAY&apos;</span>:
       return state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;playing&apos;</span>)
@@ -39,14 +40,30 @@ function reducer (state, action) {
     case <span class="pl-s">&apos;STOP&apos;</span>:
       return state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;stopped&apos;</span>)
 
-    case <span class="pl-s">&apos;PLAY_TRACK&apos;</span>:
+    case <span class="pl-s">&apos;SELECT_TRACK&apos;</span>:
       var track = state.go(<span class="pl-s">&apos;tracks&apos;</span>, action.trackId)
       return state.set(<span class="pl-s">&apos;audio.current_track&apos;</span>, track)
   }
 }
 
-createStore(reducer, scour({}))
+store = createStore(reducer, scour({}))
 </code></pre>
+<h3 id="dispatching-events">Dispatching events</h3>
+<p>Here&#x2019;s an example.</p>
+<pre><code class="lang-js">store.dispatch({
+  type: <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>,
+  data: {
+    <span class="hljs-number">1</span>: { title: <span class="pl-s">&apos;Levels&apos;</span>, artist: <span class="pl-s">&apos;Avicii&apos;</span> },
+    <span class="hljs-number">2</span>: { title: <span class="pl-s">&apos;Bonfire&apos;</span>, artist: <span class="pl-s">&apos;Knife Party&apos;</span> },
+    <span class="hljs-number">3</span>: { title: <span class="pl-s">&apos;Hello&apos;</span>, artist: <span class="pl-s">&apos;Adele&apos;</span> }
+  }
+})
+
+store.dispatch({ type: <span class="pl-s">&apos;SELECT_TRACK&apos;</span>, <span class="hljs-number">3</span> })
+store.dispatch({ type: <span class="pl-s">&apos;PLAY&apos;</span> })
+</code></pre>
+<h3 id="using-with-react">Using with React</h3>
+<p>Hmm&#x2026; I&#x2019;ll explain later.</p>
 
         </div>
         <div class="footer-nav">
@@ -65,6 +82,12 @@ createStore(reducer, scour({}))
                 <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
                 </li>
                 <li class="menu-item -level-2"><a href="redux_example.html" class="link title -active link-redux_example">Redux example</a>
+                  <ul class="headings heading-list">
+                    <li class="heading-item -depth-3"><a href="#dispatching-events" class="hlink link-dispatching-events">Dispatching events</a>
+                    </li>
+                    <li class="heading-item -depth-3"><a href="#using-with-react" class="hlink link-using-with-react">Using with React</a>
+                    </li>
+                  </ul>
                 </li>
               </ul>
             </li>

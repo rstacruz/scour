@@ -291,7 +291,19 @@
             "title": "Redux example",
             "source": "docs/redux_example.md",
             "url": "redux_example.html",
-            "slug": "redux_example"
+            "slug": "redux_example",
+            "headings": [
+              {
+                "title": "Dispatching events",
+                "depth": 3,
+                "id": "dispatching-events"
+              },
+              {
+                "title": "Using with React",
+                "depth": 3,
+                "id": "using-with-react"
+              }
+            ]
           }
         ]
       }
@@ -580,7 +592,19 @@
     "redux_example.html": {
       "source": "docs/redux_example.md",
       "title": "Redux example",
-      "slug": "redux_example"
+      "slug": "redux_example",
+      "headings": [
+        {
+          "title": "Dispatching events",
+          "depth": 3,
+          "id": "dispatching-events"
+        },
+        {
+          "title": "Using with React",
+          "depth": 3,
+          "id": "using-with-react"
+        }
+      ]
     }
   },
   "sources": {
