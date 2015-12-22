@@ -397,7 +397,8 @@ scour.prototype = {
         .set(this.keypath.concat(keypath), value).go(this.keypath)
     }
 
-    const result = scour.set(this.value, keypath, value)
+    // use .valueOf() to denature any scour-wrapping or String() or whatnot
+    const result = scour.set(this.value, keypath, value.valueOf())
     return this.replace(result, { root: null })
   },
 
