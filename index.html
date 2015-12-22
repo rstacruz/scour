@@ -421,10 +421,11 @@ scour(data).del([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">
 <p>See <a href="#set">set()</a> for more information on working with immutables.</p>
 <h3 id="extend">extend</h3>
 <blockquote>
-<p><code>extend()</code></p>
+<p><code>extend(objects...)</code></p>
 </blockquote>
 <p>Extends the data with more values. Returns a <a href="#scour">scour</a>-wrapped object. Only
-supports objects; arrays and non-objects will return undefined.</p>
+supports objects; arrays and non-objects will return undefined. Just like
+<a href="https://devdocs.io/javascript/global_objects/object/assign">Object.assign</a>, you may pass multiple objects to the parameters.</p>
 <pre><code class="lang-js">data  = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> }
 data2 = scour(data).extend({ c: <span class="hljs-number">3</span> })
 </code></pre>
