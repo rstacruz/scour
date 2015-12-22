@@ -2,9 +2,9 @@
 'use strict'
 
 const sift = require('sift')
-const each = require('./each')
-const define = require('./define_property')
-const collections = require('./collections')
+const each = require('./lib/each')
+const define = require('./lib/define_property')
+const collections = require('./lib/collections')
 
 /**
  * scour : scour(object)
