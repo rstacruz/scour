@@ -31,7 +31,7 @@
 <pre><code class="lang-js"><span class="pl-k">import</span> { createStore } <span class="pl-k">from</span> <span class="pl-s">&apos;redux&apos;</span>
 
 function reducer (state, action) {
-  // `state` is a scour-wrapped object.
+  /* `state` is a scour-wrapped object. */
   switch (action.type) {
     case <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>:
       return state.set(<span class="pl-s">&apos;tracks&apos;</span>, action.data)
@@ -46,6 +46,7 @@ function reducer (state, action) {
       var track = state.go(<span class="pl-s">&apos;tracks&apos;</span>, action.trackId)
       return state.set(<span class="pl-s">&apos;audio.current_track&apos;</span>, track)
   }
+  return state
 }
 
 store = createStore(reducer, scour({}))
