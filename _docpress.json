@@ -218,16 +218,6 @@
                 "title": "scour.each",
                 "depth": 3,
                 "id": "scour.each"
-              },
-              {
-                "title": "getv",
-                "depth": 3,
-                "id": "getv"
-              },
-              {
-                "title": "normalizeKeypath",
-                "depth": 3,
-                "id": "normalizekeypath"
               }
             ]
           },
@@ -456,16 +446,6 @@
               "title": "scour.each",
               "depth": 3,
               "id": "scour.each"
-            },
-            {
-              "title": "getv",
-              "depth": 3,
-              "id": "getv"
-            },
-            {
-              "title": "normalizeKeypath",
-              "depth": 3,
-              "id": "normalizekeypath"
             }
           ]
         },
