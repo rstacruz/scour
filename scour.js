@@ -488,6 +488,10 @@ scour.prototype = {
     return this.value
   },
 
+  valueOf () {
+    return this.value
+  },
+
   toString () {
     return `[scour (${this.keys().join(', ')})]`
   },
