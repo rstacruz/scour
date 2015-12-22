@@ -280,7 +280,31 @@ scour.prototype = {
    */
 
   /**
-   * Sets values. (todo)
+   * Sets values immutably.
+   *
+   *    data = { bob: { name: 'Bob' } }
+   *    db = scour(data)
+   *    db.set([ 'bob', 'name' ], 'Robert')
+   *    // db.value == { bob: { name: 'Robert' } }
+   *
+   * This is an immutable function, and will return a new object. It won't
+   * modify your original object.
+   *
+   *    profile = scour({ name: 'John' })
+   *    profile2 = profile.set([ 'email' ], 'john@gmail.com')
+   *
+   *    profile.value   // => { name: 'John' }
+   *    profile2.value  // => { name: 'John', email: 'john@gmail.com' }
+   *
+   * When used within a scope, it will return a new object with a new root.
+   *
+   *    data = { book: { title: 'What if?' } }
+   *    db = scour(data)
+   *
+   *    book = db.go('book').set(['id'], 23)
+   *
+   *    db          // => [scour { book: { title: 'What if?' } }]
+   *    book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
    */
 
   set (keypath, value) {

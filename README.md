@@ -424,7 +424,43 @@ for writing data.
 
 > `set(keypath, value)`
 
-Sets values. (todo)
+Sets values immutably.
+
+```js
+data = { bob: { name: 'Bob' } }
+db = scour(data)
+db.set([ 'bob', 'name' ], 'Robert')
+// db.value == { bob: { name: 'Robert' } }
+```
+
+This is an immutable function, and will return a new object. It won't
+modify your original object.
+
+```js
+profile = scour({ name: 'John' })
+profile2 = profile.set([ 'email' ], 'john@gmail.com')
+```
+
+```js
+profile.value   // => { name: 'John' }
+profile2.value  // => { name: 'John', email: 'john@gmail.com' }
+```
+
+When used within a scope, it will return a new object with a new root.
+
+```js
+data = { book: { title: 'What if?' } }
+db = scour(data)
+```
+
+```js
+book = db.go('book').set(['id'], 23)
+```
+
+```js
+db          // => [scour { book: { title: 'What if?' } }]
+book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
+```
 
 ### del
 
@@ -570,6 +606,12 @@ result = del(data, ['users', 'bob', 'name'])
 
 Iterates through `iterable`, either an object or an array. This is an
 implementation of `Array.forEach` that also works for objects.
+
+### getv
+
+> `getv(object, key, defaultValue)`
+
+Helper
 <!--api:end-->
 
 [filter()]: #filter
