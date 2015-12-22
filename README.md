@@ -111,42 +111,46 @@ users
 
 Use [use()](#use) to add your own methods to certain keypaths. This makes them behave like models. See [a detailed example](docs/extensions_example.md) of this.
 
-```js
-db = scour(data)
-  .use({
-    '': {
-      artists () {
-        return this.go('artists')
-      }
-    },
-    'artists.*': {
-      fullname () {
-        return this.get('first_name') + ' ' + this.get('last_name')
-      }
-      albums () {
-        return this.root.go('albums')
-          .filter({ artist_id: this.get('id') })
-      }
-    }
-  })
-```
+##### Sample data
+
+<!-- {.file-heading} -->
 
 ```js
 data =
   { artists:
     { 1: { first_name: 'Louie', last_name: 'Armstrong' },
-      2: { first_name: 'Miles', last_name: 'Davis' } },
-    albums:
-    { 32: { artist_id: 1, title: 'Kind of Blue' },
-      35: { artist_id: 2, title: 'Struttin' } } }
+      2: { first_name: 'Miles', last_name: 'Davis' } } }
 ```
 
+##### Your models
+
+<!-- {.file-heading} -->
+
 ```js
+Root = {
+  artists () { return this.go('artists') }
+}
+
+Artist = {
+  fullname () {
+    return this.get('first_name') + ' ' + this.get('last_name')
+  }
+}
+```
+
+##### Using with scour
+
+<!-- {.file-heading} -->
+
+```js
+db = scour(data)
+  .use({
+    '': Root,
+    'artists.*': Artist
+  })
+
 db.artists().find({ name: 'Miles' }).fullname()
 //=> 'Miles Davis'
-
-db.artists().find({ name: 'Miles' }).albums().at(0).get('title')
-// => 'Kind of Blue'
 ```
 
 ## API
