@@ -1,6 +1,6 @@
 # Use mdx to update readme.md
 update: README.md
-README.md: lib/index.js
+README.md: scour.js
 	( sed '/<!--api-->/q' $@; \
 		echo; \
 		./node_modules/.bin/mdx $^ --format markdown -x internal; \

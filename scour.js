@@ -424,6 +424,33 @@ scour.prototype = {
   }
 }
 
+/**
+ * Utility functions:
+ * (Section) These are utilities that don't need a wrapped object.
+ */
+
+/**
+ * scour.set : scour.set(object, keypath, value)
+ * Sets a `keypath` into an `object` immutably.
+ *
+ *     data = { users: { bob: { name: 'john' } } }
+ *
+ *     result = set(data, ['users', 'bob', 'name'], 'robert')
+ *     // => { users: { bob: { name: 'robert' } } }
+ */
+
 scour.set = require('./utilities/set')
+
+/**
+ * scour.del : scour.del(object, keypath)
+ * Deletes a `keypath` from an `object` immutably.
+ *
+ *     data = { users: { bob: { name: 'robert' } } }
+ *     result = del(data, ['users', 'bob', 'name'])
+ *
+ *     // => { users: { bob: {} } }
+ */
+
+scour.del = require('./utilities/del')
 
 module.exports = scour

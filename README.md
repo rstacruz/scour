@@ -519,6 +519,38 @@ names = scour(users).map((user, key) => user.get('name'))
 // => [ 'steve', 'bill' ]
 
 ```
+
+## Utility functions
+
+These are utilities that don't need a wrapped object.
+
+### scour.set
+
+> `scour.set(object, keypath, value)`
+
+Sets a `keypath` into an `object` immutably.
+
+```js
+data = { users: { bob: { name: 'john' } } }
+
+result = set(data, ['users', 'bob', 'name'], 'robert')
+// => { users: { bob: { name: 'robert' } } }
+
+```
+
+### scour.del
+
+> `scour.del(object, keypath)`
+
+Deletes a `keypath` from an `object` immutably.
+
+```js
+data = { users: { bob: { name: 'robert' } } }
+result = del(data, ['users', 'bob', 'name'])
+
+// => { users: { bob: {} } }
+
+```
 <!--api:end-->
 
 [filter()]: #filter
