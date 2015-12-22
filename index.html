@@ -286,6 +286,18 @@ see <a href="#filter">filter()</a>, as this is functionally-equivalent to the fi
 <pre><code class="lang-js">scour(data).find({ name: <span class="pl-s">&apos;john&apos;</span> })
 scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
 </code></pre>
+<h3 id="first">first</h3>
+<blockquote>
+<p><code>first()</code></p>
+</blockquote>
+<p>Returns the first result as a <a href="#scour">scour</a>-wrapped object. This is equivalent
+to <a href="#at">at(0)</a>.</p>
+<h3 id="last">last</h3>
+<blockquote>
+<p><code>last()</code></p>
+</blockquote>
+<p>Returns the first result as a <a href="#scour">scour</a>-wrapped object. This is equivalent
+to <code>at(len() - 1)</code>: see <a href="#at">at()</a> and <a href="#len">len()</a>.</p>
 <h2 id="reading-methods">Reading methods</h2>
 <p>For retrieving data.</p>
 <h3 id="get">get</h3>
@@ -558,6 +570,10 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#filter" class="link title link-filter">filter</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#find" class="link title link-find">find</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#first" class="link title link-first">first</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#last" class="link title link-last">last</a>
                 </li>
               </ul>
             </li>
