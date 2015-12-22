@@ -407,6 +407,20 @@ array.</p>
 <pre><code class="lang-js">scour(data).set(<span class="pl-s">&apos;menu.left.visible&apos;</span>, <span class="pl-c1">true</span>)
 scour(data).set([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">&apos;left&apos;</span>, <span class="pl-s">&apos;visible&apos;</span>], <span class="pl-c1">true</span>)
 </code></pre>
+<p><strong>Updating root:</strong>
+Be aware that using all writing methods (<a href="#set">set()</a>, [del()], [extend()]) on
+scoped objects (ie, made with <a href="#go">go()</a>) will spawn a new <a href="#root">root</a> object. If
+you&#x2019;re keeping a reference to the root object, you&#x2019;ll need to update it
+accordingly.</p>
+<pre><code class="lang-js">db = scour(data)
+book = db.go(<span class="pl-s">&apos;book&apos;</span>)
+book.root === db       <span class="pl-c">// correct so far</span>
+
+book = book.set(<span class="pl-s">&apos;title&apos;</span>, <span class="pl-s">&apos;IQ84&apos;</span>)
+book = book.del(<span class="pl-s">&apos;sale_price&apos;</span>)
+book.root !== db      <span class="pl-c">// `root` has been updated</span>
+
+</code></pre>
 <h3 id="del">del</h3>
 <blockquote>
 <p><code>del(keypath)</code></p>
