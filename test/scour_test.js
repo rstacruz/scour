@@ -215,6 +215,25 @@ describe('index', function () {
       expect(user.fullname()).toEqual('Mr. john')
     })
 
+    it('works on scoped objects', function () {
+      let user = scour(data)
+        .go('users')
+        .use({ '*': { fullname } })
+        .go(1)
+
+      expect(user.fullname()).toEqual('Mr. john')
+    })
+
+    it('gets carried over to new root', function () {
+      let user = scour(data)
+        .go('users')
+        .use({ '*': { fullname } })
+        .root
+        .go('users').go(1)
+
+      expect(user.fullname()).toEqual('Mr. john')
+    })
+
     it('stacks', function () {
       let user = scour(data)
         .use({ 'users.*': { fullname } })

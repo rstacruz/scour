@@ -27,16 +27,16 @@ be applied to certain keypaths.
 db = scour(data)
   .use({
     '': {
-      artists() { return this.go('artists') },
-      albums() { return this.go('albums') }
+      artists () { return this.go('artists') },
+      albums () { return this.go('albums') }
     },
 
     'artists.*': {
       // Defines a has-many relationship
-      albums() {
-        return this.root.albums().where({ artist_id: this.get('id') })
+      albums () {
+        return this.root.albums().filter({ artist_id: this.get('id') })
       }
-    }
+    },
 
     'albums.*': {
       // Defines a belongs-to relationship

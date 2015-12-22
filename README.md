@@ -617,6 +617,30 @@ some examples:
 - `users.*.photos` - will match `users.1.photos`
 - `**` will match anything
 
+__When using outside root:__
+Any extensions in a scoped object (ie, made with [go()]) will be used relative
+to it. For instance, if you define an extension to `admins.*` inside
+`.go('users')`, it will affect `users.
+
+```js
+data = { users: { john: { } }
+db = scour(data)
+
+users = db.go('users')
+  .use({ '*': { hasName () { return !!this.get('name') } })
+
+users.go('john').hasName()      // works
+```
+
+While this is supported, it is *not* recommended: these extensions will not
+propagate back to the root, and any objects taken from the root will not
+have those extensions applied to them.
+
+```js
+users.go('john').hasName()              // works
+db.go('users.john').hasName()           // doesn't work
+```
+
 ### toJSON
 
 > `toJSON()`

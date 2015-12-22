@@ -489,12 +489,38 @@ scour.prototype = {
    * - `users.**` - will match `users.1.photos`
    * - `users.*.photos` - will match `users.1.photos`
    * - `**` will match anything
+   *
+   * __When using outside root:__
+   * Any extensions in a scoped object (ie, made with [go()]) will be used relative
+   * to it. For instance, if you define an extension to `admins.*` inside
+   * `.go('users')`, it will affect `users.
+   *
+   *     data = { users: { john: { } }
+   *     db = scour(data)
+   *
+   *     users = db.go('users')
+   *       .use({ '*': { hasName () { return !!this.get('name') } })
+   *
+   *     users.go('john').hasName()      // works
+   *
+   * While this is supported, it is *not* recommended: these extensions will not
+   * propagate back to the root, and any objects taken from the root will not
+   * have those extensions applied to them.
+   *
+   *     users.go('john').hasName()              // works
+   *     db.go('users.john').hasName()           // doesn't work
    */
 
   use (spec) {
     const extensions = buildExtensions(this.keypath, spec)
-
-    return this.replace(this.value, { extensions })
+    if (this.root === this) {
+      return this.replace(this.value, { extensions, root: null })
+    } else {
+      // Spawn a new `root` with the extensions applied
+      return this.root
+        .replace(this.root.value, { extensions, root: null })
+        .go(this.keypath)
+    }
   },
 
   /**
