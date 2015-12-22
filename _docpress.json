@@ -295,17 +295,17 @@
             "headings": [
               {
                 "title": "Defining your store",
-                "depth": 3,
+                "depth": 2,
                 "id": "defining-your-store"
               },
               {
                 "title": "Dispatching events",
-                "depth": 3,
+                "depth": 2,
                 "id": "dispatching-events"
               },
               {
                 "title": "Using with React",
-                "depth": 3,
+                "depth": 2,
                 "id": "using-with-react"
               }
             ]
@@ -601,17 +601,17 @@
       "headings": [
         {
           "title": "Defining your store",
-          "depth": 3,
+          "depth": 2,
           "id": "defining-your-store"
         },
         {
           "title": "Dispatching events",
-          "depth": 3,
+          "depth": 2,
           "id": "dispatching-events"
         },
         {
           "title": "Using with React",
-          "depth": 3,
+          "depth": 2,
           "id": "using-with-react"
         }
       ]
