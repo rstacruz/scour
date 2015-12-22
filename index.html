@@ -337,12 +337,17 @@ names = scour(users).toArray()
 <blockquote>
 <p><code>set(keypath, value)</code></p>
 </blockquote>
-<p>Sets values. (To be implemented)</p>
+<p>Sets values.</p>
+<h3 id="del">del</h3>
+<blockquote>
+<p><code>del(keypath)</code></p>
+</blockquote>
+<p>Deletes values.</p>
 <h2 id="utility-methods">Utility methods</h2>
 <p>For stuff.</p>
-<h3 id="extend">extend</h3>
+<h3 id="use">use</h3>
 <blockquote>
-<p><code>extend(props)</code></p>
+<p><code>use(props)</code></p>
 </blockquote>
 <p>Extends functionality with some prototype.</p>
 <pre><code class="lang-js">users =
@@ -357,7 +362,7 @@ methods = {
 
 scour(users)
   .get(<span class="hljs-number">12</span>)
-  .extend(methods)
+  .use(methods)
   .fullname()       <span class="pl-c">// =&gt; &apos;bill gates&apos;</span>
 
 </code></pre>
@@ -516,11 +521,13 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
               <ul class="submenu">
                 <li class="menu-item -level-2"><a href="#set" class="link title link-set">set</a>
                 </li>
+                <li class="menu-item -level-2"><a href="#del" class="link title link-del">del</a>
+                </li>
               </ul>
             </li>
             <li class="menu-item -level-1 -parent"><a href="#utility-methods" class="link title link-utility-methods">Utility methods</a>
               <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#extend" class="link title link-extend">extend</a>
+                <li class="menu-item -level-2"><a href="#use" class="link title link-use">use</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#tojson" class="link title link-tojson">toJSON</a>
                 </li>

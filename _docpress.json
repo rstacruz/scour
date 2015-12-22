@@ -147,6 +147,11 @@
                 "title": "set",
                 "depth": 3,
                 "id": "set"
+              },
+              {
+                "title": "del",
+                "depth": 3,
+                "id": "del"
               }
             ]
           },
@@ -156,9 +161,9 @@
             "id": "utility-methods",
             "headings": [
               {
-                "title": "extend",
+                "title": "use",
                 "depth": 3,
-                "id": "extend"
+                "id": "use"
               },
               {
                 "title": "toJSON",
@@ -360,6 +365,11 @@
               "title": "set",
               "depth": 3,
               "id": "set"
+            },
+            {
+              "title": "del",
+              "depth": 3,
+              "id": "del"
             }
           ]
         },
@@ -369,9 +379,9 @@
           "id": "utility-methods",
           "headings": [
             {
-              "title": "extend",
+              "title": "use",
               "depth": 3,
-              "id": "extend"
+              "id": "use"
             },
             {
               "title": "toJSON",
