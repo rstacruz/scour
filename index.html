@@ -403,9 +403,16 @@ scour(data).del([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">
 </code></pre>
 <h3 id="extend">extend</h3>
 <blockquote>
-<p><code>extend(keypath)</code></p>
+<p><code>extend()</code></p>
 </blockquote>
-<p>Extends values. (todo)</p>
+<p>Extends the data with more values. Returns a <a href="#scour">scour</a>-wrapped object. Only
+supports objects; arrays and non-objects will return undefined.</p>
+<pre><code class="lang-js">data  = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> }
+data2 = scour(data).extend({ c: <span class="hljs-number">3</span> })
+</code></pre>
+<pre><code class="lang-js">data2  <span class="pl-c">// =&gt; [scour { a: 1, b: 2, c: 3 }]</span>
+data2.value   <span class="pl-c">// =&gt; { a: 1, b: 2, c: 3 }</span>
+</code></pre>
 <h2 id="utility-methods">Utility methods</h2>
 <p>For stuff.</p>
 <h3 id="use">use</h3>
