@@ -497,6 +497,18 @@ describe('index', function () {
       expect(result.value).toEqual({ a: { b: 1 }, c: 2 })
     })
 
+    it('works in a scope', function () {
+      const data = { a: { b: { c: 1 } } }
+      const result = scour(data).go('a').extend({ b: 2 })
+      expect(result.value).toEqual({ b: 2 })
+    })
+
+    it('spawns a new root', function () {
+      const data = { a: { b: { c: 1 } } }
+      const result = scour(data).go('a').extend({ b: 2 })
+      expect(result.root.value).toEqual({ a: { b: 2 } })
+    })
+
     it('overrides objects', function () {
       const data = { a: { b: 1 } }
       const result = scour(data).extend({ a: { c: 2 } })

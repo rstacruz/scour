@@ -377,8 +377,8 @@ scour.prototype = {
     keypath = normalizeKeypath(keypath)
 
     if (this.root !== this) {
-      const newRoot = this.root.set(this.keypath.concat(keypath), value)
-      return newRoot.go.apply(newRoot, this.keypath)
+      return this.root
+        .set(this.keypath.concat(keypath), value).go(this.keypath)
     }
 
     const result = scour.set(this.value, keypath, value)
@@ -402,8 +402,7 @@ scour.prototype = {
     keypath = normalizeKeypath(keypath)
 
     if (this.root !== this) {
-      const newRoot = this.root.del(this.keypath.concat(keypath))
-      return newRoot.go.apply(newRoot, this.keypath)
+      return this.root.del(this.keypath.concat(keypath)).go(this.keypath)
     }
 
     const result = scour.del(this.value, keypath)
@@ -433,6 +432,11 @@ scour.prototype = {
       if (typeof arguments[i] !== 'object') return
       assign(result, arguments[i])
     }
+
+    if (this.root !== this) {
+      return this.root.set(this.keypath, result).go(this.keypath)
+    }
+
     return this.replace(result)
   },
 
