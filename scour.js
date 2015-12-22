@@ -4,6 +4,7 @@
 const sift = require('sift')
 const define = require('./utilities/define_property')
 const collections = require('./utilities/collections')
+const assign = require('object-assign')
 
 /**
  * scour : scour(object)
@@ -388,11 +389,25 @@ scour.prototype = {
   },
 
   /**
-   * Extends values. (todo)
+   * Extends the data with more values. Returns a [scour]-wrapped object. Only
+   * supports objects; arrays and non-objects will return undefined.
+   *
+   *    data  = { a: 1, b: 2 }
+   *    data2 = scour(data).extend({ c: 3 })
+   *
+   *    data2  // => [scour { a: 1, b: 2, c: 3 }]
+   *    data2.value   // => { a: 1, b: 2, c: 3 }
    */
 
-  extend (keypath) {
-    // TODO
+  extend () {
+    if (typeof this.value !== 'object' || Array.isArray(this.value)) return
+    var result = {}
+    assign(result, this.value)
+    for (var i = 0, len = arguments.length; i < len; i++) {
+      if (typeof arguments[i] !== 'object') return
+      assign(result, arguments[i])
+    }
+    return this.spawn(result)
   },
 
   /**
@@ -520,7 +535,7 @@ scour.prototype = {
     return new scour(value || this.value, {
       root: getv(options, 'root', this.root),
       keypath: getv(options, 'keypath', this.keypath),
-      extensions: (options && typeof options.extensions === 'undefined')
+      extensions: (!options || typeof options.extensions === 'undefined')
         ? this.extensions
         : this.extensions.concat(options.extensions)
     })
@@ -575,7 +590,7 @@ scour.each = require('./utilities/each')
  */
 
 function getv (object, key, defaultValue) {
-  return object.hasOwnProperty(key)
+  return object && object.hasOwnProperty(key)
     ? object[key]
     : defaultValue
 }
