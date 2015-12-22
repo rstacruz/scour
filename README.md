@@ -436,7 +436,9 @@ Returns keys. If the value is an array, this returns the array's indices.
 
 ## Writing methods
 
-for writing data.
+These are methods for modifying an object/array tree immutably.
+Note that all these functions are immutable--it will not modify existing
+data, but rather spawn new objects with the modifications done on them.
 
 ### set
 
