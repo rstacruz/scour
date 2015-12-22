@@ -169,26 +169,63 @@ describe('index', function () {
 
   describe('.use()', function () {
     const data = { users: { 1: { name: 'john' } } }
-    const extensions = {
-      'users.*': {
-        fullname () { return 'Mr. ' + this.get('name') }
-      }
+
+    function fullname () {
+      return 'Mr. ' + this.get('name')
     }
 
     it('works', function () {
       let user = scour(data)
-        .use(extensions)
+        .use({ 'users.*': { fullname } })
         .go('users', 1)
 
       expect(user.fullname()).toEqual('Mr. john')
     })
 
+    it('works for root', function () {
+      const db = scour(data)
+        .use({ '': { users } })
+
+      expect(db.users().get('1.name')).toEqual('john')
+
+      function users () { return this.go('users') }
+    })
+
+    it('works for double stars on root', function () {
+      const db = scour(data)
+        .use({ '**': { users } })
+
+      expect(db.users().get('1.name')).toEqual('john')
+
+      function users () { return this.go('users') }
+    })
+
+    it('works for double stars on non-root', function () {
+      const db = scour(data)
+        .use({ '**': { fullname } })
+
+      expect(db.go('users.1').fullname()).toEqual('Mr. john')
+    })
+
     it('gets carried over', function () {
       let user = scour(data)
-        .use(extensions)
-        .go('users') .go(1)
+        .use({ 'users.*': { fullname } })
+        .go('users').go(1)
 
       expect(user.fullname()).toEqual('Mr. john')
+    })
+
+    it('stacks', function () {
+      let user = scour(data)
+        .use({ 'users.*': { fullname } })
+        .use({ 'users.*': {
+          greeting: function () {
+            return `Hello, ${this.fullname()}`
+          }
+        } })
+        .go('users', 1)
+
+      expect(user.greeting()).toEqual('Hello, Mr. john')
     })
   })
 

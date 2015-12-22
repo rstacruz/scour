@@ -2,9 +2,12 @@
 'use strict'
 
 const sift = require('sift')
-const define = require('./utilities/define_property')
-const collections = require('./utilities/collections')
 const assign = require('object-assign')
+const collections = require('./utilities/collections')
+const define = require('./lib/define_property')
+const buildExtensions = require('./lib/build_extensions')
+const normalizeKeypath = require('./lib/normalize_keypath')
+const getv = require('./lib/getv')
 
 /**
  * scour : scour(object)
@@ -411,6 +414,7 @@ scour.prototype = {
    */
 
   /**
+   * use : use(extensions)
    * Extends functionality with some prototype.
    *
    *     data =
@@ -433,15 +437,7 @@ scour.prototype = {
    */
 
   use (spec) {
-    let prefix = this.keypath.length ? (this.keypath.join('.') + '.') : ''
-    const extensions = scour.map(spec, (properties, keypath) => {
-      keypath = new RegExp('^' + (prefix + keypath)
-        .replace(/\./g, '\\.')
-        .replace(/\*\*/g, '.+')
-        .replace(/\*/g, '[^\.]+') + '$')
-
-      return [ keypath, properties ]
-    })
+    const extensions = buildExtensions(this.keypath, spec)
 
     return this.spawn(this.value, { extensions })
   },
@@ -611,34 +607,6 @@ scour.each = require('./utilities/each')
 scour.map = collections.map
 
 /**
- * Internal: Helper
- */
-
-function getv (object, key, defaultValue) {
-  return object && object.hasOwnProperty(key)
-    ? object[key]
-    : defaultValue
-}
-
-/**
- * Internal: normalizes a keypath, allowing dot syntax, and normalizing them
- * all to strings.
- */
-
-function normalizeKeypath (keypath, isArguments) {
-  if (typeof keypath === 'string') {
-    return keypath.split('.')
-  } else if (isArguments && keypath.length === 1) {
-    if (Array.isArray(keypath[0])) return keypath[0].map((k) => '' + k)
-    if (typeof keypath[0] === 'number') return [ '' + keypath[0] ]
-    return ('' + keypath[0]).split('.')
-  } else {
-    if (isArguments) keypath = [].slice.call(keypath)
-    return keypath.map((k) => '' + k)
-  }
-}
-
-/**
  * Internal: decorates collection functions
  */
 
@@ -647,4 +615,5 @@ function thisify (fn) {
     return fn.bind(null, this.forEach.bind(this)).apply(this, arguments)
   }
 }
+
 module.exports = scour
