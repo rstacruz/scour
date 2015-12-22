@@ -118,7 +118,8 @@ users
 
 ### Models
 
-Use [use()](#use) to add your own methods to certain keypaths. This makes them behave like models. See [a detailed example](docs/extensions_example.md) of this.
+Use [use()](#use) to add your own methods to certain keypaths. This makes them behave like models.<br>
+See [a detailed example](docs/extensions_example.md) to learn more.
 
 ##### Sample data
 
@@ -786,6 +787,7 @@ This is also available as `require('scourjs/utilities/map')`.
 [value]: #value
 [use()]: #use
 
+[Extensions example]: docs/extensions_example.md
 [Object.assign]: https://devdocs.io/javascript/global_objects/object/assign
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
