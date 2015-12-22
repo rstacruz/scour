@@ -244,26 +244,26 @@
         ]
       },
       {
-        "title": "Comparison with others",
-        "source": "docs/comparison.md",
-        "url": "comparison.html",
-        "slug": "comparison",
-        "headings": [
-          {
-            "title": "Versus Lodash",
-            "depth": 2,
-            "id": "versus-lodash"
-          },
-          {
-            "title": "Versus Immutable.js",
-            "depth": 2,
-            "id": "versus-immutable.js"
-          }
-        ]
-      },
-      {
-        "title": "Examples",
+        "title": "Appendix",
         "sections": [
+          {
+            "title": "Comparison with others",
+            "source": "docs/comparison.md",
+            "url": "comparison.html",
+            "slug": "comparison",
+            "headings": [
+              {
+                "title": "Versus Lodash",
+                "depth": 2,
+                "id": "versus-lodash"
+              },
+              {
+                "title": "Versus Immutable.js",
+                "depth": 2,
+                "id": "versus-immutable.js"
+              }
+            ]
+          },
           {
             "title": "Extensions example",
             "source": "docs/extensions_example.md",
