@@ -54,6 +54,7 @@ Use <a href="#get">get()</a> to retrieve values.</p>
 </code></pre>
 <pre><code class="lang-js">scour(data).get(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;1&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;john&apos;</span>
 </code></pre>
+<br>
 <h3 id="traversal">Traversal</h3>
 <p>Use <a href="#go">go()</a> to dig into the structure. It will return another <code>scour</code>
 wrapper scoped to that object.</p>
@@ -68,6 +69,7 @@ admins = scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class
 
 admins.go(<span class="pl-s">&apos;bob&apos;</span>).get(<span class="pl-s">&apos;logged_in&apos;</span>)           <span class="pl-c">// =&gt; true</span>
 </code></pre>
+<br>
 <h3 id="chaining">Chaining</h3>
 <p><code>scour()</code> provides a wrapper that can be used to chain methods. This is inspired by <a href="http://underscorejs.org/">Underscore</a> and <a href="http://lodash.com/">Lodash</a>.</p>
 <pre><code class="lang-js">scour(data)
@@ -75,6 +77,7 @@ admins.go(<span class="pl-s">&apos;bob&apos;</span>).get(<span class="pl-s">&apo
   .filter({ admin: <span class="pl-c1">true</span> })
   .value
 </code></pre>
+<br>
 <h3 id="immutable-modifications">Immutable modifications</h3>
 <p>Use <a href="#set">set()</a> to update values. Scout treats all data as immutable, so this
 doesn&#x2019;t modify your original <code>data</code>, but gets you a new one with the
@@ -88,6 +91,7 @@ modifications made.</p>
 <span class="pl-c">//        2: { name: &apos;shane&apos;, confirmed: true },</span>
 <span class="pl-c">//        3: { name: &apos;barry&apos;, confirmed: true } } }</span>
 </code></pre>
+<br>
 <h3 id="advanced-traversing">Advanced traversing</h3>
 <p>Use <a href="#filter">filter()</a> to filter results with advanced querying.</p>
 <pre><code class="lang-js">users = scour(data).go(<span class="pl-s">&apos;users&apos;</span>)
@@ -97,6 +101,7 @@ users
   .at(<span class="hljs-number">0</span>)
   .get(<span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;shane&apos;</span>
 </code></pre>
+<br>
 <h3 id="models">Models</h3>
 <p>Use <a href="#use">use()</a> to add your own methods to certain keypaths. This makes them behave like models. See <a href="extensions_example.html">a detailed example</a> of this.</p>
 <h5 class="file-heading" id="sample-data">Sample data</h5>
@@ -126,6 +131,7 @@ Artist = {
 db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).fullname()
 <span class="pl-c">//=&gt; &apos;Miles Davis&apos;</span>
 </code></pre>
+<br>
 <h2 id="api">API</h2>
 <!--api-->
 <h3 id="scour">scour</h3>
