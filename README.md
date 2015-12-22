@@ -541,9 +541,10 @@ For stuff.
 
 ### use
 
-> `use(spec)`
+> `use(extensions)`
 
-Extends functionality with some prototype.
+Extends functionality for certain keypaths with custom methods.
+See [Extensions example] for examples.
 
 ```js
 data =
@@ -563,8 +564,40 @@ scour(data)
   .use(extensions)
   .get('users', 12)
   .fullname()       // => 'bill gates'
-
 ```
+
+__Extensions format:__
+The parameter `extension` is an object, with keys being keypath globs, and
+values being properties to be extended.
+
+```js
+.use({
+  'books.*': { ... },
+  'authors.*': { ... },
+  'publishers.*': { ... }
+ })
+```
+
+__Extending root:__
+To bind properties to the root method, use an empty string as the keypath.
+
+```js
+.use({
+  '': {
+    users() { return this.go('users') },
+    authors() { return this.go('authors') }
+  }
+})
+```
+
+__Keypath filtering:__
+You can use glob-like `*` and `**` to match parts of a keypath. A `*` will
+match any one segment, and `**` will match one or many segments. Here are
+some examples:
+
+- `users.*` - will match `users.1`, but not `users.1.photos`
+- `users.**` - will match `users.1.photos`
+- `users.*.photos` - will match `users.1.photos`
 
 ### toJSON
 
