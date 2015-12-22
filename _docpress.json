@@ -233,6 +233,11 @@
                 "title": "scour.map",
                 "depth": 3,
                 "id": "scour.map"
+              },
+              {
+                "title": "Internal",
+                "depth": 3,
+                "id": "internal"
               }
             ]
           },
@@ -545,6 +550,11 @@
               "title": "scour.map",
               "depth": 3,
               "id": "scour.map"
+            },
+            {
+              "title": "Internal",
+              "depth": 3,
+              "id": "internal"
             }
           ]
         },
