@@ -344,7 +344,9 @@ names = scour(users).toArray()
 </blockquote>
 <p>Returns keys. If the value is an array, this returns the array&#x2019;s indices.</p>
 <h2 id="writing-methods">Writing methods</h2>
-<p>for writing data.</p>
+<p>These are methods for modifying an object/array tree immutably.
+Note that all these functions are immutable&#x2013;it will not modify existing
+data, but rather spawn new objects with the modifications done on them.</p>
 <h3 id="set">set</h3>
 <blockquote>
 <p><code>set(keypath, value)</code></p>
