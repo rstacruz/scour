@@ -72,21 +72,21 @@ describe('index', function () {
     })
   })
 
-  describe('.extend()', function () {
+  describe('.use()', function () {
     const extension = {
       fullname () { return 'Mr. ' + this.get('name') }
     }
 
     it('works', function () {
       let user = scour(data).go('users', 1)
-        .extend(extension)
+        .use(extension)
 
       expect(user.fullname()).toEqual('Mr. john')
     })
 
     it('gets carried over', function () {
       let user = scour(data)
-        .extend(extension)
+        .use(extension)
         .go('users', 1)
 
       expect(user.fullname()).toEqual('Mr. john')

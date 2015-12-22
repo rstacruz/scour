@@ -326,11 +326,11 @@ scour.prototype = {
    *
    *     scour(users)
    *       .get(12)
-   *       .extend(methods)
+   *       .use(methods)
    *       .fullname()       // => 'bill gates'
    */
 
-  extend (props) {
+  use (props) {
     return this.spawn(this.value, { extensions: [props] })
   },
 
