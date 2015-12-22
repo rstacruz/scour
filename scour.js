@@ -161,6 +161,20 @@ scour.prototype = {
   },
 
   /**
+   * Internal: gathers multiple keys (TBD)
+   */
+
+  gather (keypaths) {
+    var result
+    if (Array.isArray(this.values)) {
+      result = keypaths.map((key, val) => [ val, this.get(key) ])
+    } else {
+      result = scour.mapObject(keypaths, (key) => [ key, this.get(key) ])
+    }
+    return this.replace(result)
+  },
+
+  /**
    * Returns the item at `index`. This differs from `go` as this searches by
    * index, not by key.
    *
@@ -712,6 +726,13 @@ scour.each = require('./utilities/each')
  */
 
 scour.map = require('./utilities/map')
+
+/**
+ * Internal:
+ * Works like map, but returns an object (TBD)
+ */
+
+scour.mapObject = require('./utilities/map_object')
 
 /**
  * Internal: decorates collection functions
