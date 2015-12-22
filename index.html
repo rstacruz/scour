@@ -99,37 +99,32 @@ users
 </code></pre>
 <h3 id="models">Models</h3>
 <p>Use <a href="#use">use()</a> to add your own methods to certain keypaths. This makes them behave like models. See <a href="extensions_example.html">a detailed example</a> of this.</p>
-<pre><code class="lang-js">db = scour(data)
-  .use({
-    <span class="pl-s">&apos;&apos;</span>: {
-      artists () {
-        <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>)
-      }
-    },
-    <span class="pl-s">&apos;artists.*&apos;</span>: {
-      fullname () {
-        <span class="pl-k">return</span> <span class="pl-k">this</span>.get(<span class="pl-s">&apos;first_name&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + <span class="pl-k">this</span>.get(<span class="pl-s">&apos;last_name&apos;</span>)
-      }
-      albums () {
-        <span class="pl-k">return</span> <span class="pl-k">this</span>.root.go(<span class="pl-s">&apos;albums&apos;</span>)
-          .filter({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
-      }
-    }
-  })
-</code></pre>
+<h5 class="file-heading" id="sample-data">Sample data</h5>
 <pre><code class="lang-js">data =
   { artists:
     { <span class="hljs-number">1</span>: { first_name: <span class="pl-s">&apos;Louie&apos;</span>, last_name: <span class="pl-s">&apos;Armstrong&apos;</span> },
-      <span class="hljs-number">2</span>: { first_name: <span class="pl-s">&apos;Miles&apos;</span>, last_name: <span class="pl-s">&apos;Davis&apos;</span> } },
-    albums:
-    { <span class="hljs-number">32</span>: { artist_id: <span class="hljs-number">1</span>, title: <span class="pl-s">&apos;Kind of Blue&apos;</span> },
-      <span class="hljs-number">35</span>: { artist_id: <span class="hljs-number">2</span>, title: <span class="pl-s">&apos;Struttin&apos;</span> } } }
+      <span class="hljs-number">2</span>: { first_name: <span class="pl-s">&apos;Miles&apos;</span>, last_name: <span class="pl-s">&apos;Davis&apos;</span> } } }
 </code></pre>
-<pre><code class="lang-js">db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).fullname()
-<span class="pl-c">//=&gt; &apos;Miles Davis&apos;</span>
+<h5 class="file-heading" id="your-models">Your models</h5>
+<pre><code class="lang-js">Root = {
+  artists () { <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>) }
+}
 
-db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).albums().at(<span class="hljs-number">0</span>).get(<span class="pl-s">&apos;title&apos;</span>)
-<span class="pl-c">// =&gt; &apos;Kind of Blue&apos;</span>
+Artist = {
+  fullname () {
+    <span class="pl-k">return</span> <span class="pl-k">this</span>.get(<span class="pl-s">&apos;first_name&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + <span class="pl-k">this</span>.get(<span class="pl-s">&apos;last_name&apos;</span>)
+  }
+}
+</code></pre>
+<h5 class="file-heading" id="using-with-scour">Using with scour</h5>
+<pre><code class="lang-js">db = scour(data)
+  .use({
+    <span class="pl-s">&apos;&apos;</span>: Root,
+    <span class="pl-s">&apos;artists.*&apos;</span>: Artist
+  })
+
+db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).fullname()
+<span class="pl-c">//=&gt; &apos;Miles Davis&apos;</span>
 </code></pre>
 <h2 id="api">API</h2>
 <!--api-->
