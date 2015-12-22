@@ -32,6 +32,11 @@ describe('index', function () {
       expect(scour(data).get()).toEqual(data)
     })
 
+    it('allows dot notation', function () {
+      expect(scour(data).go('users.1').keypath)
+      .toEqual(['users', '1'])
+    })
+
     it('gives keypath (multiple keys)', function () {
       expect(scour(data).go('users', '1').keypath)
       .toEqual(['users', '1'])
@@ -245,6 +250,43 @@ describe('index', function () {
     })
   })
 
+  describe('.del()', function () {
+    it('works for root', function () {
+      const data = { a: { b: 'foo' } }
+      const result = scour(data).del([ 'a', 'b' ])
+
+      expect(result.value).toEqual({ a: {} })
+      expect(result.keypath).toEqual([])
+    })
+
+    it('allows dot notation', function () {
+      const data = { a: { b: 'foo' } }
+      const result = scour(data).del('a.b')
+
+      expect(result.value).toEqual({ a: {} })
+      expect(result.keypath).toEqual([])
+    })
+
+    describe('for non-root', function () {
+      var data, root, a, result
+
+      beforeEach(function () {
+        data = { a: { b: { c: 'd' } } }
+        root = scour(data)
+        a = root.go('a')
+        result = a.del('b')
+      })
+
+      it('works', function () {
+        expect(result.value).toEqual({})
+      })
+
+      it('sets a new root', function () {
+        expect(result.root.value).toEqual({ a: {} })
+      })
+    })
+  })
+
   describe('.set()', function () {
     it('works for root', function () {
       const data = { users: { bob: { name: 'robert' } } }
@@ -254,7 +296,14 @@ describe('index', function () {
       expect(result.keypath).toEqual([])
     })
 
-    describe('works for nonroot', function () {
+    it('allows dot notation', function () {
+      const data = { bob: { name: 'Bob' } }
+      const result = scour(data).set('bob.name', 'Robert')
+
+      expect(result.value).toEqual({ bob: { name: 'Robert' } })
+    })
+
+    describe('for nonroot', function () {
       var data, root, users, result
 
       beforeEach(function () {

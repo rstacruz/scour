@@ -112,6 +112,7 @@ scour.prototype = {
    */
 
   /**
+   * go : go(keypath...)
    * Navigates down to a given `keypath`. Always returns a [scour] instance.
    *
    *     data =
@@ -123,6 +124,15 @@ scour.prototype = {
    *     scour(data).go('users', '12')              // => [scour (name, last)]
    *     scour(data).go('users', '12').get('name')  // => 'steve'
    *
+   * __Dot notation:__
+   * Keypaths can be given in dot notation or as an array. These statements are
+   * equivalent.
+   *
+   *     scour(data).go('users.12')
+   *     scour(data).go('users', '12')
+   *     scour(data).go(['users', '12'])
+   *
+   * __Non objects:__
    * If you use it on a non-object or non-array value, it will still be
    * returned as a [scour] instance. This is not likely what you want; use
    * [get()] instead.
@@ -133,8 +143,8 @@ scour.prototype = {
    *     attr.keypath   // => ['users', '12', 'name']
    */
 
-  go (keypath) {
-    keypath = [].slice.apply(arguments).map((k) => '' + k)
+  go () {
+    const keypath = normalizeKeypath(arguments, true)
     const result = this.get.apply(this, keypath)
     return this._get(result, keypath, true)
   },
@@ -202,6 +212,7 @@ scour.prototype = {
    */
 
   /**
+   * get : get(keypath...)
    * Returns data in a given `keypath`.
    *
    *     data =
@@ -211,14 +222,20 @@ scour.prototype = {
    *
    *     scour(data).get('users')       // => same as data.users
    *     scour(data).go('users').value  // => same as data.users
+   *
+   * __Dot notation:__
+   * Like [go()], the `keypath` can be given in dot notation.
+   *
+   *     scour(data).get('books.featured.name')
+   *     scour(data).get('books', 'featured', 'name')
    */
 
-  get (keypath) {
-    var result = this.value
-    keypath = [].slice.apply(arguments)
+  get () {
+    let result = this.value
+    const keypath = normalizeKeypath(arguments, true)
 
-    for (let i = 0, len = arguments.length; i < len; i++) {
-      result = result[arguments[i]]
+    for (let i = 0, len = keypath.length; i < len; i++) {
+      result = result[keypath[i]]
       if (!result) return
     }
 
@@ -305,10 +322,16 @@ scour.prototype = {
    *
    *    db          // => [scour { book: { title: 'What if?' } }]
    *    book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
+   *
+   * Like [go()] and [get()], the keypath can be given in dot notation or an
+   * array.
+   *
+   *    scour(data).set('menu.left.visible', true)
+   *    scour(data).set(['menu', 'left', 'visible'], true)
    */
 
   set (keypath, value) {
-    if (!Array.isArray(keypath)) keypath = [keypath]
+    keypath = normalizeKeypath(keypath)
 
     if (this.root !== this) {
       const newRoot = this.root.set(this.keypath.concat(keypath), value)
@@ -321,10 +344,24 @@ scour.prototype = {
 
   /**
    * Deletes values. (todo)
+   *
+   * Like [set()], the keypath can be given in dot notation or an
+   * array.
+   *
+   *    scour(data).del('menu.left.visible')
+   *    scour(data).del(['menu', 'left', 'visible'])
    */
 
   del (keypath) {
-    // TODO
+    keypath = normalizeKeypath(keypath)
+
+    if (this.root !== this) {
+      const newRoot = this.root.del(this.keypath.concat(keypath))
+      return newRoot.go.apply(newRoot, this.keypath)
+    }
+
+    const result = scour.del(this.value, keypath)
+    return this.spawn(result, { keypath: [], root: null })
   },
 
   /**
@@ -514,4 +551,20 @@ function getv (object, key, defaultValue) {
     : defaultValue
 }
 
+/*
+ * Helper
+ */
+
+function normalizeKeypath (keypath, isArguments) {
+  if (typeof keypath === 'string') {
+    return keypath.split('.')
+  } else if (isArguments && keypath.length === 1) {
+    if (Array.isArray(keypath[0])) return keypath[0]
+    if (typeof keypath[0] === 'number') return [ '' + keypath[0] ]
+    return ('' + keypath[0]).split('.')
+  } else {
+    if (isArguments) keypath = [].slice.call(keypath)
+    return keypath.map((k) => '' + k)
+  }
+}
 module.exports = scour

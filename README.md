@@ -268,7 +268,7 @@ making them suitable for chaining.
 
 ### go
 
-> `go(keypath)`
+> `go(keypath...)`
 
 Navigates down to a given `keypath`. Always returns a [scour] instance.
 
@@ -283,6 +283,17 @@ scour(data).go('users', '12')              // => [scour (name, last)]
 scour(data).go('users', '12').get('name')  // => 'steve'
 ```
 
+__Dot notation:__
+Keypaths can be given in dot notation or as an array. These statements are
+equivalent.
+
+```js
+scour(data).go('users.12')
+scour(data).go('users', '12')
+scour(data).go(['users', '12'])
+```
+
+__Non objects:__
 If you use it on a non-object or non-array value, it will still be
 returned as a [scour] instance. This is not likely what you want; use
 [get()] instead.
@@ -356,7 +367,7 @@ For retrieving data.
 
 ### get
 
-> `get(keypath)`
+> `get(keypath...)`
 
 Returns data in a given `keypath`.
 
@@ -368,7 +379,14 @@ data =
 
 scour(data).get('users')       // => same as data.users
 scour(data).go('users').value  // => same as data.users
+```
 
+__Dot notation:__
+Like [go()], the `keypath` can be given in dot notation.
+
+```js
+scour(data).get('books.featured.name')
+scour(data).get('books', 'featured', 'name')
 ```
 
 ### len
@@ -462,11 +480,27 @@ db          // => [scour { book: { title: 'What if?' } }]
 book.root   // => [scour { book: { title: 'What if?', id: 23 } }]
 ```
 
+Like [go()] and [get()], the keypath can be given in dot notation or an
+array.
+
+```js
+scour(data).set('menu.left.visible', true)
+scour(data).set(['menu', 'left', 'visible'], true)
+```
+
 ### del
 
 > `del(keypath)`
 
 Deletes values. (todo)
+
+Like [set()], the keypath can be given in dot notation or an
+array.
+
+```js
+scour(data).del('menu.left.visible')
+scour(data).del(['menu', 'left', 'visible'])
+```
 
 ### extend
 
@@ -612,6 +646,12 @@ implementation of `Array.forEach` that also works for objects.
 > `getv(object, key, defaultValue)`
 
 Helper
+
+### normalizeKeypath
+
+> `normalizeKeypath(keypath, isArguments)`
+
+Helper
 <!--api:end-->
 
 [filter()]: #filter
@@ -620,6 +660,7 @@ Helper
 [keypath]: #keypath
 [root]: #root
 [scour]: #scour
+[set()]: #set
 
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
