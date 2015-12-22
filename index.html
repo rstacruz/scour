@@ -31,9 +31,9 @@
 As a simple utility with a broad purpose, it can be used to solve many problems. Use it to:</p>
 <ul>
 <li>Manage your <a href="http://rackt.github.io/redux">Redux</a> datastore.</li>
-<li>Provide a model layer to access data in your single-page app.</li>
+<li>Provide a model layer to access data in your single-page app. <a href="#models">&#x2192;</a></li>
 <li>Navigate a large JSON tree easily.</li>
-<li>Rejoice in having a lightweight alternative to <a href="http://facebook.github.io/immutable-js/">Immutable.js</a>.</li>
+<li>Rejoice in having a lightweight alternative to <a href="http://facebook.github.io/immutable-js/">Immutable.js</a>. (<a href="comparison.html">Compare</a>)</li>
 </ul>
 <p><a href="https://travis-ci.org/rstacruz/scour" title="See test builds"><img src="https://travis-ci.org/rstacruz/scour.svg?branch=master" alt="Status"></a></p>
 <h2 id="install">Install</h2>
@@ -98,9 +98,9 @@ users
   .get(<span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;shane&apos;</span>
 </code></pre>
 <h3 id="models">Models</h3>
-<p>Use <a href="#extend">extend()</a> to add your own methods to certain keypaths. This makes them behave like models.</p>
+<p>Use <a href="#use">use()</a> to add your own methods to certain keypaths. This makes them behave like models. See <a href="extensions_example.html">a detailed example</a> of this.</p>
 <pre><code class="lang-js">db = scour(data)
-  .extend({
+  .use({
     <span class="pl-s">&apos;&apos;</span>: {
       artists () {
         <span class="pl-k">return</span> <span class="pl-k">this</span>.go(<span class="pl-s">&apos;artists&apos;</span>)
