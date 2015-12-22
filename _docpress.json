@@ -2,7 +2,7 @@
   "toc": {
     "sections": [
       {
-        "title": "scour",
+        "title": "scour.js",
         "source": "README.md",
         "expand": true,
         "url": "index.html",
@@ -201,7 +201,7 @@
   "index": {
     "index.html": {
       "source": "README.md",
-      "title": "scour",
+      "title": "scour.js",
       "slug": "index",
       "headings": [
         {
