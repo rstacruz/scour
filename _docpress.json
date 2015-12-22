@@ -213,6 +213,16 @@
                 "title": "scour.del",
                 "depth": 3,
                 "id": "scour.del"
+              },
+              {
+                "title": "scour.each",
+                "depth": 3,
+                "id": "scour.each"
+              },
+              {
+                "title": "getv",
+                "depth": 3,
+                "id": "getv"
               }
             ]
           },
@@ -436,6 +446,16 @@
               "title": "scour.del",
               "depth": 3,
               "id": "scour.del"
+            },
+            {
+              "title": "scour.each",
+              "depth": 3,
+              "id": "scour.each"
+            },
+            {
+              "title": "getv",
+              "depth": 3,
+              "id": "getv"
             }
           ]
         },
