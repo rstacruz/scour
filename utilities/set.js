@@ -1,6 +1,6 @@
 'use strict'
 
-const assign = require('object-assign')
+const clone = require('./clone')
 
 /**
  * Sets a `keypath` into an `object` immutably.
@@ -35,10 +35,4 @@ module.exports = function set (object, keypath, value) {
   }
 
   return results[0]
-}
-
-function clone (object) {
-  return Array.isArray(object)
-    ? [].slice.call(object)
-    : assign({}, object)
 }
