@@ -2,7 +2,6 @@
 'use strict'
 
 const sift = require('sift')
-const each = require('./utilities/each')
 const define = require('./utilities/define_property')
 const collections = require('./utilities/collections')
 
@@ -43,7 +42,7 @@ function scour (value, options) {
   define(this, 'extensions', options && options.extensions || [])
 
   this.extensions.forEach((ext) => {
-    each(ext, (val, key) => {
+    scour.each(ext, (val, key) => {
       this[key] = val
     })
   })
@@ -472,5 +471,13 @@ scour.set = require('./utilities/set')
  */
 
 scour.del = require('./utilities/del')
+
+/**
+ * scour.each : scour.each(iterable, fn)
+ * Iterates through `iterable`, either an object or an array. This is an
+ * implementation of `Array.forEach` that also works for objects.
+ */
+
+scour.each = require('./utilities/each')
 
 module.exports = scour

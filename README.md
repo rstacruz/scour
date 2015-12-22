@@ -563,6 +563,13 @@ result = del(data, ['users', 'bob', 'name'])
 // => { users: { bob: {} } }
 
 ```
+
+### scour.each
+
+> `scour.each(iterable, fn)`
+
+Iterates through `iterable`, either an object or an array. This is an
+implementation of `Array.forEach` that also works for objects.
 <!--api:end-->
 
 [filter()]: #filter
