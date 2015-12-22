@@ -292,9 +292,7 @@ scour.prototype = {
     }
 
     const result = scour.set(this.value, keypath, value)
-    const newRoot = this.spawn(result, { keypath: [] })
-    newRoot.root = newRoot
-    return newRoot
+    return this.spawn(result, { keypath: [], root: null })
   },
 
   /**
@@ -388,7 +386,7 @@ scour.prototype = {
    */
 
   forEach (fn) {
-    each(this.value, (val, key) => {
+    scour.each(this.value, (val, key) => {
       fn.call(val, this._get(val, [key]), key)
     })
     return this
@@ -436,9 +434,11 @@ scour.prototype = {
 
   spawn (value, options) {
     return new scour(value || this.value, {
-      root: options && options.root || this.root,
-      keypath: options && options.keypath || this.keypath,
-      extensions: this.extensions.concat(options && options.extensions || [])
+      root: getv(options, 'root', this.root),
+      keypath: getv(options, 'keypath', this.keypath),
+      extensions: (options && typeof options.extensions === 'undefined')
+        ? this.extensions
+        : this.extensions.concat(options.extensions)
     })
   }
 }
@@ -479,5 +479,15 @@ scour.del = require('./utilities/del')
  */
 
 scour.each = require('./utilities/each')
+
+/*
+ * Helper
+ */
+
+function getv (object, key, defaultValue) {
+  return object.hasOwnProperty(key)
+    ? object[key]
+    : defaultValue
+}
 
 module.exports = scour
