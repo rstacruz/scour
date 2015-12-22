@@ -10,6 +10,7 @@ if (Object.defineProperty) {
     })
   }
 } else {
+  /* istanbul ignore next */
   define = function define (object, property, value) {
     object[property] = value
   }
