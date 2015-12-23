@@ -705,7 +705,9 @@ that it's the way that the JavaScript API for [JSON.stringify] works.
 
 ## Iteration methods
 
-These methods are generally useful for collections.
+These methods are generally useful for collections. These
+methods can work with either arrays or array-like objects, such as
+below.
 
 ```js
 subjects =
@@ -714,12 +716,8 @@ subjects =
     3: { id: 3, title: 'History', level: 102 } }
 ```
 
-__Objects or arrays:__
-These functions can work with either arrays or array-like objects, such as
-above.
-
 __Values:__
-For all these functions, The value `val` passed onto the callbacks _is_ a
+For all these functions, The items passed onto the callbacks _is_ a
 [scour]-wrapped object. Use `item.value` or `this` to access the raw
 values.
 
@@ -804,7 +802,6 @@ Creates a new `Object` with with the results of calling a provided function
 returning the keys and values for the new object.
 The rules specified in [Iteration methods] apply.
 
-Returns the resulting `Object` -- it is not a [scour]-wrapped object.
 See [scour.indexedMap()] for details and the non-wrapped version.
 
 ## Utility functions
