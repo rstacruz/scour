@@ -221,72 +221,6 @@ db.value               // => same as `data`
 db.go('users').value   // => same as `data.users`
 ```
 
-## Attributes
-
-These attributes are available to [scour] instances.
-
-### value
-
-> `value`
-
-The raw value being wrapped. You can use this to terminate a chained call.
-
-```js
-users =
-  [ { name: 'john', admin: true },
-    { name: 'kyle', admin: false } ]
-
-scour(users)
-  .filter({ admin: true })
-  .value
-// => [ { name: 'john', admin: true } ]
-```
-
-### root
-
-> `root`
-
-A reference to the root [scour] instance.
-Everytime you traverse using [go()], a new [scour] object is spawned that's
-scoped to a keypath.  Each of these [scour] objects have a `root` attribute
-that's a reference to the top-level [scour] object.
-
-```js
-db = scour(...)
-
-photos = db.go('photos')
-photos.root    // => same as `db`
-```
-
-This allows you to return to the root when needed.
-
-```js
-db = scour(...)
-artist = db.go('artists', '9328')
-artist.root.go('albums').find({ artist_id: artist.get('id') })
-```
-
-### keypath
-
-> `keypath`
-
-An array of strings representing each step in how deep the current scope is
-relative to the root. Each time you traverse using [go()], a new [scour]
-object is spawned.
-
-```js
-db = scour(...)
-
-users = db.go('users')
-users.keypath            // => ['users']
-
-admins = users.go('admins')
-admins.keypath           // => ['users', 'admins']
-
-user = admins.go('23')
-user.keypath             // => ['users', 'admins', '23']
-```
-
 ## Traversal methods
 
 For traversing. All these methods return [scour] instances,
@@ -803,6 +737,72 @@ returning the keys and values for the new object.
 The rules specified in [Iteration methods] apply.
 
 See [scour.indexedMap()] for details and the non-wrapped version.
+
+## Attributes
+
+These attributes are available to [scour] instances.
+
+### value
+
+> `value`
+
+The raw value being wrapped. You can use this to terminate a chained call.
+
+```js
+users =
+  [ { name: 'john', admin: true },
+    { name: 'kyle', admin: false } ]
+
+scour(users)
+  .filter({ admin: true })
+  .value
+// => [ { name: 'john', admin: true } ]
+```
+
+### root
+
+> `root`
+
+A reference to the root [scour] instance.
+Everytime you traverse using [go()], a new [scour] object is spawned that's
+scoped to a keypath.  Each of these [scour] objects have a `root` attribute
+that's a reference to the top-level [scour] object.
+
+```js
+db = scour(...)
+
+photos = db.go('photos')
+photos.root    // => same as `db`
+```
+
+This allows you to return to the root when needed.
+
+```js
+db = scour(...)
+artist = db.go('artists', '9328')
+artist.root.go('albums').find({ artist_id: artist.get('id') })
+```
+
+### keypath
+
+> `keypath`
+
+An array of strings representing each step in how deep the current scope is
+relative to the root. Each time you traverse using [go()], a new [scour]
+object is spawned.
+
+```js
+db = scour(...)
+
+users = db.go('users')
+users.keypath            // => ['users']
+
+admins = users.go('admins')
+admins.keypath           // => ['users', 'admins']
+
+user = admins.go('23')
+user.keypath             // => ['users', 'admins', '23']
+```
 
 ## Utility functions
 

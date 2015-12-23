@@ -60,62 +60,6 @@ function scour (value, options) {
   if (this.extensions.length) this.applyExtensions()
 }
 
-/**
- * Attributes:
- * (Section) These attributes are available to [scour] instances.
- */
-
-/**
- * value : value
- * The raw value being wrapped. You can use this to terminate a chained call.
- *
- *     users =
- *       [ { name: 'john', admin: true },
- *         { name: 'kyle', admin: false } ]
- *
- *     scour(users)
- *       .filter({ admin: true })
- *       .value
- *     // => [ { name: 'john', admin: true } ]
- */
-
-/**
- * root : root
- * A reference to the root [scour] instance.
- * Everytime you traverse using [go()], a new [scour] object is spawned that's
- * scoped to a keypath.  Each of these [scour] objects have a `root` attribute
- * that's a reference to the top-level [scour] object.
- *
- *     db = scour(...)
- *
- *     photos = db.go('photos')
- *     photos.root    // => same as `db`
- *
- * This allows you to return to the root when needed.
- *
- *     db = scour(...)
- *     artist = db.go('artists', '9328')
- *     artist.root.go('albums').find({ artist_id: artist.get('id') })
- */
-
-/**
- * keypath : keypath
- * An array of strings representing each step in how deep the current scope is
- * relative to the root. Each time you traverse using [go()], a new [scour]
- * object is spawned.
- *
- *     db = scour(...)
- *
- *     users = db.go('users')
- *     users.keypath            // => ['users']
- *
- *     admins = users.go('admins')
- *     admins.keypath           // => ['users', 'admins']
- *
- *     user = admins.go('23')
- *     user.keypath             // => ['users', 'admins', '23']
- */
-
 scour.prototype = {
   /**
    * Traversal methods:
@@ -772,6 +716,62 @@ scour.prototype = {
     })
   }
 }
+
+/**
+ * Attributes:
+ * (Section) These attributes are available to [scour] instances.
+ */
+
+/**
+ * value : value
+ * The raw value being wrapped. You can use this to terminate a chained call.
+ *
+ *     users =
+ *       [ { name: 'john', admin: true },
+ *         { name: 'kyle', admin: false } ]
+ *
+ *     scour(users)
+ *       .filter({ admin: true })
+ *       .value
+ *     // => [ { name: 'john', admin: true } ]
+ */
+
+/**
+ * root : root
+ * A reference to the root [scour] instance.
+ * Everytime you traverse using [go()], a new [scour] object is spawned that's
+ * scoped to a keypath.  Each of these [scour] objects have a `root` attribute
+ * that's a reference to the top-level [scour] object.
+ *
+ *     db = scour(...)
+ *
+ *     photos = db.go('photos')
+ *     photos.root    // => same as `db`
+ *
+ * This allows you to return to the root when needed.
+ *
+ *     db = scour(...)
+ *     artist = db.go('artists', '9328')
+ *     artist.root.go('albums').find({ artist_id: artist.get('id') })
+ */
+
+/**
+ * keypath : keypath
+ * An array of strings representing each step in how deep the current scope is
+ * relative to the root. Each time you traverse using [go()], a new [scour]
+ * object is spawned.
+ *
+ *     db = scour(...)
+ *
+ *     users = db.go('users')
+ *     users.keypath            // => ['users']
+ *
+ *     admins = users.go('admins')
+ *     admins.keypath           // => ['users', 'admins']
+ *
+ *     user = admins.go('23')
+ *     user.keypath             // => ['users', 'admins', '23']
+ */
 
 // Export utilities
 assign(scour, utils)
