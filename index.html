@@ -172,58 +172,6 @@ You can access the raw data using <a href="#value">value</a>.</p>
 db.value               <span class="pl-c">// =&gt; same as `data`</span>
 db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">// =&gt; same as `data.users`</span>
 </code></pre>
-<h2 id="attributes">Attributes</h2>
-<p>These attributes are available to <a href="#scour">scour</a> instances.</p>
-<h3 id="value">value</h3>
-<blockquote>
-<p><code>value</code></p>
-</blockquote>
-<p>The raw value being wrapped. You can use this to terminate a chained call.</p>
-<pre><code class="lang-js">users =
-  [ { name: <span class="pl-s">&apos;john&apos;</span>, admin: <span class="pl-c1">true</span> },
-    { name: <span class="pl-s">&apos;kyle&apos;</span>, admin: <span class="pl-c1">false</span> } ]
-
-scour(users)
-  .filter({ admin: <span class="pl-c1">true</span> })
-  .value
-<span class="pl-c">// =&gt; [ { name: &apos;john&apos;, admin: true } ]</span>
-</code></pre>
-<h3 id="root">root</h3>
-<blockquote>
-<p><code>root</code></p>
-</blockquote>
-<p>A reference to the root <a href="#scour">scour</a> instance.
-Everytime you traverse using <a href="#go">go()</a>, a new <a href="#scour">scour</a> object is spawned that&#x2019;s
-scoped to a keypath.  Each of these <a href="#scour">scour</a> objects have a <code>root</code> attribute
-that&#x2019;s a reference to the top-level <a href="#scour">scour</a> object.</p>
-<pre><code class="lang-js">db = scour(...)
-
-photos = db.go(<span class="pl-s">&apos;photos&apos;</span>)
-photos.root    <span class="pl-c">// =&gt; same as `db`</span>
-</code></pre>
-<p>This allows you to return to the root when needed.</p>
-<pre><code class="lang-js">db = scour(...)
-artist = db.go(<span class="pl-s">&apos;artists&apos;</span>, <span class="pl-s">&apos;9328&apos;</span>)
-artist.root.go(<span class="pl-s">&apos;albums&apos;</span>).find({ artist_id: artist.get(<span class="pl-s">&apos;id&apos;</span>) })
-</code></pre>
-<h3 id="keypath">keypath</h3>
-<blockquote>
-<p><code>keypath</code></p>
-</blockquote>
-<p>An array of strings representing each step in how deep the current scope is
-relative to the root. Each time you traverse using <a href="#go">go()</a>, a new <a href="#scour">scour</a>
-object is spawned.</p>
-<pre><code class="lang-js">db = scour(...)
-
-users = db.go(<span class="pl-s">&apos;users&apos;</span>)
-users.keypath            <span class="pl-c">// =&gt; [&apos;users&apos;]</span>
-
-admins = users.go(<span class="pl-s">&apos;admins&apos;</span>)
-admins.keypath           <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;]</span>
-
-user = admins.go(<span class="pl-s">&apos;23&apos;</span>)
-user.keypath             <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;, &apos;23&apos;]</span>
-</code></pre>
 <h2 id="traversal-methods">Traversal methods</h2>
 <p>For traversing. All these methods return <a href="#scour">scour</a> instances,
 making them suitable for chaining.</p>
@@ -620,6 +568,58 @@ The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.
 returning the keys and values for the new object.
 The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
 <p>See <a href="#scour-indexedmap">scour.indexedMap()</a> for details and the non-wrapped version.</p>
+<h2 id="attributes">Attributes</h2>
+<p>These attributes are available to <a href="#scour">scour</a> instances.</p>
+<h3 id="value">value</h3>
+<blockquote>
+<p><code>value</code></p>
+</blockquote>
+<p>The raw value being wrapped. You can use this to terminate a chained call.</p>
+<pre><code class="lang-js">users =
+  [ { name: <span class="pl-s">&apos;john&apos;</span>, admin: <span class="pl-c1">true</span> },
+    { name: <span class="pl-s">&apos;kyle&apos;</span>, admin: <span class="pl-c1">false</span> } ]
+
+scour(users)
+  .filter({ admin: <span class="pl-c1">true</span> })
+  .value
+<span class="pl-c">// =&gt; [ { name: &apos;john&apos;, admin: true } ]</span>
+</code></pre>
+<h3 id="root">root</h3>
+<blockquote>
+<p><code>root</code></p>
+</blockquote>
+<p>A reference to the root <a href="#scour">scour</a> instance.
+Everytime you traverse using <a href="#go">go()</a>, a new <a href="#scour">scour</a> object is spawned that&#x2019;s
+scoped to a keypath.  Each of these <a href="#scour">scour</a> objects have a <code>root</code> attribute
+that&#x2019;s a reference to the top-level <a href="#scour">scour</a> object.</p>
+<pre><code class="lang-js">db = scour(...)
+
+photos = db.go(<span class="pl-s">&apos;photos&apos;</span>)
+photos.root    <span class="pl-c">// =&gt; same as `db`</span>
+</code></pre>
+<p>This allows you to return to the root when needed.</p>
+<pre><code class="lang-js">db = scour(...)
+artist = db.go(<span class="pl-s">&apos;artists&apos;</span>, <span class="pl-s">&apos;9328&apos;</span>)
+artist.root.go(<span class="pl-s">&apos;albums&apos;</span>).find({ artist_id: artist.get(<span class="pl-s">&apos;id&apos;</span>) })
+</code></pre>
+<h3 id="keypath">keypath</h3>
+<blockquote>
+<p><code>keypath</code></p>
+</blockquote>
+<p>An array of strings representing each step in how deep the current scope is
+relative to the root. Each time you traverse using <a href="#go">go()</a>, a new <a href="#scour">scour</a>
+object is spawned.</p>
+<pre><code class="lang-js">db = scour(...)
+
+users = db.go(<span class="pl-s">&apos;users&apos;</span>)
+users.keypath            <span class="pl-c">// =&gt; [&apos;users&apos;]</span>
+
+admins = users.go(<span class="pl-s">&apos;admins&apos;</span>)
+admins.keypath           <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;]</span>
+
+user = admins.go(<span class="pl-s">&apos;23&apos;</span>)
+user.keypath             <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;, &apos;23&apos;]</span>
+</code></pre>
 <h2 id="utility-functions">Utility functions</h2>
 <p>These are utilities that don&#x2019;t need a wrapped object.</p>
 <h3 id="scour.set">scour.set</h3>
@@ -756,16 +756,6 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 </li>
               </ul>
             </li>
-            <li class="menu-item -level-1 -parent"><a href="#attributes" class="link title link-attributes">Attributes</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#value" class="link title link-value">value</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#root" class="link title link-root">root</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#keypath" class="link title link-keypath">keypath</a>
-                </li>
-              </ul>
-            </li>
             <li class="menu-item -level-1 -parent"><a href="#traversal-methods" class="link title link-traversal-methods">Traversal methods</a>
               <ul class="submenu">
                 <li class="menu-item -level-2"><a href="#go" class="link title link-go">go</a>
@@ -825,6 +815,16 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#mapobject" class="link title link-mapobject">mapObject</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#indexedmap" class="link title link-indexedmap">indexedMap</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a href="#attributes" class="link title link-attributes">Attributes</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a href="#value" class="link title link-value">value</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#root" class="link title link-root">root</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#keypath" class="link title link-keypath">keypath</a>
                 </li>
               </ul>
             </li>

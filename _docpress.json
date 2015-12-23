@@ -58,28 +58,6 @@
             ]
           },
           {
-            "title": "Attributes",
-            "depth": 2,
-            "id": "attributes",
-            "headings": [
-              {
-                "title": "value",
-                "depth": 3,
-                "id": "value"
-              },
-              {
-                "title": "root",
-                "depth": 3,
-                "id": "root"
-              },
-              {
-                "title": "keypath",
-                "depth": 3,
-                "id": "keypath"
-              }
-            ]
-          },
-          {
             "title": "Traversal methods",
             "depth": 2,
             "id": "traversal-methods",
@@ -216,6 +194,28 @@
                 "title": "indexedMap",
                 "depth": 3,
                 "id": "indexedmap"
+              }
+            ]
+          },
+          {
+            "title": "Attributes",
+            "depth": 2,
+            "id": "attributes",
+            "headings": [
+              {
+                "title": "value",
+                "depth": 3,
+                "id": "value"
+              },
+              {
+                "title": "root",
+                "depth": 3,
+                "id": "root"
+              },
+              {
+                "title": "keypath",
+                "depth": 3,
+                "id": "keypath"
               }
             ]
           },
@@ -395,28 +395,6 @@
           ]
         },
         {
-          "title": "Attributes",
-          "depth": 2,
-          "id": "attributes",
-          "headings": [
-            {
-              "title": "value",
-              "depth": 3,
-              "id": "value"
-            },
-            {
-              "title": "root",
-              "depth": 3,
-              "id": "root"
-            },
-            {
-              "title": "keypath",
-              "depth": 3,
-              "id": "keypath"
-            }
-          ]
-        },
-        {
           "title": "Traversal methods",
           "depth": 2,
           "id": "traversal-methods",
@@ -553,6 +531,28 @@
               "title": "indexedMap",
               "depth": 3,
               "id": "indexedmap"
+            }
+          ]
+        },
+        {
+          "title": "Attributes",
+          "depth": 2,
+          "id": "attributes",
+          "headings": [
+            {
+              "title": "value",
+              "depth": 3,
+              "id": "value"
+            },
+            {
+              "title": "root",
+              "depth": 3,
+              "id": "root"
+            },
+            {
+              "title": "keypath",
+              "depth": 3,
+              "id": "keypath"
             }
           ]
         },
