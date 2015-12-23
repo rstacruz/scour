@@ -194,8 +194,7 @@ scour.prototype = {
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions)
     }
-    const results = sift(conditions, this.value)
-    return this._get(results, [])
+    return this.replace(sift(conditions, this.value))
   },
 
   filterByFunction (fn) {
