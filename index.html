@@ -513,13 +513,37 @@ work with <code>scour</code>-wrapped objects. The name of this method is a bit
 confusing, as it doesn&#x2019;t actually return a JSON string &#x2014; but I&#x2019;m afraid
 that it&#x2019;s the way that the JavaScript API for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior">JSON.stringify</a> works.</p>
 <h2 id="iteration-methods">Iteration methods</h2>
-<p>For traversing.</p>
+<p>These methods are generally useful for collections.</p>
+<pre><code class="lang-js">subjects =
+  { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, title: <span class="pl-s">&apos;Math&apos;</span>, level: <span class="hljs-number">101</span> },
+    <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, title: <span class="pl-s">&apos;Science&apos;</span>, level: <span class="hljs-number">103</span> },
+    <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, title: <span class="pl-s">&apos;History&apos;</span>, level: <span class="hljs-number">102</span> } }
+</code></pre>
+<p><strong>Objects or arrays:</strong>
+These functions can work with either arrays or array-like objects, such as
+above.</p>
+<p><strong>Values:</strong>
+For all these functions, The value <code>val</code> passed onto the callbacks <em>is</em> a
+<a href="#scour">scour</a>-wrapped object. Use <code>item.value</code> or <code>this</code> to access the raw
+values.</p>
+<pre><code class="lang-js">scour(subjects).forEach((subject, key) =&gt; {
+  <span class="pl-c1">console</span>.log(subject.get(<span class="pl-s">&apos;title&apos;</span>))
+})
+</code></pre>
+<p><strong>Return values:</strong>
+For methods that return values (such as [map()], the returned results <em>is
+not</em> a <a href="#scour">scour</a>-wrapped object, and isn&#x2019;t suitable for chaining.</p>
+<pre><code class="lang-js">scour(subjects).map((subject, key) =&gt; {
+  <span class="pl-k">return</span> subject.get(<span class="pl-s">&apos;title&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + subject.get(<span class="pl-s">&apos;level&apos;</span>)
+})
+<span class="pl-c">// =&gt; [ &apos;Math 101&apos;, &apos;Science 103&apos;, &apos;History 102&apos; ]</span>
+</code></pre>
 <h3 id="foreach">forEach</h3>
 <blockquote>
 <p><code>forEach(function(item, key))</code></p>
 </blockquote>
-<p>Loops through each item. Supports both arrays and objects. The <code>item</code>s
-passed to the function will be returned as a <a href="#scour">scour</a> instance.</p>
+<p>Loops through each item. Supports both arrays and objects.
+The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
 <pre><code class="lang-js">users =
   { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
@@ -533,8 +557,6 @@ scour(users).each((user, key) =&gt; {
 <li><code>item</code> - the value; always a scour object.</li>
 <li><code>key</code> - the key.</li>
 </ul>
-<p>The value being passed onto the function is going to be a <a href="#scour">scour</a> object.
-Use <code>item.value</code> or <code>this</code> to access the raw values.</p>
 <h3 id="each">each</h3>
 <blockquote>
 <p><code>each(fn)</code></p>
@@ -545,15 +567,33 @@ Use <code>item.value</code> or <code>this</code> to access the raw values.</p>
 <p><code>map(function(item, key))</code></p>
 </blockquote>
 <p>Loops through each item and returns an array based on the iterator&#x2019;s
-return values. Supports both arrays and objects. The <code>item</code>s passed to
-the function will be returned as a <a href="#scour">scour</a> instance.</p>
+return values. Supports both arrays and objects.
+The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;Steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;Bill&apos;</span> } }
 
 names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;name&apos;</span>))
-<span class="pl-c">// =&gt; [ &apos;steve&apos;, &apos;bill&apos; ]</span>
+<span class="pl-c">// =&gt; [ &apos;Steve&apos;, &apos;Bill&apos; ]</span>
 </code></pre>
+<h3 id="mapobject">mapObject</h3>
+<blockquote>
+<p><code>mapObject(function(val, key))</code></p>
+</blockquote>
+<p>Creates a new <code>Object</code> with with the results of calling a provided function
+on every element in this array. Works like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>, but also works on
+objects as well as arrays, and it returns an object instead.
+The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
+<p>See <a href="#scour-mapobject">scour.mapObject()</a> for details and the non-wrapped version.</p>
+<h3 id="indexedmap">indexedMap</h3>
+<blockquote>
+<p><code>indexedMap(function(val, key))</code></p>
+</blockquote>
+<p>Creates a new <code>Object</code> with with the results of calling a provided function
+returning the keys and values for the new object.
+The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
+<p>Returns the resulting <code>Object</code> &#x2013; it is not a <a href="#scour">scour</a>-wrapped object.
+See <a href="#scour-indexedmap">scour.indexedMap()</a> for details and the non-wrapped version.</p>
 <h2 id="utility-functions">Utility functions</h2>
 <p>These are utilities that don&#x2019;t need a wrapped object.</p>
 <h3 id="scour.set">scour.set</h3>
@@ -583,14 +623,60 @@ result = del(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl
 <p><code>scour.each(iterable, fn)</code></p>
 </blockquote>
 <p>Iterates through <code>iterable</code>, either an object or an array. This is an
-implementation of <code>Array.forEach</code> that also works for objects.</p>
+implementation of <a href="http://devdocs.io/javascript/global_objects/array/foreach">Array#forEach</a> that also works for objects.</p>
+<p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
+<code>key</code>, just like <code>Array#forEach</code>.</p>
 <p>This is also available as <code>require(&apos;scourjs/utilities/each&apos;)</code>.</p>
 <h3 id="scour.map">scour.map</h3>
 <blockquote>
 <p><code>scour.map(iterable, fn)</code></p>
 </blockquote>
-<p>Works like Array#map, but also works on objects.</p>
+<p>Creates a new <code>Array</code> with with the results of calling a provided function
+on every element in this array. Works like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>, but also works on
+objects as well as arrays.</p>
+<p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
+<code>key</code>, just like <code>Array#map</code>.</p>
 <p>This is also available as <code>require(&apos;scourjs/utilities/map&apos;)</code>.</p>
+<h3 id="scour.mapobject">scour.mapObject</h3>
+<blockquote>
+<p><code>scour.mapObject(iterable, fn)</code></p>
+</blockquote>
+<p>Creates a new <code>Object</code> with with the results of calling a provided function
+on every element in this array. Works like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>, but also works on
+objects as well as arrays, and it returns an object instead.</p>
+<p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
+<code>key</code>, just like <code>Array#map</code>.</p>
+<pre><code class="lang-js">object = { a: <span class="hljs-number">20</span>, b: <span class="hljs-number">30</span>, c: <span class="hljs-number">40</span> }
+result = scour.mapObject(object, (val, key) =&gt; {
+  <span class="pl-k">return</span> <span class="pl-s">&apos;$&apos;</span> + val + <span class="pl-s">&apos;.00&apos;</span>
+})
+
+<span class="pl-c">// =&gt; { a: &apos;$20.00&apos;, b: &apos;$30.00&apos;, c: &apos;$40.00&apos; }</span>
+</code></pre>
+<p>This is also available as <code>require(&apos;scourjs/utilities/map_object&apos;)</code>.</p>
+<h3 id="scour.indexedmap">scour.indexedMap</h3>
+<blockquote>
+<p><code>scour.indexedMap(iterable, fn)</code></p>
+</blockquote>
+<p>Creates a new <code>Object</code> with with the results of calling a provided function
+returning the keys and values for the new object.</p>
+<p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
+<code>key</code>, just like <code>Array#map</code>.</p>
+<p>The callback <code>fn</code> should return an array with two elements: with <code>result[0]</code>
+being the key, and <code>result[1]</code> being the value. These are what the new
+object will be constructed with.</p>
+<p>The <code>iterable</code> parameter can be an object or an array. This works like
+<code>Array#map</code>, but also works on objects as well as arrays.</p>
+<pre><code class="lang-js">list = [<span class="pl-s">&apos;Fred&apos;</span>, <span class="pl-s">&apos;Barney&apos;</span>, <span class="pl-s">&apos;Wilma&apos;</span>]
+
+object = scour.indexedMap(list, (val, key) =&gt; {
+  <span class="pl-k">var</span> newkey = val.substr(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>)
+  <span class="pl-k">return</span> [ newkey, val ]
+})
+
+<span class="pl-c">// =&gt; { f: &apos;Fred&apos;, b: &apos;Barney&apos;, w: &apos;Wilma&apos; }</span>
+</code></pre>
+<p>This is also available as <code>require(&apos;scourjs/utilities/indexed_map&apos;)</code>.</p>
 <!--api:end-->
 <h2 id="thanks">Thanks</h2>
 <p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
@@ -699,6 +785,10 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 </li>
                 <li class="menu-item -level-2"><a href="#map" class="link title link-map">map</a>
                 </li>
+                <li class="menu-item -level-2"><a href="#mapobject" class="link title link-mapobject">mapObject</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#indexedmap" class="link title link-indexedmap">indexedMap</a>
+                </li>
               </ul>
             </li>
             <li class="menu-item -level-1 -parent"><a href="#utility-functions" class="link title link-utility-functions">Utility functions</a>
@@ -710,6 +800,10 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#scour.each" class="link title link-scour.each">scour.each</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#scour.map" class="link title link-scour.map">scour.map</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#scour.mapobject" class="link title link-scour.mapobject">scour.mapObject</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#scour.indexedmap" class="link title link-scour.indexedmap">scour.indexedMap</a>
                 </li>
               </ul>
             </li>

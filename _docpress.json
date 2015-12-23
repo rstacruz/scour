@@ -206,6 +206,16 @@
                 "title": "map",
                 "depth": 3,
                 "id": "map"
+              },
+              {
+                "title": "mapObject",
+                "depth": 3,
+                "id": "mapobject"
+              },
+              {
+                "title": "indexedMap",
+                "depth": 3,
+                "id": "indexedmap"
               }
             ]
           },
@@ -233,6 +243,16 @@
                 "title": "scour.map",
                 "depth": 3,
                 "id": "scour.map"
+              },
+              {
+                "title": "scour.mapObject",
+                "depth": 3,
+                "id": "scour.mapobject"
+              },
+              {
+                "title": "scour.indexedMap",
+                "depth": 3,
+                "id": "scour.indexedmap"
               }
             ]
           },
@@ -518,6 +538,16 @@
               "title": "map",
               "depth": 3,
               "id": "map"
+            },
+            {
+              "title": "mapObject",
+              "depth": 3,
+              "id": "mapobject"
+            },
+            {
+              "title": "indexedMap",
+              "depth": 3,
+              "id": "indexedmap"
             }
           ]
         },
@@ -545,6 +575,16 @@
               "title": "scour.map",
               "depth": 3,
               "id": "scour.map"
+            },
+            {
+              "title": "scour.mapObject",
+              "depth": 3,
+              "id": "scour.mapobject"
+            },
+            {
+              "title": "scour.indexedMap",
+              "depth": 3,
+              "id": "scour.indexedmap"
             }
           ]
         },
