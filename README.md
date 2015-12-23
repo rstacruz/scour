@@ -240,7 +240,6 @@ scour(users)
   .filter({ admin: true })
   .value
 // => [ { name: 'john', admin: true } ]
-
 ```
 
 ### root
@@ -286,7 +285,6 @@ admins.keypath           // => ['users', 'admins']
 
 user = admins.go('23')
 user.keypath             // => ['users', 'admins', '23']
-
 ```
 
 ## Traversal methods
@@ -347,7 +345,6 @@ users =
 
 scour(users).at(0)          // => [scour { name: 'steve' }]
 scour(users).get(12)        // => [scour { name: 'steve' }]
-
 ```
 
 ### filter
@@ -444,7 +441,6 @@ users =
     23: { name: 'bill' } }
 
 names = scour(users).len()  // => 2
-
 ```
 
 ### toArray
@@ -461,7 +457,6 @@ users =
 
 names = scour(users).toArray()
 // => [ {name: 'steve'}, {name: 'bill'} ]
-
 ```
 
 ### values
@@ -720,7 +715,6 @@ users =
 
 names = scour(users).map((user, key) => user.get('name'))
 // => [ 'steve', 'bill' ]
-
 ```
 
 ## Utility functions
