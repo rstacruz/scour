@@ -16,6 +16,11 @@ describe('.len()', function () {
       .toEqual(list.length)
   })
 
+  it('works for empties', function () {
+    expect(scour([]).len())
+      .toEqual(0)
+  })
+
   it('works for undefined', function () {
     expect(scour(undefined).len())
       .toEqual(0)

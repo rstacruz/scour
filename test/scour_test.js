@@ -80,50 +80,6 @@ describe('index', function () {
     })
   })
 
-  describe('.first()', function () {
-    it('works for arrays', function () {
-      const data = [ 'a', 'b' ]
-      expect(scour(data).first().value).toEqual('a')
-    })
-
-    it('works for objects', function () {
-      const data = { 0: 'a', 1: 'b' }
-      expect(scour(data).first().value).toEqual('a')
-    })
-
-    it('works for empty arrays', function () {
-      const data = []
-      expect(scour(data).first()).toEqual(undefined)
-    })
-
-    it('works for empty objects', function () {
-      const data = {}
-      expect(scour(data).first()).toEqual(undefined)
-    })
-  })
-
-  describe('.last()', function () {
-    it('works for arrays', function () {
-      const data = [ 'a', 'b' ]
-      expect(scour(data).last().value).toEqual('b')
-    })
-
-    it('works for objects', function () {
-      const data = { 0: 'a', 1: 'b' }
-      expect(scour(data).last().value).toEqual('b')
-    })
-
-    it('works for empty arrays', function () {
-      const data = []
-      expect(scour(data).last()).toEqual(undefined)
-    })
-
-    it('works for empty objects', function () {
-      const data = {}
-      expect(scour(data).last()).toEqual(undefined)
-    })
-  })
-
   describe('.toArray()', function () {
     it('works for objects', function () {
       expect(scour({ a: 1, b: 2 }).toArray()).toEqual([1, 2])

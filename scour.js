@@ -301,7 +301,8 @@ scour.prototype = {
    */
 
   last () {
-    return this.at(this.len() - 1)
+    var len = this.len()
+    if (len > 0) return this.at(len - 1)
   },
 
   /**
