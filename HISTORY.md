@@ -7,6 +7,8 @@
 - Implement `scour.sortBy()`.
 - Implement `scour#mapObject()`.
 - Implement `scour#indexedMap()`.
+- `scour#forEach()` - pass the 3rd parameter as the index.
+- `scour.each()` - pass the 3rd parameter as the index even for arrays.
 
 ## [v0.2.0]
 > Dec 23, 2015

@@ -659,7 +659,7 @@ scour.prototype = {
    */
 
   /**
-   * forEach : forEach(function(item, key))
+   * forEach : forEach(function(item, key, index))
    * Loops through each item. Supports both arrays and objects.
    * The rules specified in [Iteration methods] apply.
    *
@@ -675,11 +675,13 @@ scour.prototype = {
    *
    * - `item` - the value; always a scour object.
    * - `key` - the key.
+   * - `index` - the index.
    */
 
   forEach (fn) {
+    let index = 0
     scour.each(this.value, (val, key) => {
-      fn.call(val, this._get(val, [key]), key)
+      fn.call(val, this._get(val, [key]), key, index++)
     })
     return this
   },

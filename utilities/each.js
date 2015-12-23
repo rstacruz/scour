@@ -12,7 +12,7 @@ function each (list, fn) {
   var idx
 
   if (typeof len === 'number') {
-    for (i = 0; i < len; i++) fn(list[i], i)
+    for (i = 0; i < len; i++) fn(list[i], i, i)
   } else {
     idx = 0
     for (i in list) {
