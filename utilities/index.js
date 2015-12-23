@@ -35,10 +35,9 @@ exports.del = require('./del')
 /**
  * scour.each : scour.each(iterable, fn)
  * Iterates through `iterable`, either an object or an array. This is an
- * implementation of [Array#forEach] that also works for objects.
- *
- * The callback `fn` will be invoked with two parameters: `currentValue` and
- * `key`, just like `Array#forEach`.
+ * implementation of [Array#forEach] that also works for objects. The callback
+ * `fn` will be invoked with two parameters: `currentValue` and `key`, just
+ * like `Array#forEach`.
  *
  * This is also available as `require('scourjs/utilities/each')`.
  *

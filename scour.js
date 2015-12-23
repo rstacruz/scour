@@ -62,9 +62,9 @@ function scour (value, options) {
 
 scour.prototype = {
   /**
-   * Traversal methods:
-   * (Section) For traversing. All these methods return [scour] instances,
-   * making them suitable for chaining.
+   * Chaining methods:
+   * (Section) These methods are used to traverse nested structures. All these
+   * methods return [scour] instances, making them suitable for chaining.
    */
 
   /**
@@ -247,6 +247,56 @@ scour.prototype = {
   last () {
     var len = this.len()
     if (len > 0) return this.at(len - 1)
+  },
+
+  /**
+   * Sorts a collection. Returns a [scour]-wrapped object suitable for
+   * chaining. Like other chainable methods, this works on arrays as well as
+   * objects.
+   *
+   *     data =
+   *       { wilma: { name: 'Wilma' },
+   *         barney: { name: 'Barney' },
+   *         fred: { name: 'Fred' } }
+   *
+   *     scour(data).sortBy('name')
+   *
+   * __Conditions:__
+   * The given condition can be a string or a function. When it's given as a
+   * function, the `item` being passed is a [scour]-wrapped object, just like
+   * in [forEach()] (et al). These two examples below are
+   * functionally-equivalent.
+   *
+   *     scour(data).sortBy('name')
+   *     scour(data).sortBy((item) => item.get('name'))
+   */
+
+  sortBy (condition) {
+    if (typeof condition === 'string') {
+      var key = condition
+      condition = function (item) { return item.get(key) }
+    }
+
+    var values = this.map((value, key, index) => ({
+      key, value: value.value, criteria: condition(value, key), index
+    }))
+
+    var sorted = values.sort((left, right) => {
+      const a = left.criteria
+      const b = right.criteria
+      if (a !== b) {
+        if (a > b || a === void 0) return 1
+        if (a < b || b === void 0) return -1
+      }
+      return a.index - b.index
+    })
+
+    if (Array.isArray(this.value)) {
+      return this.replace(sorted.map((res) => res.value))
+    } else {
+      return this.replace(
+        utils.indexedMap(sorted, (res) => [ res.key, res.value ]))
+    }
   },
 
   /**
