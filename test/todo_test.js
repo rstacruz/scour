@@ -14,7 +14,8 @@ describe('todo', function () {
   })
 
   describe('optimizations', function () {
-    it('use native .map and .forEach')
+    it('use native .forEach', done)
+    it('optimize .sortBy(string)', done)
   })
 
   describe('array', function () {

@@ -285,14 +285,20 @@ scour.prototype = {
    */
 
   sortBy (condition) {
+    var values
+
     if (typeof condition === 'string') {
       var key = condition
-      condition = function (item) { return item.get(key) }
+      condition = function (item) { return item[key] }
+      // don't use `this.map` or `this.each` so we skip `new scour()`
+      values = utils.map(this.value, (value, key, index) => ({
+        key, value, criteria: condition(value, key), index
+      }))
+    } else {
+      values = this.map((value, key, index) => ({
+        key, value: value.value, criteria: condition(value, key), index
+      }))
     }
-
-    var values = this.map((value, key, index) => ({
-      key, value: value.value, criteria: condition(value, key), index
-    }))
 
     var sorted = values.sort((left, right) => {
       const a = left.criteria
