@@ -4,7 +4,6 @@ module.exports = function filter (each, fn, _isArray) {
   var isArray = typeof _isArray !== 'undefined' ? _isArray : Array.isArray(each)
   var result
 
-  /* istanbul ignore next */
   if (typeof each !== 'function') each = forEach.bind(this, each)
 
   if (isArray) {

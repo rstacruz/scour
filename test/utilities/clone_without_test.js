@@ -12,4 +12,10 @@ describe('clone without', function () {
     const data = { moe: 1, larry: 2, curly: 3 }
     expect(cloneWithout(data, 'larry')).toEqual({ moe: 1, curly: 3 })
   })
+
+  it('works for objects with non-enumerable properties', function () {
+    const data = { moe: 1, larry: 2, curly: 3 }
+    Object.defineProperty(data, 'sue', { enumerable: false, value: 4 })
+    expect(cloneWithout(data, 'larry')).toEqual({ moe: 1, curly: 3 })
+  })
 })
