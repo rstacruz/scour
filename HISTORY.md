@@ -3,6 +3,8 @@
 - Implement `scour.mapObject()`.
 - Implement `scour.indexedMap()`.
 - Implement `scour.filter()`.
+- Implement `scour.reject()`.
+- Implement `scour.sortBy()`.
 - Implement `scour#mapObject()`.
 - Implement `scour#indexedMap()`.
 

@@ -6,6 +6,7 @@ const assign = require('object-assign')
 const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
 const utils = require('./utilities')
+const negate = require('./lib/negate')
 
 /**
  * scour : scour(object)
@@ -209,7 +210,19 @@ scour.prototype = {
       this.each((val, key) => { if (fn(val, key)) result[key] = val.value })
     }
 
-    return result
+    return this.replace(result)
+  },
+
+  /**
+   * Inverse of `filter()`.
+   */
+
+  reject (conditions) {
+    if (typeof conditions === 'function') {
+      return this.filterByFunction(negate(conditions))
+    } else {
+      return this.filter({ $not: conditions })
+    }
   },
 
   /**
