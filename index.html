@@ -541,17 +541,16 @@ work with <code>scour</code>-wrapped objects. The name of this method is a bit
 confusing, as it doesn&#x2019;t actually return a JSON string &#x2014; but I&#x2019;m afraid
 that it&#x2019;s the way that the JavaScript API for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior">JSON.stringify</a> works.</p>
 <h2 id="iteration-methods">Iteration methods</h2>
-<p>These methods are generally useful for collections.</p>
+<p>These methods are generally useful for collections. These
+methods can work with either arrays or array-like objects, such as
+below.</p>
 <pre><code class="lang-js">subjects =
   { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, title: <span class="pl-s">&apos;Math&apos;</span>, level: <span class="hljs-number">101</span> },
     <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, title: <span class="pl-s">&apos;Science&apos;</span>, level: <span class="hljs-number">103</span> },
     <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, title: <span class="pl-s">&apos;History&apos;</span>, level: <span class="hljs-number">102</span> } }
 </code></pre>
-<p><strong>Objects or arrays:</strong>
-These functions can work with either arrays or array-like objects, such as
-above.</p>
 <p><strong>Values:</strong>
-For all these functions, The value <code>val</code> passed onto the callbacks <em>is</em> a
+For all these functions, The items passed onto the callbacks <em>is</em> a
 <a href="#scour">scour</a>-wrapped object. Use <code>item.value</code> or <code>this</code> to access the raw
 values.</p>
 <pre><code class="lang-js">scour(subjects).forEach((subject, key) =&gt; {
@@ -620,8 +619,7 @@ The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.
 <p>Creates a new <code>Object</code> with with the results of calling a provided function
 returning the keys and values for the new object.
 The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
-<p>Returns the resulting <code>Object</code> &#x2013; it is not a <a href="#scour">scour</a>-wrapped object.
-See <a href="#scour-indexedmap">scour.indexedMap()</a> for details and the non-wrapped version.</p>
+<p>See <a href="#scour-indexedmap">scour.indexedMap()</a> for details and the non-wrapped version.</p>
 <h2 id="utility-functions">Utility functions</h2>
 <p>These are utilities that don&#x2019;t need a wrapped object.</p>
 <h3 id="scour.set">scour.set</h3>
