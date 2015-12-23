@@ -249,7 +249,6 @@ reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query
 <pre><code class="lang-js">scour(products).filter({ price: { $gt: <span class="hljs-number">200</span> })
 scour(articles).filter({ published_at: { $not: <span class="pl-c1">null</span> }})
 </code></pre>
-<p>Also see <a href="#scour-filter">scour.filter()</a> for the unwrapped version.</p>
 <p><strong>Arrays or objects:</strong>
 Both arrays and array-like objects are supported. In this example below,
 an object will be used as the input.</p>
@@ -261,6 +260,7 @@ an object will be used as the input.</p>
 scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
 <span class="pl-c">// =&gt; 2</span>
 </code></pre>
+<p>Also see <a href="#scour-filter">scour.filter()</a> for the unwrapped version.</p>
 <h3 id="reject">reject</h3>
 <blockquote>
 <p><code>reject(conditions)</code></p>
