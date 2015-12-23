@@ -187,7 +187,6 @@ scour(users)
   .filter({ admin: <span class="pl-c1">true</span> })
   .value
 <span class="pl-c">// =&gt; [ { name: &apos;john&apos;, admin: true } ]</span>
-
 </code></pre>
 <h3 id="root">root</h3>
 <blockquote>
@@ -224,7 +223,6 @@ admins.keypath           <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;a
 
 user = admins.go(<span class="pl-s">&apos;23&apos;</span>)
 user.keypath             <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;admins&apos;, &apos;23&apos;]</span>
-
 </code></pre>
 <h2 id="traversal-methods">Traversal methods</h2>
 <p>For traversing. All these methods return <a href="#scour">scour</a> instances,
@@ -271,7 +269,6 @@ index, not by key.</p>
 
 scour(users).at(<span class="hljs-number">0</span>)          <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
 scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
-
 </code></pre>
 <h3 id="filter">filter</h3>
 <blockquote>
@@ -342,7 +339,6 @@ number of keys.</p>
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
 
 names = scour(users).len()  <span class="pl-c">// =&gt; 2</span>
-
 </code></pre>
 <h3 id="toarray">toArray</h3>
 <blockquote>
@@ -356,7 +352,6 @@ that object.</p>
 
 names = scour(users).toArray()
 <span class="pl-c">// =&gt; [ {name: &apos;steve&apos;}, {name: &apos;bill&apos;} ]</span>
-
 </code></pre>
 <h3 id="values">values</h3>
 <blockquote>
@@ -558,7 +553,6 @@ the function will be returned as a <a href="#scour">scour</a> instance.</p>
 
 names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;name&apos;</span>))
 <span class="pl-c">// =&gt; [ &apos;steve&apos;, &apos;bill&apos; ]</span>
-
 </code></pre>
 <h2 id="utility-functions">Utility functions</h2>
 <p>These are utilities that don&#x2019;t need a wrapped object.</p>
