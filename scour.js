@@ -163,7 +163,7 @@ scour.prototype = {
    *
    *     scour(data)
    *       .filter((item, key) => +item.get('price') > 200)
-   *       .sortBy('price') // todo
+   *       .sortBy('price')
    *       .first()
    *
    * __Advanced queries:__
