@@ -983,8 +983,8 @@ This is also available as `require('scourjs/utilities/filter')`.
 [toArray()]: #toarray
 [value]: #value
 [use()]: #use
-[scour.mapObject()]: #scour-mapobject
-[scour.indexedMap()]: #scour-indexedmap
+[scour.mapObject()]: #scour.mapobject
+[scour.indexedMap()]: #scour.indexedmap
 [scour.filter()]: #scour-filter
 [Iteration methods]: #iteration-methods
 
