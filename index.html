@@ -240,7 +240,7 @@ passed to the callback will be a <a href="#scour">scour</a>-wrapped object. The 
 will also be a <a href="#scour">scour</a>-wrapped object, making it chainable.</p>
 <pre><code class="lang-js">scour(data)
   .filter((item, key) =&gt; +item.get(<span class="pl-s">&apos;price&apos;</span>) &gt; <span class="hljs-number">200</span>)
-  .sortBy(<span class="pl-s">&apos;price&apos;</span>) <span class="pl-c">// todo</span>
+  .sortBy(<span class="pl-s">&apos;price&apos;</span>)
   .first()
 </code></pre>
 <p><strong>Advanced queries:</strong>
