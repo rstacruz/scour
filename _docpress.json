@@ -125,11 +125,6 @@
                 "id": "toarray"
               },
               {
-                "title": "values",
-                "depth": 3,
-                "id": "values"
-              },
-              {
                 "title": "keys",
                 "depth": 3,
                 "id": "keys"
@@ -470,11 +465,6 @@
               "title": "toArray",
               "depth": 3,
               "id": "toarray"
-            },
-            {
-              "title": "values",
-              "depth": 3,
-              "id": "values"
             },
             {
               "title": "keys",

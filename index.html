@@ -265,7 +265,7 @@ scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
 <blockquote>
 <p><code>reject(conditions)</code></p>
 </blockquote>
-<p>Inverse of <code>filter()</code>.</p>
+<p>Inverse of <a href="#filter">filter()</a> &#x2013; see <code>filter()</code> documentation for details.</p>
 <h3 id="find">find</h3>
 <blockquote>
 <p><code>find(conditions)</code></p>
@@ -348,7 +348,8 @@ names = scour(users).len()  <span class="pl-c">// =&gt; 2</span>
 <p><code>toArray()</code></p>
 </blockquote>
 <p>Returns an array. If the the value is an object, it returns the values of
-that object.</p>
+that object. If the value is an array, it returns it as is. Also aliased
+as <code>values()</code>.</p>
 <pre><code class="lang-js">users =
   { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
@@ -356,16 +357,12 @@ that object.</p>
 names = scour(users).toArray()
 <span class="pl-c">// =&gt; [ {name: &apos;steve&apos;}, {name: &apos;bill&apos;} ]</span>
 </code></pre>
-<h3 id="values">values</h3>
-<blockquote>
-<p><code>values()</code></p>
-</blockquote>
-<p>Alias for <code>toArray()</code>.</p>
 <h3 id="keys">keys</h3>
 <blockquote>
 <p><code>keys()</code></p>
 </blockquote>
-<p>Returns keys. If the value is an array, this returns the array&#x2019;s indices.</p>
+<p>Returns keys. If the value is an array, this returns the array&#x2019;s indices.
+Also see <a href="#toarray">toArray()</a> to retrieve the values instead.</p>
 <h2 id="writing-methods">Writing methods</h2>
 <p>These are methods for modifying an object/array tree immutably.
 Note that all these functions are immutable&#x2013;it will not modify existing
@@ -811,8 +808,6 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#len" class="link title link-len">len</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#toarray" class="link title link-toarray">toArray</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#values" class="link title link-values">values</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#keys" class="link title link-keys">keys</a>
                 </li>
