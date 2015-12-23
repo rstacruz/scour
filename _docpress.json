@@ -277,6 +277,29 @@
         "title": "Appendix",
         "sections": [
           {
+            "title": "Changelog",
+            "source": "HISTORY.md",
+            "url": "HISTORY.html",
+            "slug": "history",
+            "headings": [
+              {
+                "title": "[v0.3.0]",
+                "depth": 2,
+                "id": "v0.3.0"
+              },
+              {
+                "title": "[v0.2.0]",
+                "depth": 2,
+                "id": "v0.2.0"
+              },
+              {
+                "title": "[v0.1.0]",
+                "depth": 2,
+                "id": "v0.1.0"
+              }
+            ]
+          },
+          {
             "title": "Comparison with others",
             "source": "docs/comparison.md",
             "url": "comparison.html",
@@ -615,6 +638,28 @@
         }
       ]
     },
+    "HISTORY.html": {
+      "source": "HISTORY.md",
+      "title": "Changelog",
+      "slug": "history",
+      "headings": [
+        {
+          "title": "[v0.3.0]",
+          "depth": 2,
+          "id": "v0.3.0"
+        },
+        {
+          "title": "[v0.2.0]",
+          "depth": 2,
+          "id": "v0.2.0"
+        },
+        {
+          "title": "[v0.1.0]",
+          "depth": 2,
+          "id": "v0.1.0"
+        }
+      ]
+    },
     "comparison.html": {
       "source": "docs/comparison.md",
       "title": "Comparison with others",
@@ -679,6 +724,7 @@
   },
   "sources": {
     "README.md": "index.html",
+    "HISTORY.md": "HISTORY.html",
     "docs/comparison.md": "comparison.html",
     "docs/extensions_example.md": "extensions_example.html",
     "docs/redux_example.md": "redux_example.html",
