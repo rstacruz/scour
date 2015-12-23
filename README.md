@@ -221,10 +221,10 @@ db.value               // => same as `data`
 db.go('users').value   // => same as `data.users`
 ```
 
-## Traversal methods
+## Chaining methods
 
-For traversing. All these methods return [scour] instances,
-making them suitable for chaining.
+These methods are used to traverse nested structures. All these
+methods return [scour] instances, making them suitable for chaining.
 
 ### go
 
@@ -311,7 +311,7 @@ will also be a [scour]-wrapped object, making it chainable.
 ```js
 scour(data)
   .filter((item, key) => +item.get('price') > 200)
-  .sortBy('price') // todo
+  .sortBy('price')
   .first()
 ```
 
@@ -342,6 +342,12 @@ scour(devices).filter({ mobile: true }).len()
 
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
+### reject
+
+> `reject(conditions)`
+
+Inverse of `filter()`.
+
 ### find
 
 > `find(conditions)`
@@ -371,6 +377,34 @@ to [at(0)](#at).
 
 Returns the first result as a [scour]-wrapped object. This is equivalent
 to `at(len() - 1)`: see [at()] and [len()].
+
+### sortBy
+
+> `sortBy(condition)`
+
+Sorts a collection. Returns a [scour]-wrapped object suitable for
+chaining. Like other chainable methods, this works on arrays as well as
+objects.
+
+```js
+data =
+  { wilma: { name: 'Wilma' },
+    barney: { name: 'Barney' },
+    fred: { name: 'Fred' } }
+
+scour(data).sortBy('name')
+```
+
+__Conditions:__
+The given condition can be a string or a function. When it's given as a
+function, the `item` being passed is a [scour]-wrapped object, just like
+in [forEach()] (et al). These two examples below are
+functionally-equivalent.
+
+```js
+scour(data).sortBy('name')
+scour(data).sortBy((item) => item.get('name'))
+```
 
 ## Reading methods
 
@@ -674,7 +708,7 @@ scour(subjects).map((subject, key) => {
 
 ### forEach
 
-> `forEach(function(item, key))`
+> `forEach(function(item, key, index))`
 
 Loops through each item. Supports both arrays and objects.
 The rules specified in [Iteration methods] apply.
@@ -693,6 +727,7 @@ The values passed onto the function are:
 
 - `item` - the value; always a scour object.
 - `key` - the key.
+- `index` - the index.
 
 ### each
 
@@ -843,10 +878,9 @@ This is also available as `require('scourjs/utilities/del')`.
 > `scour.each(iterable, fn)`
 
 Iterates through `iterable`, either an object or an array. This is an
-implementation of [Array#forEach] that also works for objects.
-
-The callback `fn` will be invoked with two parameters: `currentValue` and
-`key`, just like `Array#forEach`.
+implementation of [Array#forEach] that also works for objects. The callback
+`fn` will be invoked with two parameters: `currentValue` and `key`, just
+like `Array#forEach`.
 
 This is also available as `require('scourjs/utilities/each')`.
 

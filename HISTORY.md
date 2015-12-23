@@ -1,4 +1,5 @@
-## [v0.3.0] - unreleased
+## [v0.3.0]
+> Dec 24, 2015
 
 - Implement `scour.mapObject()`.
 - Implement `scour.indexedMap()`.
