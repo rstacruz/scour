@@ -170,7 +170,7 @@ scour.prototype = {
     if (Array.isArray(this.values)) {
       result = keypaths.map((key, val) => [ val, this.get(key) ])
     } else {
-      result = utils.mapObject(keypaths, (key) => [ key, this.get(key) ])
+      result = utils.indexedMap(keypaths, (key) => [ key, this.get(key) ])
     }
     return this.replace(result)
   },

@@ -756,7 +756,10 @@ This is also available as `require('scourjs/utilities/del')`.
 > `scour.each(iterable, fn)`
 
 Iterates through `iterable`, either an object or an array. This is an
-implementation of `Array.forEach` that also works for objects.
+implementation of [Array#forEach] that also works for objects.
+
+The callback `fn` will be invoked with two parameters: `currentValue` and
+`key`, just like `Array#forEach`.
 
 This is also available as `require('scourjs/utilities/each')`.
 
@@ -764,9 +767,42 @@ This is also available as `require('scourjs/utilities/each')`.
 
 > `scour.map(iterable, fn)`
 
-Works like Array#map, but also works on objects.
+Creates a new `Array` with with the results of calling a provided function
+on every element in this array. Works like [Array#map], but also works on
+objects as well as arrays.
+
+The callback `fn` will be invoked with two parameters: `currentValue` and
+`key`, just like `Array#map`.
 
 This is also available as `require('scourjs/utilities/map')`.
+
+### scour.indexedMap
+
+> `scour.indexedMap(iterable, fn)`
+
+Creates a new `Object` with with the results of calling a provided function
+returning the keys and values for the new object.
+
+The callback `fn` will be invoked with two parameters: `currentValue` and
+`key`, just like `Array#map`.
+
+The callback `fn` should return an array with two elements: with `result[0]`
+being the key, and `result[1]` being the value. These are what the new
+object will be constructed with.
+
+The `iterable` parameter can be an object or an array. This works like
+`Array#map`, but also works on objects as well as arrays.
+
+```js
+list = ['Fred', 'Barney', 'Wilma']
+
+object = scour.indexedMap(list, (val, key) => {
+  var newkey = val.substr(0, 1)
+  return [ newkey, val ]
+})
+
+// => { f: 'Fred', b: 'Barney', w: 'Wilma' }
+```
 <!--api:end-->
 
 [at()]: #at
@@ -788,6 +824,8 @@ This is also available as `require('scourjs/utilities/map')`.
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
 [Immutable.js]: http://facebook.github.io/immutable-js/
+[Array#map]: http://devdocs.io/javascript/global_objects/array/map
+[Array#forEach]: http://devdocs.io/javascript/global_objects/array/foreach
 
 ## Thanks
 
