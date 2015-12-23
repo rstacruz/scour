@@ -9,9 +9,9 @@ module.exports = function cloneWithout (object, key) {
     var result = {}
     key = '' + key
     for (var k in object) {
-      if (!object.hasOwnProperty(k)) continue
-      if (key === k) continue
-      result[k] = object[k]
+      if (object.hasOwnProperty(k) && key !== k) {
+        result[k] = object[k]
+      }
     }
     return result
   }
