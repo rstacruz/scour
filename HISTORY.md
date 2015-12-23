@@ -1,3 +1,8 @@
+## [v0.3.0] - unreleased
+
+- Implement `scour.mapObject()`.
+- Implement `scour.indexedMap()`.
+
 ## [v0.2.0]
 > Dec 23, 2015
 
@@ -11,3 +16,4 @@
 - Initial release.
 
 [v0.2.0]: https://github.com/rstacruz/scour/compare/v0.1.0...v0.2.0
+[v0.3.0]: https://github.com/rstacruz/scour/compare/v0.2.0...v0.3.0

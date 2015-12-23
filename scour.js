@@ -572,13 +572,40 @@ scour.prototype = {
 
   /**
    * Iteration methods:
-   * (Section) For traversing.
+   * (Section) These methods are generally useful for collections.
+   *
+   *     subjects =
+   *       { 1: { id: 1, title: 'Math', level: 101 },
+   *         2: { id: 2, title: 'Science', level: 103 },
+   *         3: { id: 3, title: 'History', level: 102 } }
+   *
+   * __Objects or arrays:__
+   * These functions can work with either arrays or array-like objects, such as
+   * above.
+   *
+   * __Values:__
+   * For all these functions, The value `val` passed onto the callbacks _is_ a
+   * [scour]-wrapped object. Use `item.value` or `this` to access the raw
+   * values.
+   *
+   *     scour(subjects).forEach((subject, key) => {
+   *       console.log(subject.get('title'))
+   *     })
+   *
+   * __Return values:__
+   * For methods that return values (such as [map()], the returned results _is
+   * not_ a [scour]-wrapped object, and isn't suitable for chaining.
+   *
+   *     scour(subjects).map((subject, key) => {
+   *       return subject.get('title') + ' ' + subject.get('level')
+   *     })
+   *     // => [ 'Math 101', 'Science 103', 'History 102' ]
    */
 
   /**
    * forEach : forEach(function(item, key))
-   * Loops through each item. Supports both arrays and objects. The `item`s
-   * passed to the function will be returned as a [scour] instance.
+   * Loops through each item. Supports both arrays and objects.
+   * The rules specified in [Iteration methods] apply.
    *
    *     users =
    *       { 12: { name: 'steve' },
@@ -592,9 +619,6 @@ scour.prototype = {
    *
    * - `item` - the value; always a scour object.
    * - `key` - the key.
-   *
-   * The value being passed onto the function is going to be a [scour] object.
-   * Use `item.value` or `this` to access the raw values.
    */
 
   forEach (fn) {
@@ -615,18 +639,42 @@ scour.prototype = {
   /**
    * map : map(function(item, key))
    * Loops through each item and returns an array based on the iterator's
-   * return values. Supports both arrays and objects. The `item`s passed to
-   * the function will be returned as a [scour] instance.
+   * return values. Supports both arrays and objects.
+   * The rules specified in [Iteration methods] apply.
    *
    *     users =
-   *       { 12: { name: 'steve' },
-   *         23: { name: 'bill' } }
+   *       { 12: { name: 'Steve' },
+   *         23: { name: 'Bill' } }
    *
    *     names = scour(users).map((user, key) => user.get('name'))
-   *     // => [ 'steve', 'bill' ]
+   *     // => [ 'Steve', 'Bill' ]
    */
 
   map: thisify(utils.map),
+
+  /**
+   * mapObject : mapObject(function(val, key))
+   * Creates a new `Object` with with the results of calling a provided function
+   * on every element in this array. Works like [Array#map], but also works on
+   * objects as well as arrays, and it returns an object instead.
+   * The rules specified in [Iteration methods] apply.
+   *
+   * See [scour.mapObject()] for details and the non-wrapped version.
+   */
+
+  mapObject: thisify(utils.mapObject),
+
+  /**
+   * indexedMap : indexedMap(function(val, key))
+   * Creates a new `Object` with with the results of calling a provided function
+   * returning the keys and values for the new object.
+   * The rules specified in [Iteration methods] apply.
+   *
+   * Returns the resulting `Object` -- it is not a [scour]-wrapped object.
+   * See [scour.indexedMap()] for details and the non-wrapped version.
+   */
+
+  indexedMap: thisify(utils.indexedMap),
 
   /**
    * Internal: spawns an instance with a given data and keypath.

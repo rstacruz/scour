@@ -667,14 +667,47 @@ that it's the way that the JavaScript API for [JSON.stringify] works.
 
 ## Iteration methods
 
-For traversing.
+These methods are generally useful for collections.
+
+```js
+subjects =
+  { 1: { id: 1, title: 'Math', level: 101 },
+    2: { id: 2, title: 'Science', level: 103 },
+    3: { id: 3, title: 'History', level: 102 } }
+```
+
+__Objects or arrays:__
+These functions can work with either arrays or array-like objects, such as
+above.
+
+__Values:__
+For all these functions, The value `val` passed onto the callbacks _is_ a
+[scour]-wrapped object. Use `item.value` or `this` to access the raw
+values.
+
+```js
+scour(subjects).forEach((subject, key) => {
+  console.log(subject.get('title'))
+})
+```
+
+__Return values:__
+For methods that return values (such as [map()], the returned results _is
+not_ a [scour]-wrapped object, and isn't suitable for chaining.
+
+```js
+scour(subjects).map((subject, key) => {
+  return subject.get('title') + ' ' + subject.get('level')
+})
+// => [ 'Math 101', 'Science 103', 'History 102' ]
+```
 
 ### forEach
 
 > `forEach(function(item, key))`
 
-Loops through each item. Supports both arrays and objects. The `item`s
-passed to the function will be returned as a [scour] instance.
+Loops through each item. Supports both arrays and objects.
+The rules specified in [Iteration methods] apply.
 
 ```js
 users =
@@ -691,9 +724,6 @@ The values passed onto the function are:
 - `item` - the value; always a scour object.
 - `key` - the key.
 
-The value being passed onto the function is going to be a [scour] object.
-Use `item.value` or `this` to access the raw values.
-
 ### each
 
 > `each(fn)`
@@ -705,17 +735,39 @@ Alias for [forEach](#foreach).
 > `map(function(item, key))`
 
 Loops through each item and returns an array based on the iterator's
-return values. Supports both arrays and objects. The `item`s passed to
-the function will be returned as a [scour] instance.
+return values. Supports both arrays and objects.
+The rules specified in [Iteration methods] apply.
 
 ```js
 users =
-  { 12: { name: 'steve' },
-    23: { name: 'bill' } }
+  { 12: { name: 'Steve' },
+    23: { name: 'Bill' } }
 
 names = scour(users).map((user, key) => user.get('name'))
-// => [ 'steve', 'bill' ]
+// => [ 'Steve', 'Bill' ]
 ```
+
+### mapObject
+
+> `mapObject(function(val, key))`
+
+Creates a new `Object` with with the results of calling a provided function
+on every element in this array. Works like [Array#map], but also works on
+objects as well as arrays, and it returns an object instead.
+The rules specified in [Iteration methods] apply.
+
+See [scour.mapObject()] for details and the non-wrapped version.
+
+### indexedMap
+
+> `indexedMap(function(val, key))`
+
+Creates a new `Object` with with the results of calling a provided function
+returning the keys and values for the new object.
+The rules specified in [Iteration methods] apply.
+
+Returns the resulting `Object` -- it is not a [scour]-wrapped object.
+See [scour.indexedMap()] for details and the non-wrapped version.
 
 ## Utility functions
 
@@ -776,6 +828,28 @@ The callback `fn` will be invoked with two parameters: `currentValue` and
 
 This is also available as `require('scourjs/utilities/map')`.
 
+### scour.mapObject
+
+> `scour.mapObject(iterable, fn)`
+
+Creates a new `Object` with with the results of calling a provided function
+on every element in this array. Works like [Array#map], but also works on
+objects as well as arrays, and it returns an object instead.
+
+The callback `fn` will be invoked with two parameters: `currentValue` and
+`key`, just like `Array#map`.
+
+```js
+object = { a: 20, b: 30, c: 40 }
+result = scour.mapObject(object, (val, key) => {
+  return '$' + val + '.00'
+})
+
+// => { a: '$20.00', b: '$30.00', c: '$40.00' }
+```
+
+This is also available as `require('scourjs/utilities/map_object')`.
+
 ### scour.indexedMap
 
 > `scour.indexedMap(iterable, fn)`
@@ -803,6 +877,8 @@ object = scour.indexedMap(list, (val, key) => {
 
 // => { f: 'Fred', b: 'Barney', w: 'Wilma' }
 ```
+
+This is also available as `require('scourjs/utilities/indexed_map')`.
 <!--api:end-->
 
 [at()]: #at
@@ -818,6 +894,9 @@ object = scour.indexedMap(list, (val, key) => {
 [set()]: #set
 [value]: #value
 [use()]: #use
+[scour.mapObject()]: #scour-mapobject
+[scour.indexedMap()]: #scour-indexedmap
+[Iteration methods]: #iteration-methods
 
 [Extensions example]: docs/extensions_example.md
 [Object.assign]: https://devdocs.io/javascript/global_objects/object/assign
