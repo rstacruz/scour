@@ -976,6 +976,7 @@ This is also available as `require('scourjs/utilities/filter')`.
 [go()]: #go
 [keypath]: #keypath
 [len()]: #len
+[map()]: #map
 [root]: #root
 [scour]: #scour
 [set()]: #set
