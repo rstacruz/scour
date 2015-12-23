@@ -253,6 +253,11 @@
                 "title": "scour.indexedMap",
                 "depth": 3,
                 "id": "scour.indexedmap"
+              },
+              {
+                "title": "scour.filter",
+                "depth": 3,
+                "id": "scour.filter"
               }
             ]
           },
@@ -585,6 +590,11 @@
               "title": "scour.indexedMap",
               "depth": 3,
               "id": "scour.indexedmap"
+            },
+            {
+              "title": "scour.filter",
+              "depth": 3,
+              "id": "scour.filter"
             }
           ]
         },

@@ -275,15 +275,43 @@ scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">
 <p><code>filter(conditions)</code></p>
 </blockquote>
 <p>Sifts through the values and returns a set that matches given
-<code>conditions</code>. Supports functions, simple objects, and MongoDB-style
-queries.</p>
-<pre><code class="lang-js">scour(data).filter({ name: <span class="pl-s">&apos;john&apos;</span> })
-scour(data).filter({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
+<code>conditions</code>. Supports simple objects, MongoDB-style
+queries, and functions.</p>
+<pre><code class="lang-js">scour(data).filter({ name: <span class="pl-s">&apos;Moe&apos;</span> })
+scour(data).filter({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;Larry&apos;</span>, <span class="pl-s">&apos;Curly&apos;</span>] })
+scour(data).filter((item) =&gt; item.get(<span class="pl-s">&apos;name&apos;</span>) === <span class="pl-s">&apos;Moe&apos;</span>)
 </code></pre>
-<p>MongoDB-style queries are supported as provided by <a href="https://www.npmjs.com/package/sift">sift.js</a>.  For
+<p><strong>Filter by object:</strong>
+If you pass an object as a condition, <code>filter()</code> will check if that object
+coincides with the objects in the collection.</p>
+<pre><code class="lang-js">scour(data).filter({ name: <span class="pl-s">&apos;Moe&apos;</span> })
+</code></pre>
+<p><strong>Filter by function:</strong>
+You may pass a function as a parameter. In this case, the <code>item</code> being
+passed to the callback will be a <a href="#scour">scour</a>-wrapped object. The result
+will also be a <a href="#scour">scour</a>-wrapped object, making it chainable.</p>
+<pre><code class="lang-js">scour(data)
+  .filter((item, key) =&gt; +item.get(<span class="pl-s">&apos;price&apos;</span>) &gt; <span class="hljs-number">200</span>)
+  .sortBy(<span class="pl-s">&apos;price&apos;</span>) <span class="pl-c">// todo</span>
+  .first()
+</code></pre>
+<p><strong>Advanced queries:</strong>
+MongoDB-style queries are supported as provided by <a href="https://www.npmjs.com/package/sift">sift.js</a>.  For
 reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
 <pre><code class="lang-js">scour(products).filter({ price: { $gt: <span class="hljs-number">200</span> })
 scour(articles).filter({ published_at: { $not: <span class="pl-c1">null</span> }})
+</code></pre>
+<p>Also see <a href="#scour-filter">scour.filter()</a> for the unwrapped version.</p>
+<p><strong>Arrays or objects:</strong>
+Both arrays and array-like objects are supported. In this example below,
+an object will be used as the input.</p>
+<pre><code class="lang-js">devices =
+  { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, name: <span class="pl-s">&apos;Phone&apos;</span>, mobile: <span class="pl-c1">true</span> },
+    <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, name: <span class="pl-s">&apos;Tablet&apos;</span>, mobile: <span class="pl-c1">true</span> },
+    <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, name: <span class="pl-s">&apos;Desktop&apos;</span>, mobile: <span class="pl-c1">false</span> } }
+
+scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
+<span class="pl-c">// =&gt; 2</span>
 </code></pre>
 <h3 id="find">find</h3>
 <blockquote>
@@ -635,7 +663,7 @@ implementation of <a href="http://devdocs.io/javascript/global_objects/array/for
 on every element in this array. Works like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>, but also works on
 objects as well as arrays.</p>
 <p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
-<code>key</code>, just like <code>Array#map</code>.</p>
+<code>key</code>, just like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>.</p>
 <p>This is also available as <code>require(&apos;scourjs/utilities/map&apos;)</code>.</p>
 <h3 id="scour.mapobject">scour.mapObject</h3>
 <blockquote>
@@ -645,7 +673,7 @@ objects as well as arrays.</p>
 on every element in this array. Works like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>, but also works on
 objects as well as arrays, and it returns an object instead.</p>
 <p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
-<code>key</code>, just like <code>Array#map</code>.</p>
+<code>key</code>, just like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>.</p>
 <pre><code class="lang-js">object = { a: <span class="hljs-number">20</span>, b: <span class="hljs-number">30</span>, c: <span class="hljs-number">40</span> }
 result = scour.mapObject(object, (val, key) =&gt; {
   <span class="pl-k">return</span> <span class="pl-s">&apos;$&apos;</span> + val + <span class="pl-s">&apos;.00&apos;</span>
@@ -661,7 +689,7 @@ result = scour.mapObject(object, (val, key) =&gt; {
 <p>Creates a new <code>Object</code> with with the results of calling a provided function
 returning the keys and values for the new object.</p>
 <p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
-<code>key</code>, just like <code>Array#map</code>.</p>
+<code>key</code>, just like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>.</p>
 <p>The callback <code>fn</code> should return an array with two elements: with <code>result[0]</code>
 being the key, and <code>result[1]</code> being the value. These are what the new
 object will be constructed with.</p>
@@ -677,6 +705,17 @@ object = scour.indexedMap(list, (val, key) =&gt; {
 <span class="pl-c">// =&gt; { f: &apos;Fred&apos;, b: &apos;Barney&apos;, w: &apos;Wilma&apos; }</span>
 </code></pre>
 <p>This is also available as <code>require(&apos;scourjs/utilities/indexed_map&apos;)</code>.</p>
+<h3 id="scour.filter">scour.filter</h3>
+<blockquote>
+<p><code>scour.filter(iterable, function(val, key), [isArray])</code></p>
+</blockquote>
+<p>Creates a new Array or Object with all elements that pass the test
+implemented by the provided function.</p>
+<p>Works like <a href="http://devdocs.io/javascript/global_objects/array/filter">Array#filter</a>, but will return an object if an object is also passed.</p>
+<p>The optional <code>isArray</code> argument, when passed <code>true</code>, will always make this
+return an <code>Array</code>. If <code>false</code>, it will always be an <code>Object</code>. Leave it
+<code>undefined</code> for the default behavior.</p>
+<p>This is also available as <code>require(&apos;scourjs/utilities/filter&apos;)</code>.</p>
 <!--api:end-->
 <h2 id="thanks">Thanks</h2>
 <p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
@@ -804,6 +843,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#scour.mapobject" class="link title link-scour.mapobject">scour.mapObject</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#scour.indexedmap" class="link title link-scour.indexedmap">scour.indexedMap</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#scour.filter" class="link title link-scour.filter">scour.filter</a>
                 </li>
               </ul>
             </li>
