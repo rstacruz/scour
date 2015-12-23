@@ -107,13 +107,13 @@ scour.prototype = {
   },
 
   /**
-   * Internal: gathers multiple keys (TBD)
+   * Internal: gathers multiple keys; not used yet
    */
 
   gather (keypaths) {
     var result
-    if (Array.isArray(this.values)) {
-      result = keypaths.map((key, val) => [ val, this.get(key) ])
+    if (Array.isArray(this.value)) {
+      result = keypaths.map((key, val) => this.get(key))
     } else {
       result = utils.indexedMap(keypaths, (key) => [ key, this.get(key) ])
     }

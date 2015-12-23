@@ -19,6 +19,14 @@ describe('.del()', function () {
     expect(result.keypath).toEqual([])
   })
 
+  it('leaves stuff behind', function () {
+    const data = { a: { b: 'foo', c: 'bar' } }
+    const result = scour(data).del('a.b')
+
+    expect(result.value).toEqual({ a: { c: 'bar' } })
+    expect(result.keypath).toEqual([])
+  })
+
   describe('for non-root', function () {
     var data, root, a, result
 

@@ -15,10 +15,12 @@ function each (list, fn) {
 
   if (typeof len === 'number') {
     if (native) return native.call(list, fn)
+    /* istanbul ignore next */
     for (i = 0; i < len; i++) fn(list[i], i, i)
   } else {
     idx = 0
     for (i in list) {
+      /* istanbul ignore next */
       if (list.hasOwnProperty(i)) fn(list[i], i, idx++)
     }
   }
