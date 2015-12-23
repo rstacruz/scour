@@ -2,6 +2,9 @@
 
 - Implement `scour.mapObject()`.
 - Implement `scour.indexedMap()`.
+- Implement `scour.filter()`.
+- Implement `scour#mapObject()`.
+- Implement `scour#indexedMap()`.
 
 ## [v0.2.0]
 > Dec 23, 2015

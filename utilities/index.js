@@ -41,6 +41,8 @@ exports.del = require('./del')
  * `key`, just like `Array#forEach`.
  *
  * This is also available as `require('scourjs/utilities/each')`.
+ *
+ * [Array#forEach]: http://devdocs.io/javascript/global_objects/array/foreach
  */
 
 exports.each = require('./each')
@@ -52,9 +54,11 @@ exports.each = require('./each')
  * objects as well as arrays.
  *
  * The callback `fn` will be invoked with two parameters: `currentValue` and
- * `key`, just like `Array#map`.
+ * `key`, just like [Array#map].
  *
  * This is also available as `require('scourjs/utilities/map')`.
+ *
+ * [Array#map]: http://devdocs.io/javascript/global_objects/array/map
  */
 
 exports.map = require('./map')
@@ -66,7 +70,7 @@ exports.map = require('./map')
  * objects as well as arrays, and it returns an object instead.
  *
  * The callback `fn` will be invoked with two parameters: `currentValue` and
- * `key`, just like `Array#map`.
+ * `key`, just like [Array#map].
  *
  *     object = { a: 20, b: 30, c: 40 }
  *     result = scour.mapObject(object, (val, key) => {
@@ -86,7 +90,7 @@ exports.mapObject = require('./map_object')
  * returning the keys and values for the new object.
  *
  * The callback `fn` will be invoked with two parameters: `currentValue` and
- * `key`, just like `Array#map`.
+ * `key`, just like [Array#map].
  *
  * The callback `fn` should return an array with two elements: with `result[0]`
  * being the key, and `result[1]` being the value. These are what the new
@@ -108,3 +112,17 @@ exports.mapObject = require('./map_object')
  */
 
 exports.indexedMap = require('./indexed_map')
+
+/**
+ * scour.filter : scour.filter(function(val, key))
+ * Creates a new Array or Object with all elements that pass the test
+ * implemented by the provided function.
+ *
+ * Works like [Array#filter], but will return an object if an object is also passed.
+ *
+ * This is also available as `require('scourjs/utilities/filter')`.
+ *
+ * [Array#filter]: http://devdocs.io/javascript/global_objects/array/filter
+ */
+
+exports.filter = require('./filter')
