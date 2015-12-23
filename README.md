@@ -324,8 +324,6 @@ scour(products).filter({ price: { $gt: 200 })
 scour(articles).filter({ published_at: { $not: null }})
 ```
 
-Also see [scour.filter()] for the unwrapped version.
-
 __Arrays or objects:__
 Both arrays and array-like objects are supported. In this example below,
 an object will be used as the input.
@@ -340,13 +338,15 @@ scour(devices).filter({ mobile: true }).len()
 // => 2
 ```
 
+Also see [scour.filter()] for the unwrapped version.
+
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
 ### reject
 
 > `reject(conditions)`
 
-Inverse of `filter()`.
+Inverse of [filter()] -- see `filter()` documentation for details.
 
 ### find
 
@@ -454,7 +454,8 @@ names = scour(users).len()  // => 2
 > `toArray()`
 
 Returns an array. If the the value is an object, it returns the values of
-that object.
+that object. If the value is an array, it returns it as is. Also aliased
+as `values()`.
 
 ```js
 users =
@@ -465,17 +466,12 @@ names = scour(users).toArray()
 // => [ {name: 'steve'}, {name: 'bill'} ]
 ```
 
-### values
-
-> `values()`
-
-Alias for `toArray()`.
-
 ### keys
 
 > `keys()`
 
 Returns keys. If the value is an array, this returns the array's indices.
+Also see [toArray()] to retrieve the values instead.
 
 ## Writing methods
 
@@ -983,6 +979,7 @@ This is also available as `require('scourjs/utilities/filter')`.
 [root]: #root
 [scour]: #scour
 [set()]: #set
+[toArray()]: #toarray
 [value]: #value
 [use()]: #use
 [scour.mapObject()]: #scour-mapobject

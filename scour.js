@@ -214,7 +214,7 @@ scour.prototype = {
   },
 
   /**
-   * Inverse of `filter()`.
+   * Inverse of [filter()] -- see `filter()` documentation for details.
    */
 
   reject (conditions) {
@@ -367,7 +367,8 @@ scour.prototype = {
 
   /**
    * Returns an array. If the the value is an object, it returns the values of
-   * that object.
+   * that object. If the value is an array, it returns it as is. Also aliased
+   * as `values()`.
    *
    *     users =
    *       { 12: { name: 'steve' },
@@ -382,16 +383,13 @@ scour.prototype = {
     return scour.map(this.value, (val, key) => val)
   },
 
-  /**
-   * Alias for `toArray()`.
-   */
-
   values () {
     return this.toArray()
   },
 
   /**
    * Returns keys. If the value is an array, this returns the array's indices.
+   * Also see [toArray()] to retrieve the values instead.
    */
 
   keys () {
