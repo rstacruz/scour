@@ -60,6 +60,27 @@ exports.each = require('./each')
 exports.map = require('./map')
 
 /**
+ * scour.mapObject : scour.mapObject(iterable, fn)
+ * Creates a new `Object` with with the results of calling a provided function
+ * on every element in this array. Works like [Array#map], but also works on
+ * objects as well as arrays, and it returns an object instead.
+ *
+ * The callback `fn` will be invoked with two parameters: `currentValue` and
+ * `key`, just like `Array#map`.
+ *
+ *     object = { a: 20, b: 30, c: 40 }
+ *     result = scour.mapObject(object, (val, key) => {
+ *       return '$' + val + '.00'
+ *     })
+ *
+ *     // => { a: '$20.00', b: '$30.00', c: '$40.00' }
+ *
+ * This is also available as `require('scourjs/utilities/map_object')`.
+ */
+
+exports.mapObject = require('./map_object')
+
+/**
  * scour.indexedMap : scour.indexedMap(iterable, fn)
  * Creates a new `Object` with with the results of calling a provided function
  * returning the keys and values for the new object.
@@ -82,6 +103,8 @@ exports.map = require('./map')
  *     })
  *
  *     // => { f: 'Fred', b: 'Barney', w: 'Wilma' }
+ *
+ * This is also available as `require('scourjs/utilities/indexed_map')`.
  */
 
 exports.indexedMap = require('./indexed_map')
