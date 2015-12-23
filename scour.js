@@ -729,8 +729,7 @@ scour.each = require('./utilities/each')
 scour.map = require('./utilities/map')
 
 /**
- * Internal:
- * Works like map, but returns an object (TBD)
+ * Internal: works like map, but returns an object (TBD)
  */
 
 scour.mapObject = require('./utilities/map_object')
