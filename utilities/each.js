@@ -1,3 +1,5 @@
+var native = Array.prototype.forEach
+
 /**
  * each : each(list, fn)
  * Iterates through `list` (an array or an object). This is useful when dealing
@@ -12,6 +14,7 @@ function each (list, fn) {
   var idx
 
   if (typeof len === 'number') {
+    if (native) return native.call(list, fn)
     for (i = 0; i < len; i++) fn(list[i], i, i)
   } else {
     idx = 0
