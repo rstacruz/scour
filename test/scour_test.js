@@ -278,42 +278,6 @@ describe('index', function () {
     })
   })
 
-  describe('.filter()', function () {
-    beforeEach(function () {
-      this.results = scour(data).go('users').filter({ name: { $regex: /^j/ } })
-    })
-
-    it('has results', function () {
-      expect(this.results.go(1).value).toEqual({ name: 'john' })
-      expect(this.results.go(2).value).toEqual({ name: 'jake' })
-      expect(this.results.go(3)).toEqual(undefined)
-    })
-  })
-
-  describe('.filter() again', function () {
-    beforeEach(function () {
-      this.results = scour(data).go('users').filter({ name: { $regex: /^a/ } })
-    })
-
-    it('has results indexed by id', function () {
-      expect(this.results.go(3).value).toEqual({ name: 'ara' })
-    })
-
-    it('has proper keypaths', function () {
-      expect(this.results.go(3).keypath).toEqual([ 'users', '3' ])
-    })
-  })
-
-  describe('.find()', function () {
-    beforeEach(function () {
-      this.result = scour(data).go('users').find({ name: { $regex: /^j/ } })
-    })
-
-    it('works', function () {
-      expect(this.result.value).toEqual({ name: 'john' })
-    })
-  })
-
   describe('.find() empty', function () {
     beforeEach(function () {
       this.result = scour(data).go('users').find({ abc: 'def' })

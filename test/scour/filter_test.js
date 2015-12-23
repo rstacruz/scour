@@ -45,3 +45,19 @@ describe('.filter()', function () {
     })
   })
 })
+
+describe('.filter() via function', function () {
+  it('works for objects', function () {
+    var data = { a: 10, b: 11, c: 12 }
+    var result = scour(data).filter((val, key) => val.value % 2 === 0)
+
+    expect(result).toEqual({ a: 10, c: 12 })
+  })
+
+  it('works for arrays', function () {
+    var data = [ 10, 11, 12 ]
+    var result = scour(data).filter((val, key) => val.value % 2 === 0)
+
+    expect(result).toEqual([ 10, 12 ])
+  })
+})

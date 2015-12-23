@@ -1,7 +1,7 @@
 const forEach = require('./each')
 
-module.exports = function filter (each, fn) {
-  var isArray = Array.isArray(each)
+module.exports = function filter (each, fn, _isArray) {
+  var isArray = typeof _isArray !== 'undefined' ? _isArray : Array.isArray(each)
   var result
 
   /* istanbul ignore next */

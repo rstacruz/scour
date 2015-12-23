@@ -114,11 +114,15 @@ exports.mapObject = require('./map_object')
 exports.indexedMap = require('./indexed_map')
 
 /**
- * scour.filter : scour.filter(function(val, key))
+ * scour.filter : scour.filter(iterable, function(val, key), [isArray])
  * Creates a new Array or Object with all elements that pass the test
  * implemented by the provided function.
  *
  * Works like [Array#filter], but will return an object if an object is also passed.
+ *
+ * The optional `isArray` argument, when passed `true`, will always make this
+ * return an `Array`. If `false`, it will always be an `Object`. Leave it
+ * `undefined` for the default behavior.
  *
  * This is also available as `require('scourjs/utilities/filter')`.
  *

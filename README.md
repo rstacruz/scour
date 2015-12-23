@@ -352,16 +352,36 @@ scour(users).get(12)        // => [scour { name: 'steve' }]
 > `filter(conditions)`
 
 Sifts through the values and returns a set that matches given
-`conditions`. Supports functions, simple objects, and MongoDB-style
-queries.
-
-[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+`conditions`. Supports simple objects, MongoDB-style
+queries, and functions.
 
 ```js
-scour(data).filter({ name: 'john' })
-scour(data).filter({ name: { $in: ['moe', 'larry'] })
+scour(data).filter({ name: 'Moe' })
+scour(data).filter({ name: { $in: ['Larry', 'Curly'] })
+scour(data).filter((item) => item.get('name') === 'Moe')
 ```
 
+__Filter by object:__
+If you pass an object as a condition, `filter()` will check if that object
+coincides with the objects in the collection.
+
+```js
+scour(data).filter({ name: 'Moe' })
+```
+
+__Filter by function:__
+You may pass a function as a parameter. In this case, the `item` being
+passed to the callback will be a [scour]-wrapped object. The result
+will also be a [scour]-wrapped object, making it chainable.
+
+```js
+scour(data)
+  .filter((item, key) => +item.get('price') > 200)
+  .sortBy('price') // todo
+  .first()
+```
+
+__Advanced queries:__
 MongoDB-style queries are supported as provided by [sift.js].  For
 reference, see [MongoDB Query Operators][query-ops].
 
@@ -369,6 +389,24 @@ reference, see [MongoDB Query Operators][query-ops].
 scour(products).filter({ price: { $gt: 200 })
 scour(articles).filter({ published_at: { $not: null }})
 ```
+
+Also see [scour.filter()] for the unwrapped version.
+
+__Arrays or objects:__
+Both arrays and array-like objects are supported. In this example below,
+an object will be used as the input.
+
+```js
+devices =
+  { 1: { id: 1, name: 'Phone', mobile: true },
+    2: { id: 2, name: 'Tablet', mobile: true },
+    3: { id: 3, name: 'Desktop', mobile: false } }
+
+scour(devices).filter({ mobile: true }).len()
+// => 2
+```
+
+[query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
 ### find
 
@@ -815,6 +853,8 @@ The callback `fn` will be invoked with two parameters: `currentValue` and
 
 This is also available as `require('scourjs/utilities/each')`.
 
+[Array#forEach]: http://devdocs.io/javascript/global_objects/array/foreach
+
 ### scour.map
 
 > `scour.map(iterable, fn)`
@@ -824,9 +864,11 @@ on every element in this array. Works like [Array#map], but also works on
 objects as well as arrays.
 
 The callback `fn` will be invoked with two parameters: `currentValue` and
-`key`, just like `Array#map`.
+`key`, just like [Array#map].
 
 This is also available as `require('scourjs/utilities/map')`.
+
+[Array#map]: http://devdocs.io/javascript/global_objects/array/map
 
 ### scour.mapObject
 
@@ -837,7 +879,7 @@ on every element in this array. Works like [Array#map], but also works on
 objects as well as arrays, and it returns an object instead.
 
 The callback `fn` will be invoked with two parameters: `currentValue` and
-`key`, just like `Array#map`.
+`key`, just like [Array#map].
 
 ```js
 object = { a: 20, b: 30, c: 40 }
@@ -858,7 +900,7 @@ Creates a new `Object` with with the results of calling a provided function
 returning the keys and values for the new object.
 
 The callback `fn` will be invoked with two parameters: `currentValue` and
-`key`, just like `Array#map`.
+`key`, just like [Array#map].
 
 The callback `fn` should return an array with two elements: with `result[0]`
 being the key, and `result[1]` being the value. These are what the new
@@ -879,6 +921,23 @@ object = scour.indexedMap(list, (val, key) => {
 ```
 
 This is also available as `require('scourjs/utilities/indexed_map')`.
+
+### scour.filter
+
+> `scour.filter(iterable, function(val, key), [isArray])`
+
+Creates a new Array or Object with all elements that pass the test
+implemented by the provided function.
+
+Works like [Array#filter], but will return an object if an object is also passed.
+
+The optional `isArray` argument, when passed `true`, will always make this
+return an `Array`. If `false`, it will always be an `Object`. Leave it
+`undefined` for the default behavior.
+
+This is also available as `require('scourjs/utilities/filter')`.
+
+[Array#filter]: http://devdocs.io/javascript/global_objects/array/filter
 <!--api:end-->
 
 [at()]: #at
@@ -896,6 +955,7 @@ This is also available as `require('scourjs/utilities/indexed_map')`.
 [use()]: #use
 [scour.mapObject()]: #scour-mapobject
 [scour.indexedMap()]: #scour-indexedmap
+[scour.filter()]: #scour-filter
 [Iteration methods]: #iteration-methods
 
 [Extensions example]: docs/extensions_example.md
@@ -903,8 +963,6 @@ This is also available as `require('scourjs/utilities/indexed_map')`.
 [sift.js]: https://www.npmjs.com/package/sift
 [Redux]: http://rackt.github.io/redux
 [Immutable.js]: http://facebook.github.io/immutable-js/
-[Array#map]: http://devdocs.io/javascript/global_objects/array/map
-[Array#forEach]: http://devdocs.io/javascript/global_objects/array/foreach
 
 ## Thanks
 

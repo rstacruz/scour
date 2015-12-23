@@ -198,24 +198,74 @@ scour.prototype = {
 
   /**
    * Sifts through the values and returns a set that matches given
-   * `conditions`. Supports functions, simple objects, and MongoDB-style
-   * queries.
+   * `conditions`. Supports simple objects, MongoDB-style
+   * queries, and functions.
    *
-   * [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
+   *     scour(data).filter({ name: 'Moe' })
+   *     scour(data).filter({ name: { $in: ['Larry', 'Curly'] })
+   *     scour(data).filter((item) => item.get('name') === 'Moe')
    *
-   *     scour(data).filter({ name: 'john' })
-   *     scour(data).filter({ name: { $in: ['moe', 'larry'] })
+   * __Filter by object:__
+   * If you pass an object as a condition, `filter()` will check if that object
+   * coincides with the objects in the collection.
    *
+   *     scour(data).filter({ name: 'Moe' })
+   *
+   * __Filter by function:__
+   * You may pass a function as a parameter. In this case, the `item` being
+   * passed to the callback will be a [scour]-wrapped object. The result
+   * will also be a [scour]-wrapped object, making it chainable.
+   *
+   *     scour(data)
+   *       .filter((item, key) => +item.get('price') > 200)
+   *       .sortBy('price') // todo
+   *       .first()
+   *
+   * __Advanced queries:__
    * MongoDB-style queries are supported as provided by [sift.js].  For
    * reference, see [MongoDB Query Operators][query-ops].
    *
    *     scour(products).filter({ price: { $gt: 200 })
    *     scour(articles).filter({ published_at: { $not: null }})
+   *
+   * Also see [scour.filter()] for the unwrapped version.
+   *
+   * __Arrays or objects:__
+   * Both arrays and array-like objects are supported. In this example below,
+   * an object will be used as the input.
+   *
+   *     devices =
+   *       { 1: { id: 1, name: 'Phone', mobile: true },
+   *         2: { id: 2, name: 'Tablet', mobile: true },
+   *         3: { id: 3, name: 'Desktop', mobile: false } }
+   *
+   *     scour(devices).filter({ mobile: true }).len()
+   *     // => 2
+   *
+   * [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
    */
 
   filter (conditions) {
+    if (typeof conditions === 'function') {
+      return this.filterByFunction(conditions)
+    }
     const results = sift(conditions, this.value)
     return this._get(results, [])
+  },
+
+  filterByFunction (fn) {
+    var isArray = Array.isArray(this.value)
+    var result
+
+    if (isArray) {
+      result = []
+      this.each((val, key) => fn(val, key) && result.push(val.value))
+    } else {
+      result = {}
+      this.each((val, key) => { if (fn(val, key)) result[key] = val.value })
+    }
+
+    return result
   },
 
   /**
