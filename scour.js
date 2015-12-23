@@ -379,9 +379,7 @@ scour.prototype = {
 
   toArray () {
     if (Array.isArray(this.value)) return this.value
-    var result = []
-    scour.each(this.value, (val, key) => result.push(val))
-    return result
+    return scour.map(this.value, (val, key) => val)
   },
 
   /**
