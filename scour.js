@@ -173,8 +173,6 @@ scour.prototype = {
    *     scour(products).filter({ price: { $gt: 200 })
    *     scour(articles).filter({ published_at: { $not: null }})
    *
-   * Also see [scour.filter()] for the unwrapped version.
-   *
    * __Arrays or objects:__
    * Both arrays and array-like objects are supported. In this example below,
    * an object will be used as the input.
@@ -186,6 +184,8 @@ scour.prototype = {
    *
    *     scour(devices).filter({ mobile: true }).len()
    *     // => 2
+   *
+   * Also see [scour.filter()] for the unwrapped version.
    *
    * [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
    */
