@@ -58,9 +58,9 @@
             ]
           },
           {
-            "title": "Traversal methods",
+            "title": "Chaining methods",
             "depth": 2,
-            "id": "traversal-methods",
+            "id": "chaining-methods",
             "headings": [
               {
                 "title": "go",
@@ -78,6 +78,11 @@
                 "id": "filter"
               },
               {
+                "title": "reject",
+                "depth": 3,
+                "id": "reject"
+              },
+              {
                 "title": "find",
                 "depth": 3,
                 "id": "find"
@@ -91,6 +96,11 @@
                 "title": "last",
                 "depth": 3,
                 "id": "last"
+              },
+              {
+                "title": "sortBy",
+                "depth": 3,
+                "id": "sortby"
               }
             ]
           },
@@ -395,9 +405,9 @@
           ]
         },
         {
-          "title": "Traversal methods",
+          "title": "Chaining methods",
           "depth": 2,
-          "id": "traversal-methods",
+          "id": "chaining-methods",
           "headings": [
             {
               "title": "go",
@@ -415,6 +425,11 @@
               "id": "filter"
             },
             {
+              "title": "reject",
+              "depth": 3,
+              "id": "reject"
+            },
+            {
               "title": "find",
               "depth": 3,
               "id": "find"
@@ -428,6 +443,11 @@
               "title": "last",
               "depth": 3,
               "id": "last"
+            },
+            {
+              "title": "sortBy",
+              "depth": 3,
+              "id": "sortby"
             }
           ]
         },

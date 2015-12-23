@@ -172,9 +172,9 @@ You can access the raw data using <a href="#value">value</a>.</p>
 db.value               <span class="pl-c">// =&gt; same as `data`</span>
 db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">// =&gt; same as `data.users`</span>
 </code></pre>
-<h2 id="traversal-methods">Traversal methods</h2>
-<p>For traversing. All these methods return <a href="#scour">scour</a> instances,
-making them suitable for chaining.</p>
+<h2 id="chaining-methods">Chaining methods</h2>
+<p>These methods are used to traverse nested structures. All these
+methods return <a href="#scour">scour</a> instances, making them suitable for chaining.</p>
 <h3 id="go">go</h3>
 <blockquote>
 <p><code>go(keypath...)</code></p>
@@ -261,6 +261,11 @@ an object will be used as the input.</p>
 scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
 <span class="pl-c">// =&gt; 2</span>
 </code></pre>
+<h3 id="reject">reject</h3>
+<blockquote>
+<p><code>reject(conditions)</code></p>
+</blockquote>
+<p>Inverse of <code>filter()</code>.</p>
 <h3 id="find">find</h3>
 <blockquote>
 <p><code>find(conditions)</code></p>
@@ -284,6 +289,28 @@ to <a href="#at">at(0)</a>.</p>
 </blockquote>
 <p>Returns the first result as a <a href="#scour">scour</a>-wrapped object. This is equivalent
 to <code>at(len() - 1)</code>: see <a href="#at">at()</a> and <a href="#len">len()</a>.</p>
+<h3 id="sortby">sortBy</h3>
+<blockquote>
+<p><code>sortBy(condition)</code></p>
+</blockquote>
+<p>Sorts a collection. Returns a <a href="#scour">scour</a>-wrapped object suitable for
+chaining. Like other chainable methods, this works on arrays as well as
+objects.</p>
+<pre><code class="lang-js">data =
+  { wilma: { name: <span class="pl-s">&apos;Wilma&apos;</span> },
+    barney: { name: <span class="pl-s">&apos;Barney&apos;</span> },
+    fred: { name: <span class="pl-s">&apos;Fred&apos;</span> } }
+
+scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>)
+</code></pre>
+<p><strong>Conditions:</strong>
+The given condition can be a string or a function. When it&#x2019;s given as a
+function, the <code>item</code> being passed is a <a href="#scour">scour</a>-wrapped object, just like
+in [forEach()] (et al). These two examples below are
+functionally-equivalent.</p>
+<pre><code class="lang-js">scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>)
+scour(data).sortBy((item) =&gt; item.get(<span class="pl-s">&apos;name&apos;</span>))
+</code></pre>
 <h2 id="reading-methods">Reading methods</h2>
 <p>For retrieving data.</p>
 <h3 id="get">get</h3>
@@ -515,7 +542,7 @@ not</em> a <a href="#scour">scour</a>-wrapped object, and isn&#x2019;t suitable 
 </code></pre>
 <h3 id="foreach">forEach</h3>
 <blockquote>
-<p><code>forEach(function(item, key))</code></p>
+<p><code>forEach(function(item, key, index))</code></p>
 </blockquote>
 <p>Loops through each item. Supports both arrays and objects.
 The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
@@ -531,6 +558,7 @@ scour(users).each((user, key) =&gt; {
 <ul>
 <li><code>item</code> - the value; always a scour object.</li>
 <li><code>key</code> - the key.</li>
+<li><code>index</code> - the index.</li>
 </ul>
 <h3 id="each">each</h3>
 <blockquote>
@@ -649,9 +677,9 @@ result = del(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl
 <p><code>scour.each(iterable, fn)</code></p>
 </blockquote>
 <p>Iterates through <code>iterable</code>, either an object or an array. This is an
-implementation of <a href="http://devdocs.io/javascript/global_objects/array/foreach">Array#forEach</a> that also works for objects.</p>
-<p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
-<code>key</code>, just like <code>Array#forEach</code>.</p>
+implementation of <a href="http://devdocs.io/javascript/global_objects/array/foreach">Array#forEach</a> that also works for objects. The callback
+<code>fn</code> will be invoked with two parameters: <code>currentValue</code> and <code>key</code>, just
+like <code>Array#forEach</code>.</p>
 <p>This is also available as <code>require(&apos;scourjs/utilities/each&apos;)</code>.</p>
 <h3 id="scour.map">scour.map</h3>
 <blockquote>
@@ -756,7 +784,7 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 </li>
               </ul>
             </li>
-            <li class="menu-item -level-1 -parent"><a href="#traversal-methods" class="link title link-traversal-methods">Traversal methods</a>
+            <li class="menu-item -level-1 -parent"><a href="#chaining-methods" class="link title link-chaining-methods">Chaining methods</a>
               <ul class="submenu">
                 <li class="menu-item -level-2"><a href="#go" class="link title link-go">go</a>
                 </li>
@@ -764,11 +792,15 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 </li>
                 <li class="menu-item -level-2"><a href="#filter" class="link title link-filter">filter</a>
                 </li>
+                <li class="menu-item -level-2"><a href="#reject" class="link title link-reject">reject</a>
+                </li>
                 <li class="menu-item -level-2"><a href="#find" class="link title link-find">find</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#first" class="link title link-first">first</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#last" class="link title link-last">last</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#sortby" class="link title link-sortby">sortBy</a>
                 </li>
               </ul>
             </li>
