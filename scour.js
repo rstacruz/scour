@@ -5,6 +5,7 @@ const sift = require('sift')
 const assign = require('object-assign')
 const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
+const utils = require('./utilities')
 
 /**
  * scour : scour(object)
@@ -169,7 +170,7 @@ scour.prototype = {
     if (Array.isArray(this.values)) {
       result = keypaths.map((key, val) => [ val, this.get(key) ])
     } else {
-      result = scour.mapObject(keypaths, (key) => [ key, this.get(key) ])
+      result = utils.mapObject(keypaths, (key) => [ key, this.get(key) ])
     }
     return this.replace(result)
   },
@@ -625,7 +626,7 @@ scour.prototype = {
    *     // => [ 'steve', 'bill' ]
    */
 
-  map: thisify(require('./utilities/map')),
+  map: thisify(utils.map),
 
   /**
    * Internal: spawns an instance with a given data and keypath.
@@ -676,63 +677,8 @@ scour.prototype = {
   }
 }
 
-/**
- * Utility functions:
- * (Section) These are utilities that don't need a wrapped object.
- */
-
-/**
- * scour.set : scour.set(object, keypath, value)
- * Sets a `keypath` into an `object` immutably.
- *
- *     data = { users: { bob: { name: 'john' } } }
- *
- *     result = set(data, ['users', 'bob', 'name'], 'robert')
- *     // => { users: { bob: { name: 'robert' } } }
- *
- * This is also available as `require('scourjs/utilities/set')`.
- */
-
-scour.set = require('./utilities/set')
-
-/**
- * scour.del : scour.del(object, keypath)
- * Deletes a `keypath` from an `object` immutably.
- *
- *     data = { users: { bob: { name: 'robert' } } }
- *     result = del(data, ['users', 'bob', 'name'])
- *
- *     // => { users: { bob: {} } }
- *
- * This is also available as `require('scourjs/utilities/del')`.
- */
-
-scour.del = require('./utilities/del')
-
-/**
- * scour.each : scour.each(iterable, fn)
- * Iterates through `iterable`, either an object or an array. This is an
- * implementation of `Array.forEach` that also works for objects.
- *
- * This is also available as `require('scourjs/utilities/each')`.
- */
-
-scour.each = require('./utilities/each')
-
-/**
- * scour.map : scour.map(iterable, fn)
- * Works like Array#map, but also works on objects.
- *
- * This is also available as `require('scourjs/utilities/map')`.
- */
-
-scour.map = require('./utilities/map')
-
-/**
- * Internal: works like map, but returns an object (TBD)
- */
-
-scour.mapObject = require('./utilities/map_object')
+// Export utilities
+assign(scour, utils)
 
 /**
  * Internal: decorates collection functions
