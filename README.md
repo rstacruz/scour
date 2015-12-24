@@ -388,11 +388,14 @@ objects.
 
 ```js
 data =
-  { wilma: { name: 'Wilma' },
-    barney: { name: 'Barney' },
-    fred: { name: 'Fred' } }
+  { 0: { name: 'Wilma' },
+    1: { name: 'Barney' },
+    2: { name: 'Fred' } }
 
-scour(data).sortBy('name')
+scour(data).sortBy('name').value
+// { 1: { name: 'Barney' },
+//   2: { name: 'Fred' },
+//   0: { name: 'Wilma' } }
 ```
 
 __Conditions:__

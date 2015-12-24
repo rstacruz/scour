@@ -267,11 +267,14 @@ scour.prototype = {
    * objects.
    *
    *     data =
-   *       { wilma: { name: 'Wilma' },
-   *         barney: { name: 'Barney' },
-   *         fred: { name: 'Fred' } }
+   *       { 0: { name: 'Wilma' },
+   *         1: { name: 'Barney' },
+   *         2: { name: 'Fred' } }
    *
-   *     scour(data).sortBy('name')
+   *     scour(data).sortBy('name').value
+   *     // { 1: { name: 'Barney' },
+   *     //   2: { name: 'Fred' },
+   *     //   0: { name: 'Wilma' } }
    *
    * __Conditions:__
    * The given condition can be a string or a function. When it's given as a
