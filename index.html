@@ -297,11 +297,14 @@ to <code>at(len() - 1)</code>: see <a href="#at">at()</a> and <a href="#len">len
 chaining. Like other chainable methods, this works on arrays as well as
 objects.</p>
 <pre><code class="lang-js">data =
-  { wilma: { name: <span class="pl-s">&apos;Wilma&apos;</span> },
-    barney: { name: <span class="pl-s">&apos;Barney&apos;</span> },
-    fred: { name: <span class="pl-s">&apos;Fred&apos;</span> } }
+  { <span class="hljs-number">0</span>: { name: <span class="pl-s">&apos;Wilma&apos;</span> },
+    <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;Barney&apos;</span> },
+    <span class="hljs-number">2</span>: { name: <span class="pl-s">&apos;Fred&apos;</span> } }
 
-scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>)
+scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>).value
+<span class="pl-c">// { 1: { name: &apos;Barney&apos; },</span>
+<span class="pl-c">//   2: { name: &apos;Fred&apos; },</span>
+<span class="pl-c">//   0: { name: &apos;Wilma&apos; } }</span>
 </code></pre>
 <p><strong>Conditions:</strong>
 The given condition can be a string or a function. When it&#x2019;s given as a
