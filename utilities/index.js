@@ -5,6 +5,20 @@
  */
 
 /**
+ * scour.get : scour.get(object, keypath)
+ * Gets a keypath from an object.
+ *
+ *     data = { users: { bob: { name: 'john' } } }
+ *
+ *     result = get(data, ['users', 'bob', 'name'])
+ *     // => 'robert'
+ *
+ * This is also available as `require('scourjs/utilities/get')`.
+ */
+
+exports.get = require('./get')
+
+/**
  * scour.set : scour.set(object, keypath, value)
  * Sets a `keypath` into an `object` immutably.
  *
