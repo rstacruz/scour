@@ -8,6 +8,7 @@
       "es2015"
     ]
   },
+  "browser": "dist/scour.js",
   "bugs": {
     "url": "https://github.com/rstacruz/scour/issues"
   },
@@ -48,10 +49,10 @@
     "url": "git+https://github.com/rstacruz/scour.git"
   },
   "scripts": {
-    "build": "browserify -t babelify --bare -s scour scour.js | uglifyjs -cm > scour.min.js",
+    "build": "browserify -t babelify --bare -s scour scour.js > dist/scour.js; uglifyjs dist/scour.js -cm > dist/scour.min.js",
     "coverage": "istanbul cover _mocha -- -R spec",
     "prepublish": "make -B update && npm run build",
     "test": "mocha",
-    "watch": "watchify -v -t babelify --bare -s scour scour.js -o 'uglifyjs -cm > scour.min.js'"
+    "watch": "watchify -v -t babelify --bare -s scour scour.js -o dist/scour.js"
   }
 }

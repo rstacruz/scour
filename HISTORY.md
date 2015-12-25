@@ -1,6 +1,13 @@
 # Changelog
 
 ## [v0.4.0]
+> Dec 25, 2015
+
+- Implement `scour.extendIn()`.
+- Optimize various functions.
+- `scour#extend()` - fix behavior when extending a root.
+- Place built files in `dist/scour.js` and `dist/scour.min.js`.
+- Fix usage with browserify.
 
 ## [v0.3.0]
 > Dec 24, 2015
