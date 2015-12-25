@@ -1,5 +1,7 @@
 # Changelog
 
+## [v0.4.0]
+
 ## [v0.3.0]
 > Dec 24, 2015
 
@@ -28,4 +30,4 @@
 [v0.1.0]: https://github.com/rstacruz/scour/compare/v0.0.0...v0.1.0
 [v0.2.0]: https://github.com/rstacruz/scour/compare/v0.1.0...v0.2.0
 [v0.3.0]: https://github.com/rstacruz/scour/compare/v0.2.0...v0.3.0
-
+[v0.4.0]: https://github.com/rstacruz/scour/compare/v0.3.0...v0.4.0

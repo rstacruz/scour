@@ -33,6 +33,20 @@ exports.set = require('./set')
 exports.del = require('./del')
 
 /**
+ * scour.extendIn : scour.del(object, keypath, extensions...)
+ * Internal: Deletes a `keypath` from an `object` immutably.
+ *
+ *     data = { users: { bob: { name: 'robert' } } }
+ *     extendIn(data, ['users', 'bob'], { email: 'bob@gmail.com' })
+ *
+ *     // => { users: { bob: { name: 'robert', email: 'bob@gmail.com' } } }
+ *
+ * This is also available as `require('scourjs/utilities/extendIn')`.
+ */
+
+// exports.extendIn = require('./extend_in')
+
+/**
  * scour.each : scour.each(iterable, fn)
  * Iterates through `iterable`, either an object or an array. This is an
  * implementation of [Array#forEach] that also works for objects. The callback
