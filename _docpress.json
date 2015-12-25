@@ -73,6 +73,11 @@
                 "id": "at"
               },
               {
+                "title": "getAt",
+                "depth": 3,
+                "id": "getat"
+              },
+              {
                 "title": "filter",
                 "depth": 3,
                 "id": "filter"
@@ -293,6 +298,11 @@
             "slug": "history",
             "headings": [
               {
+                "title": "[v0.5.0] - unreleased",
+                "depth": 2,
+                "id": "v0.5.0-unreleased"
+              },
+              {
                 "title": "[v0.4.0]",
                 "depth": 2,
                 "id": "v0.4.0"
@@ -451,6 +461,11 @@
               "title": "at",
               "depth": 3,
               "id": "at"
+            },
+            {
+              "title": "getAt",
+              "depth": 3,
+              "id": "getat"
             },
             {
               "title": "filter",
@@ -668,6 +683,11 @@
       "title": "Changelog",
       "slug": "history",
       "headings": [
+        {
+          "title": "[v0.5.0] - unreleased",
+          "depth": 2,
+          "id": "v0.5.0-unreleased"
+        },
         {
           "title": "[v0.4.0]",
           "depth": 2,

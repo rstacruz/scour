@@ -175,11 +175,28 @@ db.go(<span class="pl-s">&apos;users&apos;</span>).value   <span class="pl-c">//
 <h2 id="chaining-methods">Chaining methods</h2>
 <p>These methods are used to traverse nested structures. All these
 methods return <a href="#scour">scour</a> instances, making them suitable for chaining.</p>
+<h4 id="on-null-values">On null values</h4>
+<p>Note that <code>undefined</code>, <code>false</code> and <code>null</code> values are still <a href="#scour">scour</a>-wrapped
+when returned from <a href="#go">go()</a>, <a href="#at">at()</a> and [find()].</p>
+<pre><code class="lang-js">list = [ { name: <span class="pl-s">&apos;Homer&apos;</span> }, { name: <span class="pl-s">&apos;Bart&apos;</span> } ]
+
+scour(list).at(<span class="hljs-number">4</span>)         <span class="pl-c">// =&gt; [ scour undefined ]</span>
+scour(list).at(<span class="hljs-number">4</span>).value   <span class="pl-c">// =&gt; undefined</span>
+</code></pre>
+<p>This is done so that you can chain methods safely even when something is null.
+This behavior is consistent with what you&#x2019;d expect with jQuery.</p>
+<pre><code class="lang-js">data = { users: { ... } }
+db = scour(data)
+
+db.go(<span class="pl-s">&apos;blogposts&apos;</span>).map((post) =&gt; post.get(<span class="pl-s">&apos;title&apos;</span>))
+<span class="pl-c">// =&gt; []</span>
+</code></pre>
 <h3 id="go">go</h3>
 <blockquote>
 <p><code>go(keypath...)</code></p>
 </blockquote>
-<p>Navigates down to a given <code>keypath</code>. Always returns a <a href="#scour">scour</a> instance.</p>
+<p>Navigates down to a given <code>keypath</code>. Always returns a <a href="#scour">scour</a> instance.
+Rules <a href="#on-null-values">on null values</a> apply.</p>
 <pre><code class="lang-js">data =
   { users:
     { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, last: <span class="pl-s">&apos;jobs&apos;</span> },
@@ -210,13 +227,27 @@ attr.keypath   <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;12&apos;, &
 <p><code>at(index)</code></p>
 </blockquote>
 <p>Returns the item at <code>index</code>. This differs from <code>go</code> as this searches by
-index, not by key.</p>
+index, not by key. This returns a the raw value, unlike <a href="#getat">getAt()</a>. Rules
+<a href="#on-null-values">on null values</a> apply.</p>
 <pre><code class="lang-js">users =
   { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
 
 scour(users).at(<span class="hljs-number">0</span>)          <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
 scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
+</code></pre>
+<h3 id="getat">getAt</h3>
+<blockquote>
+<p><code>getAt(index)</code></p>
+</blockquote>
+<p>Returns the item at <code>index</code>. This differs from <code>get</code> as this searches by
+index, not by key. This returns a the raw value, unlike <a href="#at">at()</a>.</p>
+<pre><code class="lang-js">users =
+  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+
+scour(users).at(<span class="hljs-number">0</span>)           <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
+scour(users).getAt(<span class="hljs-number">0</span>)        <span class="pl-c">// =&gt; { name: &apos;steve&apos; }</span>
 </code></pre>
 <h3 id="filter">filter</h3>
 <blockquote>
@@ -273,7 +304,7 @@ scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
 <p>Returns the first value that matches <code>conditions</code>.  Supports MongoDB-style
 queries. For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>. Also
 see <a href="#filter">filter()</a>, as this is functionally-equivalent to the first result of
-<code>filter()</code>.</p>
+<code>filter()</code>. Rules <a href="#on-null-values">on null values</a> apply.</p>
 <pre><code class="lang-js">scour(data).find({ name: <span class="pl-s">&apos;john&apos;</span> })
 scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
 </code></pre>
@@ -811,6 +842,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#go" class="link title link-go">go</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#at" class="link title link-at">at</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#getat" class="link title link-getat">getAt</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#filter" class="link title link-filter">filter</a>
                 </li>
