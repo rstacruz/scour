@@ -11,5 +11,5 @@ module.exports = function extendIn (source, keypath, extensions) {
     assign(data, arguments[i])
   }
 
-  return set(source, keypath, datA)
+  return set(source, keypath, data)
 }

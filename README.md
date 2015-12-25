@@ -842,6 +842,21 @@ user.keypath             // => ['users', 'admins', '23']
 
 These are utilities that don't need a wrapped object.
 
+### scour.get
+
+> `scour.get(object, keypath)`
+
+Gets a keypath from an object.
+
+```js
+data = { users: { bob: { name: 'john' } } }
+
+result = get(data, ['users', 'bob', 'name'])
+// => 'robert'
+```
+
+This is also available as `require('scourjs/utilities/get')`.
+
 ### scour.set
 
 > `scour.set(object, keypath, value)`
@@ -871,6 +886,21 @@ result = del(data, ['users', 'bob', 'name'])
 ```
 
 This is also available as `require('scourjs/utilities/del')`.
+
+### scour.extendIn
+
+> `scour.extendIn(object, keypath, extensions...)`
+
+Extends a `keypath` from an `object` immutably.
+
+```js
+data = { users: { bob: { name: 'robert' } } }
+result = extendIn(data, ['users', 'bob'], { email: 'bob@gmail.com' })
+
+// => { users: { bob: { name: 'robert', email: 'bob@gmail.com' } } }
+```
+
+This is also available as `require('scourjs/utilities/extend_in')`.
 
 ### scour.each
 

@@ -47,18 +47,18 @@ exports.set = require('./set')
 exports.del = require('./del')
 
 /**
- * scour.extendIn : scour.del(object, keypath, extensions...)
- * Internal: Deletes a `keypath` from an `object` immutably.
+ * scour.extendIn : scour.extendIn(object, keypath, extensions...)
+ * Extends a `keypath` from an `object` immutably.
  *
  *     data = { users: { bob: { name: 'robert' } } }
- *     extendIn(data, ['users', 'bob'], { email: 'bob@gmail.com' })
+ *     result = extendIn(data, ['users', 'bob'], { email: 'bob@gmail.com' })
  *
  *     // => { users: { bob: { name: 'robert', email: 'bob@gmail.com' } } }
  *
- * This is also available as `require('scourjs/utilities/extendIn')`.
+ * This is also available as `require('scourjs/utilities/extend_in')`.
  */
 
-// exports.extendIn = require('./extend_in')
+exports.extendIn = require('./extend_in')
 
 /**
  * scour.each : scour.each(iterable, fn)
