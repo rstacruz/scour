@@ -68,18 +68,6 @@ describe('index', function () {
     })
   })
 
-  describe('.at()', function () {
-    it('works', function () {
-      expect(scour(data).go('users').at(0).get('name'))
-        .toEqual('john')
-    })
-
-    it('works for arrays', function () {
-      expect(scour(list).at(0).get('name'))
-        .toEqual('apple')
-    })
-  })
-
   describe('.toArray()', function () {
     it('works for objects', function () {
       expect(scour({ a: 1, b: 2 }).toArray()).toEqual([1, 2])

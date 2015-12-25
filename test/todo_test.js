@@ -19,6 +19,9 @@ describe('todo', function () {
   })
 
   describe('array', function () {
+    it('.at', done)
+    it('.go and .at returning objects, ALWAYS')
+    it('.getAt')
     it('.gather')
     it('.slice')
     it('.initial')

@@ -1006,6 +1006,7 @@ This is also available as `require('scourjs/utilities/filter')`.
 [filter()]: #filter
 [forEach()]: #foreach
 [get()]: #get
+[getAt()]: #getat
 [go()]: #go
 [keypath]: #keypath
 [len()]: #len

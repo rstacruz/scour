@@ -122,7 +122,7 @@ scour.prototype = {
 
   /**
    * Returns the item at `index`. This differs from `go` as this searches by
-   * index, not by key.
+   * index, not by key. This returns a the raw value, unlike [getAt()].
    *
    *     users =
    *       { 12: { name: 'steve' },
@@ -139,6 +139,24 @@ scour.prototype = {
 
     const key = this.keys()[index]
     return this._get(this.value[key], [ '' + key ])
+  },
+
+  /**
+   * Returns the item at `index`. This differs from `get` as this searches by
+   * index, not by key. This returns a the raw value, unlike [at()].
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     scour(users).at(0)           // => [scour { name: 'steve' }]
+   *     scour(users).getAt(0)        // => { name: 'steve' }
+   */
+
+  getAt (index) {
+    if (Array.isArray(this.value)) return this.value[index]
+    const key = this.keys()[index]
+    return this.value[key]
   },
 
   /**
