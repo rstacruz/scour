@@ -517,7 +517,7 @@ scour.prototype = {
       return this.root.set(this.keypath, result).go(this.keypath)
     }
 
-    return this.replace(result)
+    return this.replace(result, { root: false })
   },
 
   /**

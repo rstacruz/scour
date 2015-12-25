@@ -45,5 +45,12 @@ describe('.extend()', function () {
   it('fails on non-objects being passed as arguments', function () {
     expect(scour({}).extend('huh')).toEqual(undefined)
   })
+
+  it('works in root', function () {
+    const data = { a: { b: 1 } }
+    const result = scour(data).extend({ c: { d: 2 } })
+
+    expect(result.root).toBe(result)
+  })
 })
 
