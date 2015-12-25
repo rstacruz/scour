@@ -15,15 +15,37 @@ const list = [
   { name: 'banana' }
 ]
 
+var item
+
 describe('.at()', function () {
   it('works', function () {
     expect(scour(data).go('users').at(0).get('name'))
       .toEqual('john')
   })
 
+  describe('with OOB on objects', function () {
+    before(function () {
+      item = scour(data).go('users').at(999)
+    })
+
+    it('has a value of undefined', function () {
+      expect(item.value).toEqual(undefined)
+    })
+  })
+
   it('works for arrays', function () {
     expect(scour(list).at(0).get('name'))
       .toEqual('apple')
+  })
+
+  describe('with OOB on lists', function () {
+    before(function () {
+      item = scour(list).at(999)
+    })
+
+    it('has a value of undefined', function () {
+      expect(item.value).toEqual(undefined)
+    })
   })
 })
 

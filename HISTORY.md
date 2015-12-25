@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.5.0] - unreleased
+
+- Make `scour.get()`, `scour.at()`, and `scour.find()` return scour-wrapped objects, even if undefined.
+- Implement `scour#getAt()`.
+
 ## [v0.4.0]
 > Dec 25, 2015
 
@@ -7,7 +12,7 @@
 - Optimize various functions.
 - `scour#extend()` - fix behavior when extending a root.
 - Place built files in `dist/scour.js` and `dist/scour.min.js`.
-- Fix usage with browserify.
+ Fix usage with browserify.
 
 ## [v0.3.0]
 > Dec 24, 2015

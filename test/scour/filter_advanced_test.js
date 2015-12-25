@@ -18,7 +18,7 @@ describe('.filter()', function () {
   it('works', function () {
     expect(this.results.go(1).value).toEqual({ name: 'john' })
     expect(this.results.go(2).value).toEqual({ name: 'jake' })
-    expect(this.results.go(3)).toEqual(undefined)
+    expect(this.results.go(3).value).toEqual(undefined)
   })
 
   describe('on objects', function () {

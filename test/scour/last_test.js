@@ -15,11 +15,11 @@ describe('.last()', function () {
 
   it('works for empty arrays', function () {
     const data = []
-    expect(scour(data).last()).toEqual(undefined)
+    expect(scour(data).last().value).toEqual(undefined)
   })
 
   it('works for empty objects', function () {
     const data = {}
-    expect(scour(data).last()).toEqual(undefined)
+    expect(scour(data).last().value).toEqual(undefined)
   })
 })

@@ -226,11 +226,34 @@ db.go('users').value   // => same as `data.users`
 These methods are used to traverse nested structures. All these
 methods return [scour] instances, making them suitable for chaining.
 
+#### On null values
+Note that `undefined`, `false` and `null` values are still [scour]-wrapped
+when returned from [go()], [at()] and [find()].
+
+```js
+list = [ { name: 'Homer' }, { name: 'Bart' } ]
+
+scour(list).at(4)         // => [ scour undefined ]
+scour(list).at(4).value   // => undefined
+```
+
+This is done so that you can chain methods safely even when something is null.
+This behavior is consistent with what you'd expect with jQuery.
+
+```js
+data = { users: { ... } }
+db = scour(data)
+
+db.go('blogposts').map((post) => post.get('title'))
+// => []
+```
+
 ### go
 
 > `go(keypath...)`
 
 Navigates down to a given `keypath`. Always returns a [scour] instance.
+Rules [on null values] apply.
 
 ```js
 data =
@@ -270,7 +293,8 @@ attr.keypath   // => ['users', '12', 'name']
 > `at(index)`
 
 Returns the item at `index`. This differs from `go` as this searches by
-index, not by key.
+index, not by key. This returns a the raw value, unlike [getAt()]. Rules
+[on null values] apply.
 
 ```js
 users =
@@ -279,6 +303,22 @@ users =
 
 scour(users).at(0)          // => [scour { name: 'steve' }]
 scour(users).get(12)        // => [scour { name: 'steve' }]
+```
+
+### getAt
+
+> `getAt(index)`
+
+Returns the item at `index`. This differs from `get` as this searches by
+index, not by key. This returns a the raw value, unlike [at()].
+
+```js
+users =
+  { 12: { name: 'steve' },
+    23: { name: 'bill' } }
+
+scour(users).at(0)           // => [scour { name: 'steve' }]
+scour(users).getAt(0)        // => { name: 'steve' }
 ```
 
 ### filter
@@ -355,7 +395,7 @@ Inverse of [filter()] -- see `filter()` documentation for details.
 Returns the first value that matches `conditions`.  Supports MongoDB-style
 queries. For reference, see [MongoDB Query Operators][query-ops]. Also
 see [filter()], as this is functionally-equivalent to the first result of
-`filter()`.
+`filter()`. Rules [on null values] apply.
 
 [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
 
@@ -1021,6 +1061,7 @@ This is also available as `require('scourjs/utilities/filter')`.
 [scour.indexedMap()]: #scour.indexedmap
 [scour.filter()]: #scour-filter
 [Iteration methods]: #iteration-methods
+[on null values]: #on-null-values
 
 [Extensions example]: docs/extensions_example.md
 [Object.assign]: https://devdocs.io/javascript/global_objects/object/assign

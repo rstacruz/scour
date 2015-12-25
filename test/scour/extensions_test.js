@@ -41,7 +41,7 @@ describe('.use()', function () {
 
     expect(albums.at(0).get('name')).toEqual('Kind of Blue')
     expect(albums.at(1).get('name')).toEqual('Come Fly With Me')
-    expect(albums.at(2)).toEqual(undefined)
+    expect(albums.at(2).value).toEqual(undefined)
     expect(albums.len()).toEqual(2)
   })
 
