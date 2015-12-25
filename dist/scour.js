@@ -692,11 +692,30 @@ scour.prototype = {
    * Chaining methods:
    * (Section) These methods are used to traverse nested structures. All these
    * methods return [scour] instances, making them suitable for chaining.
+   *
+   * #### On null values
+   * Note that `undefined`, `false` and `null` values are still [scour]-wrapped
+   * when returned from [go()], [at()] and [find()].
+   *
+   *     list = [ { name: 'Homer' }, { name: 'Bart' } ]
+   *
+   *     scour(list).at(4)         // => [ scour undefined ]
+   *     scour(list).at(4).value   // => undefined
+   *
+   * This is done so that you can chain methods safely even when something is null.
+   * This behavior is consistent with what you'd expect with jQuery.
+   *
+   *     data = { users: { ... } }
+   *     db = scour(data)
+   *
+   *     db.go('blogposts').map((post) => post.get('title'))
+   *     // => []
    */
 
   /**
    * go : go(keypath...)
    * Navigates down to a given `keypath`. Always returns a [scour] instance.
+   * Rules [on null values] apply.
    *
    *     data =
    *       { users:
@@ -729,7 +748,7 @@ scour.prototype = {
   go: function go() {
     var keypath = normalizeKeypath(arguments, true);
     var result = this.get.apply(this, keypath);
-    return this._get(result, keypath, true);
+    return this._get(result, keypath);
   },
 
   /**
@@ -754,7 +773,8 @@ scour.prototype = {
 
   /**
    * Returns the item at `index`. This differs from `go` as this searches by
-   * index, not by key.
+   * index, not by key. This returns a the raw value, unlike [getAt()]. Rules
+   * [on null values] apply.
    *
    *     users =
    *       { 12: { name: 'steve' },
@@ -771,6 +791,24 @@ scour.prototype = {
 
     var key = this.keys()[index];
     return this._get(this.value[key], ['' + key]);
+  },
+
+  /**
+   * Returns the item at `index`. This differs from `get` as this searches by
+   * index, not by key. This returns a the raw value, unlike [at()].
+   *
+   *     users =
+   *       { 12: { name: 'steve' },
+   *         23: { name: 'bill' } }
+   *
+   *     scour(users).at(0)           // => [scour { name: 'steve' }]
+   *     scour(users).getAt(0)        // => { name: 'steve' }
+   */
+
+  getAt: function getAt(index) {
+    if (Array.isArray(this.value)) return this.value[index];
+    var key = this.keys()[index];
+    return this.value[key];
   },
 
   /**
@@ -863,7 +901,7 @@ scour.prototype = {
    * Returns the first value that matches `conditions`.  Supports MongoDB-style
    * queries. For reference, see [MongoDB Query Operators][query-ops]. Also
    * see [filter()], as this is functionally-equivalent to the first result of
-   * `filter()`.
+   * `filter()`. Rules [on null values] apply.
    *
    * [query-ops]: https://docs.mongodb.org/manual/reference/operator/query/
    *
@@ -893,7 +931,7 @@ scour.prototype = {
 
   last: function last() {
     var len = this.len();
-    if (len > 0) return this.at(len - 1);
+    return this.at(len - 1);
   },
 
   /**
@@ -1377,7 +1415,6 @@ scour.prototype = {
    */
 
   _get: function _get(result, keypath) {
-    if (typeof result === 'undefined' || result === null) return result;
     return this.replace(result, {
       keypath: this.keypath.concat(keypath)
     });
@@ -1396,7 +1433,7 @@ scour.prototype = {
 
   replace: function replace(value, options) {
     var op = options || {};
-    return new scour(value || this.value, {
+    return new scour(value, {
       root: typeof op.root !== 'undefined' ? op.root : this.root,
       keypath: typeof op.keypath !== 'undefined' ? op.keypath : this.keypath,
       extensions: typeof op.extensions !== 'undefined' ? this.extensions.concat(op.extensions) : this.extensions

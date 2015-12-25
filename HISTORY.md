@@ -1,6 +1,7 @@
 # Changelog
 
-## [v0.5.0] - unreleased
+## [v0.5.0]
+> Dec 25, 2015
 
 - Make `scour.get()`, `scour.at()`, and `scour.find()` return scour-wrapped objects, even if undefined.
 - Implement `scour#getAt()`.
@@ -43,3 +44,4 @@
 [v0.2.0]: https://github.com/rstacruz/scour/compare/v0.1.0...v0.2.0
 [v0.3.0]: https://github.com/rstacruz/scour/compare/v0.2.0...v0.3.0
 [v0.4.0]: https://github.com/rstacruz/scour/compare/v0.3.0...v0.4.0
+[v0.5.0]: https://github.com/rstacruz/scour/compare/v0.4.0...v0.5.0
