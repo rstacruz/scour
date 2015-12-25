@@ -8,7 +8,7 @@
       "es2015"
     ]
   },
-  "browser": "dist/scour.js",
+  "browser": "dist/scour.min.js",
   "bugs": {
     "url": "https://github.com/rstacruz/scour/issues"
   },
