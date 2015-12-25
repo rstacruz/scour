@@ -230,6 +230,11 @@
             "id": "utility-functions",
             "headings": [
               {
+                "title": "scour.get",
+                "depth": 3,
+                "id": "scour.get"
+              },
+              {
                 "title": "scour.set",
                 "depth": 3,
                 "id": "scour.set"
@@ -238,6 +243,11 @@
                 "title": "scour.del",
                 "depth": 3,
                 "id": "scour.del"
+              },
+              {
+                "title": "scour.extendIn",
+                "depth": 3,
+                "id": "scour.extendin"
               },
               {
                 "title": "scour.each",
@@ -282,6 +292,11 @@
             "url": "HISTORY.html",
             "slug": "history",
             "headings": [
+              {
+                "title": "[v0.4.0]",
+                "depth": 2,
+                "id": "v0.4.0"
+              },
               {
                 "title": "[v0.3.0]",
                 "depth": 2,
@@ -595,6 +610,11 @@
           "id": "utility-functions",
           "headings": [
             {
+              "title": "scour.get",
+              "depth": 3,
+              "id": "scour.get"
+            },
+            {
               "title": "scour.set",
               "depth": 3,
               "id": "scour.set"
@@ -603,6 +623,11 @@
               "title": "scour.del",
               "depth": 3,
               "id": "scour.del"
+            },
+            {
+              "title": "scour.extendIn",
+              "depth": 3,
+              "id": "scour.extendin"
             },
             {
               "title": "scour.each",
@@ -643,6 +668,11 @@
       "title": "Changelog",
       "slug": "history",
       "headings": [
+        {
+          "title": "[v0.4.0]",
+          "depth": 2,
+          "id": "v0.4.0"
+        },
         {
           "title": "[v0.3.0]",
           "depth": 2,
