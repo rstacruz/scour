@@ -790,7 +790,7 @@ scour.prototype = {
     }
 
     var key = this.keys()[index];
-    return this._get(this.value[key], ['' + key]);
+    return this._get(key && this.value[key], ['' + key]);
   },
 
   /**
@@ -808,7 +808,7 @@ scour.prototype = {
   getAt: function getAt(index) {
     if (Array.isArray(this.value)) return this.value[index];
     var key = this.keys()[index];
-    return this.value[key];
+    return key && this.value[key];
   },
 
   /**
@@ -861,6 +861,7 @@ scour.prototype = {
    */
 
   filter: function filter(conditions) {
+    if (!this.value) return this.replace([]);
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions);
     }
@@ -890,6 +891,7 @@ scour.prototype = {
    */
 
   reject: function reject(conditions) {
+    if (!this.value) return this.replace([]);
     if (typeof conditions === 'function') {
       return this.filterByFunction(negate(conditions));
     } else {
@@ -960,6 +962,7 @@ scour.prototype = {
    */
 
   sortBy: function sortBy(condition) {
+    if (!this.value) return this.replace([]);
     var values;
 
     if (typeof condition === 'string') {
@@ -1027,6 +1030,7 @@ scour.prototype = {
    */
 
   get: function get() {
+    if (!this.value) return;
     var keypath = normalizeKeypath(arguments, true);
     return utils.get(this.value, keypath);
   },
@@ -1077,6 +1081,7 @@ scour.prototype = {
    */
 
   keys: function keys() {
+    if (!this.value) return [];
     return Object.keys(this.value);
   },
 
@@ -1136,7 +1141,7 @@ scour.prototype = {
     }
 
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
-    var result = scour.set(this.value, keypath, value.valueOf());
+    var result = scour.set(this.value || {}, keypath, value.valueOf());
     return this.replace(result, { root: null });
   },
 
@@ -1154,6 +1159,7 @@ scour.prototype = {
    */
 
   del: function del(keypath) {
+    if (!this.value) return this;
     keypath = normalizeKeypath(keypath);
 
     if (this.root !== this) {
