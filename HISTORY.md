@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.7.0] - unreleased
+
+- Implement `scour.sortBy()`.
+- `scour#sortBy()` - allow dot notation.
+
 ## [v0.6.0]
 > Dec 26, 2015
 
@@ -51,3 +56,4 @@
 [v0.4.0]: https://github.com/rstacruz/scour/compare/v0.3.0...v0.4.0
 [v0.5.0]: https://github.com/rstacruz/scour/compare/v0.4.0...v0.5.0
 [v0.6.0]: https://github.com/rstacruz/scour/compare/v0.5.0...v0.6.0
+[v0.7.0]: https://github.com/rstacruz/scour/compare/v0.6.0...v0.7.0

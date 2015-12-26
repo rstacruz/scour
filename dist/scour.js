@@ -20,7 +20,7 @@ module.exports = function buildExtensions(keypath, extensions) {
   });
 };
 
-},{"../utilities/map":16}],2:[function(require,module,exports){
+},{"../utilities/map":19}],2:[function(require,module,exports){
 "use strict";
 
 /**
@@ -62,6 +62,40 @@ module.exports = function normalizeKeypath(keypath, isArguments) {
 };
 
 },{}],4:[function(require,module,exports){
+'use strict';
+
+var indexedMap = require('../utilities/indexed_map');
+var map = require('../utilities/map');
+
+/*
+ * Internal: Sorts a `{ key, value, criteria, index }` tuple array by
+ * `criteria`. Returns the array of values if `isArray` is not `false`,
+ * or an object indexed by `key` otherwise.
+ */
+
+module.exports = function sortValues(values, isArray) {
+  var sorted = values.sort(function (left, right) {
+    var a = left.criteria;
+    var b = right.criteria;
+    if (a !== b) {
+      if (a > b || a === void 0) return 1;
+      if (a < b || b === void 0) return -1;
+    }
+    return a.index - b.index;
+  });
+
+  if (isArray === false) {
+    return indexedMap(sorted, function (res) {
+      return [res.key, res.value];
+    });
+  } else {
+    return map(sorted, function (res) {
+      return res.value;
+    });
+  }
+};
+
+},{"../utilities/indexed_map":18,"../utilities/map":19}],5:[function(require,module,exports){
 /* eslint-disable no-unused-vars */
 'use strict';
 var hasOwnProperty = Object.prototype.hasOwnProperty;
@@ -102,7 +136,7 @@ module.exports = Object.assign || function (target, source) {
 	return to;
 };
 
-},{}],5:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 /*
  * Sift 2.x
  *
@@ -621,7 +655,248 @@ module.exports = Object.assign || function (target, source) {
   }
 })();
 
-},{}],6:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
+
+/**
+ * Module Dependencies
+ */
+
+var expr;
+try {
+  expr = require('props');
+} catch(e) {
+  expr = require('component-props');
+}
+
+/**
+ * Expose `toFunction()`.
+ */
+
+module.exports = toFunction;
+
+/**
+ * Convert `obj` to a `Function`.
+ *
+ * @param {Mixed} obj
+ * @return {Function}
+ * @api private
+ */
+
+function toFunction(obj) {
+  switch ({}.toString.call(obj)) {
+    case '[object Object]':
+      return objectToFunction(obj);
+    case '[object Function]':
+      return obj;
+    case '[object String]':
+      return stringToFunction(obj);
+    case '[object RegExp]':
+      return regexpToFunction(obj);
+    default:
+      return defaultToFunction(obj);
+  }
+}
+
+/**
+ * Default to strict equality.
+ *
+ * @param {Mixed} val
+ * @return {Function}
+ * @api private
+ */
+
+function defaultToFunction(val) {
+  return function(obj){
+    return val === obj;
+  };
+}
+
+/**
+ * Convert `re` to a function.
+ *
+ * @param {RegExp} re
+ * @return {Function}
+ * @api private
+ */
+
+function regexpToFunction(re) {
+  return function(obj){
+    return re.test(obj);
+  };
+}
+
+/**
+ * Convert property `str` to a function.
+ *
+ * @param {String} str
+ * @return {Function}
+ * @api private
+ */
+
+function stringToFunction(str) {
+  // immediate such as "> 20"
+  if (/^ *\W+/.test(str)) return new Function('_', 'return _ ' + str);
+
+  // properties such as "name.first" or "age > 18" or "age > 18 && age < 36"
+  return new Function('_', 'return ' + get(str));
+}
+
+/**
+ * Convert `object` to a function.
+ *
+ * @param {Object} object
+ * @return {Function}
+ * @api private
+ */
+
+function objectToFunction(obj) {
+  var match = {};
+  for (var key in obj) {
+    match[key] = typeof obj[key] === 'string'
+      ? defaultToFunction(obj[key])
+      : toFunction(obj[key]);
+  }
+  return function(val){
+    if (typeof val !== 'object') return false;
+    for (var key in match) {
+      if (!(key in val)) return false;
+      if (!match[key](val[key])) return false;
+    }
+    return true;
+  };
+}
+
+/**
+ * Built the getter function. Supports getter style functions
+ *
+ * @param {String} str
+ * @return {String}
+ * @api private
+ */
+
+function get(str) {
+  var props = expr(str);
+  if (!props.length) return '_.' + str;
+
+  var val, i, prop;
+  for (i = 0; i < props.length; i++) {
+    prop = props[i];
+    val = '_.' + prop;
+    val = "('function' == typeof " + val + " ? " + val + "() : " + val + ")";
+
+    // mimic negative lookbehind to avoid problems with nested properties
+    str = stripNested(prop, str, val);
+  }
+
+  return str;
+}
+
+/**
+ * Mimic negative lookbehind to avoid problems with nested properties.
+ *
+ * See: http://blog.stevenlevithan.com/archives/mimic-lookbehind-javascript
+ *
+ * @param {String} prop
+ * @param {String} str
+ * @param {String} val
+ * @return {String}
+ * @api private
+ */
+
+function stripNested (prop, str, val) {
+  return str.replace(new RegExp('(\\.)?' + prop, 'g'), function($0, $1) {
+    return $1 ? $0 : val;
+  });
+}
+
+},{"component-props":8,"props":8}],8:[function(require,module,exports){
+/**
+ * Global Names
+ */
+
+var globals = /\b(Array|Date|Object|Math|JSON)\b/g;
+
+/**
+ * Return immediate identifiers parsed from `str`.
+ *
+ * @param {String} str
+ * @param {String|Function} map function or prefix
+ * @return {Array}
+ * @api public
+ */
+
+module.exports = function(str, fn){
+  var p = unique(props(str));
+  if (fn && 'string' == typeof fn) fn = prefixed(fn);
+  if (fn) return map(str, p, fn);
+  return p;
+};
+
+/**
+ * Return immediate identifiers in `str`.
+ *
+ * @param {String} str
+ * @return {Array}
+ * @api private
+ */
+
+function props(str) {
+  return str
+    .replace(/\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\//g, '')
+    .replace(globals, '')
+    .match(/[a-zA-Z_]\w*/g)
+    || [];
+}
+
+/**
+ * Return `str` with `props` mapped with `fn`.
+ *
+ * @param {String} str
+ * @param {Array} props
+ * @param {Function} fn
+ * @return {String}
+ * @api private
+ */
+
+function map(str, props, fn) {
+  var re = /\.\w+|\w+ *\(|"[^"]*"|'[^']*'|\/([^/]+)\/|[a-zA-Z_]\w*/g;
+  return str.replace(re, function(_){
+    if ('(' == _[_.length - 1]) return fn(_);
+    if (!~props.indexOf(_)) return _;
+    return fn(_);
+  });
+}
+
+/**
+ * Return unique array.
+ *
+ * @param {Array} arr
+ * @return {Array}
+ * @api private
+ */
+
+function unique(arr) {
+  var ret = [];
+
+  for (var i = 0; i < arr.length; i++) {
+    if (~ret.indexOf(arr[i])) continue;
+    ret.push(arr[i]);
+  }
+
+  return ret;
+}
+
+/**
+ * Map with prefix `str`.
+ */
+
+function prefixed(str) {
+  return function(_){
+    return str + _;
+  };
+}
+
+},{}],9:[function(require,module,exports){
 /* eslint-disable new-cap */
 'use strict';
 
@@ -633,6 +908,8 @@ var buildExtensions = require('./lib/build_extensions');
 var normalizeKeypath = require('./lib/normalize_keypath');
 var utils = require('./utilities');
 var negate = require('./lib/negate');
+var sortValues = require('./lib/sort_values');
+var toFunction = require('to-function');
 
 /**
  * scour : scour(object)
@@ -959,6 +1236,10 @@ scour.prototype = {
    *
    *     scour(data).sortBy('name')
    *     scour(data).sortBy((item) => item.get('name'))
+   *
+   * You may also define nested keys in dot-notation:
+   *
+   *     scour(data).sortBy('user.name')
    */
 
   sortBy: function sortBy(condition) {
@@ -967,9 +1248,7 @@ scour.prototype = {
 
     if (typeof condition === 'string') {
       var key = condition;
-      condition = function (item) {
-        return item[key];
-      };
+      condition = toFunction(key);
       // don't use `this.map` or `this.each` so we skip `new scour()`
       values = utils.map(this.value, function (value, key, index) {
         return {
@@ -984,25 +1263,8 @@ scour.prototype = {
       });
     }
 
-    var sorted = values.sort(function (left, right) {
-      var a = left.criteria;
-      var b = right.criteria;
-      if (a !== b) {
-        if (a > b || a === void 0) return 1;
-        if (a < b || b === void 0) return -1;
-      }
-      return a.index - b.index;
-    });
-
-    if (Array.isArray(this.value)) {
-      return this.replace(sorted.map(function (res) {
-        return res.value;
-      }));
-    } else {
-      return this.replace(utils.indexedMap(sorted, function (res) {
-        return [res.key, res.value];
-      }));
-    }
+    var sorted = sortValues(values, Array.isArray(this.value));
+    return this.replace(sorted);
   },
 
   /**
@@ -1533,7 +1795,7 @@ function thisify(fn) {
 
 module.exports = scour;
 
-},{"./lib/build_extensions":1,"./lib/negate":2,"./lib/normalize_keypath":3,"./utilities":14,"object-assign":4,"sift":5}],7:[function(require,module,exports){
+},{"./lib/build_extensions":1,"./lib/negate":2,"./lib/normalize_keypath":3,"./lib/sort_values":4,"./utilities":17,"object-assign":5,"sift":6,"to-function":7}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = function clone(object) {
@@ -1541,7 +1803,7 @@ module.exports = function clone(object) {
   return Array.isArray(object) ? [].slice.call(object) : assign({}, object);
 };
 
-},{"object-assign":4}],8:[function(require,module,exports){
+},{"object-assign":5}],11:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1563,7 +1825,7 @@ module.exports = function cloneWithout(object, key) {
   }
 };
 
-},{}],9:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -1608,7 +1870,7 @@ module.exports = function del(object, keypath) {
   return results[0];
 };
 
-},{"./clone":7,"./clone_without":8}],10:[function(require,module,exports){
+},{"./clone":10,"./clone_without":11}],13:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1643,7 +1905,7 @@ each.native = Array.prototype.forEach;
 
 module.exports = each;
 
-},{}],11:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 var get = require('./get');
@@ -1662,7 +1924,7 @@ module.exports = function extendIn(source, keypath, extensions) {
   return set(source, keypath, data);
 };
 
-},{"./get":13,"./set":18,"object-assign":4}],12:[function(require,module,exports){
+},{"./get":16,"./set":21,"object-assign":5}],15:[function(require,module,exports){
 'use strict';
 
 var forEach = require('./each');
@@ -1688,7 +1950,7 @@ module.exports = function filter(each, fn, _isArray) {
   return result;
 };
 
-},{"./each":10}],13:[function(require,module,exports){
+},{"./each":13}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function get(object, keypath) {
@@ -1702,7 +1964,7 @@ module.exports = function get(object, keypath) {
   return result;
 };
 
-},{}],14:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 /**
@@ -1864,7 +2126,19 @@ exports.indexedMap = require('./indexed_map');
 
 exports.filter = require('./filter');
 
-},{"./del":9,"./each":10,"./extend_in":11,"./filter":12,"./get":13,"./indexed_map":15,"./map":16,"./map_object":17,"./set":18}],15:[function(require,module,exports){
+/**
+ * scour.sortBy : scour.sortBy(iterable, criteria)
+ * Sorts by a given criteria.
+ *
+ *     list = [ { name: 'Fred' }, { name: 'Barney' }, { name: 'Wilma' } ]
+ *     scour.sortBy(list, 'name')
+ *
+ * This is also available as `require('scourjs/utilities/sort_by')`.
+ */
+
+exports.sortBy = require('./sort_by');
+
+},{"./del":12,"./each":13,"./extend_in":14,"./filter":15,"./get":16,"./indexed_map":18,"./map":19,"./map_object":20,"./set":21,"./sort_by":22}],18:[function(require,module,exports){
 'use strict';
 
 var forEach = require('./each');
@@ -1880,7 +2154,7 @@ module.exports = function indexedMap(each, fn) {
   return result;
 };
 
-},{"./each":10}],16:[function(require,module,exports){
+},{"./each":13}],19:[function(require,module,exports){
 'use strict';
 
 var forEach = require('./each');
@@ -1894,7 +2168,7 @@ module.exports = function map(each, fn) {
   return result;
 };
 
-},{"./each":10}],17:[function(require,module,exports){
+},{"./each":13}],20:[function(require,module,exports){
 'use strict';
 
 var forEach = require('./each');
@@ -1908,7 +2182,7 @@ module.exports = function mapObject(each, fn) {
   return result;
 };
 
-},{"./each":10}],18:[function(require,module,exports){
+},{"./each":13}],21:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -1950,5 +2224,28 @@ module.exports = function set(object, keypath, value) {
   return results[0];
 };
 
-},{"./clone":7}]},{},[6])(6)
+},{"./clone":10}],22:[function(require,module,exports){
+'use strict';
+
+var map = require('./map');
+var forEach = require('./each');
+var toFunction = require('to-function');
+var sortValues = require('../lib/sort_values');
+
+module.exports = function sortBy(each, condition, isArray) {
+  if (typeof isArray === 'undefined' && !Array.isArray(each)) isArray = false;
+  if (typeof each !== 'function') each = forEach.bind(this, each);
+
+  condition = toFunction(condition);
+
+  var values = map(each, function (value, key, index) {
+    return {
+      key: key, value: value, criteria: condition(value, key), index: index
+    };
+  });
+
+  return sortValues(values, isArray);
+};
+
+},{"../lib/sort_values":4,"./each":13,"./map":19,"to-function":7}]},{},[9])(9)
 });
