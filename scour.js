@@ -7,6 +7,7 @@ const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
 const utils = require('./utilities')
 const negate = require('./lib/negate')
+const sortValues = require('./lib/sort_values')
 const toFunction = require('to-function')
 
 /**
@@ -348,22 +349,8 @@ scour.prototype = {
       }))
     }
 
-    var sorted = values.sort((left, right) => {
-      const a = left.criteria
-      const b = right.criteria
-      if (a !== b) {
-        if (a > b || a === void 0) return 1
-        if (a < b || b === void 0) return -1
-      }
-      return a.index - b.index
-    })
-
-    if (Array.isArray(this.value)) {
-      return this.replace(sorted.map((res) => res.value))
-    } else {
-      return this.replace(
-        utils.indexedMap(sorted, (res) => [ res.key, res.value ]))
-    }
+    var sorted = sortValues(values, Array.isArray(this.value))
+    return this.replace(sorted)
   },
 
   /**

@@ -157,3 +157,15 @@ exports.indexedMap = require('./indexed_map')
  */
 
 exports.filter = require('./filter')
+
+/**
+ * scour.sortBy : scour.sortBy(iterable, criteria)
+ * Sorts by a given criteria.
+ *
+ *     list = [ { name: 'Fred' }, { name: 'Barney' }, { name: 'Wilma' } ]
+ *     scour.sortBy(list, 'name')
+ *
+ * This is also available as `require('scourjs/utilities/sort_by')`.
+ */
+
+exports.sortBy = require('./sort_by')
