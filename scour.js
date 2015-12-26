@@ -327,6 +327,7 @@ scour.prototype = {
    */
 
   sortBy (condition) {
+    if (!this.value) return this.replace([])
     var values
 
     if (typeof condition === 'string') {
@@ -496,7 +497,7 @@ scour.prototype = {
     }
 
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
-    const result = scour.set(this.value, keypath, value.valueOf())
+    const result = scour.set(this.value || {}, keypath, value.valueOf())
     return this.replace(result, { root: null })
   },
 
@@ -514,6 +515,7 @@ scour.prototype = {
    */
 
   del (keypath) {
+    if (!this.value) return this
     keypath = normalizeKeypath(keypath)
 
     if (this.root !== this) {

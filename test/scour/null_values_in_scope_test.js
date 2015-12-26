@@ -2,8 +2,9 @@
 
 const scour = require('../../scour')
 
-describe('null values', function () {
-  const nil = scour(null)
+describe('null values in scope', function () {
+  const root = scour({})
+  const nil = root.go('nonexistent')
 
   it('len()', function () {
     expect(nil.len()).toEqual(0)
@@ -66,11 +67,12 @@ describe('null values', function () {
     expect(nil.values()).toEqual([])
   })
 
-  it('set() (root)', function () {
+  it('set()', function () {
     expect(nil.set('a', true).value).toEqual({ a: true })
+    expect(nil.set('a', true).root.value).toEqual({ nonexistent: { a: true } })
   })
 
-  it('set() (root)', function () {
-    expect(nil.del('a').value).toEqual(null)
+  it('del()', function () {
+    expect(nil.del('a').value).toEqual(undefined)
   })
 })
