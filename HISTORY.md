@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.7.1]
+> Dec 27, 2015
+
+- Fix `.get()` returning undefined for false values.
+
 ## [v0.7.0]
 > Dec 27, 2015
 
@@ -58,3 +63,4 @@
 [v0.5.0]: https://github.com/rstacruz/scour/compare/v0.4.0...v0.5.0
 [v0.6.0]: https://github.com/rstacruz/scour/compare/v0.5.0...v0.6.0
 [v0.7.0]: https://github.com/rstacruz/scour/compare/v0.6.0...v0.7.0
+[v0.7.1]: https://github.com/rstacruz/scour/compare/v0.7.0...v0.7.1

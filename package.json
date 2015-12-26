@@ -1,7 +1,7 @@
 {
   "name": "scourjs",
   "description": "Traverse objects and arrays",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
   "babel": {
     "presets": [
