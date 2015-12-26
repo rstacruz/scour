@@ -278,6 +278,11 @@
                 "title": "scour.filter",
                 "depth": 3,
                 "id": "scour.filter"
+              },
+              {
+                "title": "scour.sortBy",
+                "depth": 3,
+                "id": "scour.sortby"
               }
             ]
           },
@@ -297,6 +302,11 @@
             "url": "HISTORY.html",
             "slug": "history",
             "headings": [
+              {
+                "title": "[v0.7.0] - unreleased",
+                "depth": 2,
+                "id": "v0.7.0-unreleased"
+              },
               {
                 "title": "[v0.6.0]",
                 "depth": 2,
@@ -673,6 +683,11 @@
               "title": "scour.filter",
               "depth": 3,
               "id": "scour.filter"
+            },
+            {
+              "title": "scour.sortBy",
+              "depth": 3,
+              "id": "scour.sortby"
             }
           ]
         },
@@ -688,6 +703,11 @@
       "title": "Changelog",
       "slug": "history",
       "headings": [
+        {
+          "title": "[v0.7.0] - unreleased",
+          "depth": 2,
+          "id": "v0.7.0-unreleased"
+        },
         {
           "title": "[v0.6.0]",
           "depth": 2,

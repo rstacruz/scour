@@ -345,6 +345,9 @@ functionally-equivalent.</p>
 <pre><code class="lang-js">scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>)
 scour(data).sortBy((item) =&gt; item.get(<span class="pl-s">&apos;name&apos;</span>))
 </code></pre>
+<p>You may also define nested keys in dot-notation:</p>
+<pre><code class="lang-js">scour(data).sortBy(<span class="pl-s">&apos;user.name&apos;</span>)
+</code></pre>
 <h2 id="reading-methods">Reading methods</h2>
 <p>For retrieving data.</p>
 <h3 id="get">get</h3>
@@ -795,6 +798,15 @@ implemented by the provided function.</p>
 return an <code>Array</code>. If <code>false</code>, it will always be an <code>Object</code>. Leave it
 <code>undefined</code> for the default behavior.</p>
 <p>This is also available as <code>require(&apos;scourjs/utilities/filter&apos;)</code>.</p>
+<h3 id="scour.sortby">scour.sortBy</h3>
+<blockquote>
+<p><code>scour.sortBy(iterable, criteria)</code></p>
+</blockquote>
+<p>Sorts by a given criteria.</p>
+<pre><code class="lang-js">list = [ { name: <span class="pl-s">&apos;Fred&apos;</span> }, { name: <span class="pl-s">&apos;Barney&apos;</span> }, { name: <span class="pl-s">&apos;Wilma&apos;</span> } ]
+scour.sortBy(list, <span class="pl-s">&apos;name&apos;</span>)
+</code></pre>
+<p>This is also available as <code>require(&apos;scourjs/utilities/sort_by&apos;)</code>.</p>
 <!--api:end-->
 <h2 id="thanks">Thanks</h2>
 <p><strong>scour</strong> &#xA9; 2015+, Rico Sta. Cruz. Released under the <a href="http://mit-license.org/">MIT</a> License.<br>
@@ -932,6 +944,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#scour.indexedmap" class="link title link-scour.indexedmap">scour.indexedMap</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#scour.filter" class="link title link-scour.filter">scour.filter</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#scour.sortby" class="link title link-scour.sortby">scour.sortBy</a>
                 </li>
               </ul>
             </li>
