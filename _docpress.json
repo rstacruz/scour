@@ -298,6 +298,11 @@
             "slug": "history",
             "headings": [
               {
+                "title": "[v0.6.0]",
+                "depth": 2,
+                "id": "v0.6.0"
+              },
+              {
                 "title": "[v0.5.0]",
                 "depth": 2,
                 "id": "v0.5.0"
@@ -683,6 +688,11 @@
       "title": "Changelog",
       "slug": "history",
       "headings": [
+        {
+          "title": "[v0.6.0]",
+          "depth": 2,
+          "id": "v0.6.0"
+        },
         {
           "title": "[v0.5.0]",
           "depth": 2,
