@@ -14,7 +14,8 @@
   },
   "dependencies": {
     "object-assign": "4.0.1",
-    "sift": "https://github.com/rstacruz/sift.js/tarball/feature/sift-by-object"
+    "sift": "https://github.com/rstacruz/sift.js/tarball/feature/sift-by-object",
+    "to-function": "2.0.6"
   },
   "devDependencies": {
     "babel": "6.3.13",

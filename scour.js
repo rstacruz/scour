@@ -7,6 +7,7 @@ const buildExtensions = require('./lib/build_extensions')
 const normalizeKeypath = require('./lib/normalize_keypath')
 const utils = require('./utilities')
 const negate = require('./lib/negate')
+const toFunction = require('to-function')
 
 /**
  * scour : scour(object)
@@ -324,6 +325,10 @@ scour.prototype = {
    *
    *     scour(data).sortBy('name')
    *     scour(data).sortBy((item) => item.get('name'))
+   *
+   * You may also define nested keys in dot-notation:
+   *
+   *     scour(data).sortBy('user.name')
    */
 
   sortBy (condition) {
@@ -332,7 +337,7 @@ scour.prototype = {
 
     if (typeof condition === 'string') {
       var key = condition
-      condition = function (item) { return item[key] }
+      condition = toFunction(key)
       // don't use `this.map` or `this.each` so we skip `new scour()`
       values = utils.map(this.value, (value, key, index) => ({
         key, value, criteria: condition(value, key), index
