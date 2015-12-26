@@ -1,6 +1,7 @@
 # Changelog
 
-## [v0.7.0] - unreleased
+## [v0.7.0]
+> Dec 27, 2015
 
 - Implement `scour.sortBy()`.
 - `scour#sortBy()` - allow dot notation.

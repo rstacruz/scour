@@ -449,6 +449,12 @@ scour(data).sortBy('name')
 scour(data).sortBy((item) => item.get('name'))
 ```
 
+You may also define nested keys in dot-notation:
+
+```js
+scour(data).sortBy('user.name')
+```
+
 ## Reading methods
 
 For retrieving data.
@@ -1038,6 +1044,19 @@ return an `Array`. If `false`, it will always be an `Object`. Leave it
 This is also available as `require('scourjs/utilities/filter')`.
 
 [Array#filter]: http://devdocs.io/javascript/global_objects/array/filter
+
+### scour.sortBy
+
+> `scour.sortBy(iterable, criteria)`
+
+Sorts by a given criteria.
+
+```js
+list = [ { name: 'Fred' }, { name: 'Barney' }, { name: 'Wilma' } ]
+scour.sortBy(list, 'name')
+```
+
+This is also available as `require('scourjs/utilities/sort_by')`.
 <!--api:end-->
 
 [at()]: #at
