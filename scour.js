@@ -158,7 +158,7 @@ scour.prototype = {
     }
 
     const key = this.keys()[index]
-    return this._get(this.value[key], [ '' + key ])
+    return this._get(key && this.value[key], [ '' + key ])
   },
 
   /**
@@ -176,7 +176,7 @@ scour.prototype = {
   getAt (index) {
     if (Array.isArray(this.value)) return this.value[index]
     const key = this.keys()[index]
-    return this.value[key]
+    return key && this.value[key]
   },
 
   /**
@@ -229,6 +229,7 @@ scour.prototype = {
    */
 
   filter (conditions) {
+    if (!this.value) return this.replace([])
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions)
     }
@@ -255,6 +256,7 @@ scour.prototype = {
    */
 
   reject (conditions) {
+    if (!this.value) return this.replace([])
     if (typeof conditions === 'function') {
       return this.filterByFunction(negate(conditions))
     } else {
@@ -383,6 +385,7 @@ scour.prototype = {
    */
 
   get () {
+    if (!this.value) return
     const keypath = normalizeKeypath(arguments, true)
     return utils.get(this.value, keypath)
   },
@@ -432,6 +435,7 @@ scour.prototype = {
    */
 
   keys () {
+    if (!this.value) return []
     return Object.keys(this.value)
   },
 
