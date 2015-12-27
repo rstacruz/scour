@@ -818,6 +818,25 @@ The rules specified in [Iteration methods] apply.
 
 See [scour.indexedMap()] for details and the non-wrapped version.
 
+### reset
+
+> `reset(value, options)`
+
+Returns a clone with the `value` replaced. The new instance will
+retain the same properties, so things like [use()] extensions are carried
+over.
+
+```js
+db = scour({ name: 'hello' })
+db.value  //=> { name: 'hello' }
+
+db = db.reset({})
+db.value  // => {}
+```
+
+This is useful for, say, using Scour with [Redux] and implementing an
+action to reset the state back to empty.
+
 ## Attributes
 
 These attributes are available to [scour] instances.

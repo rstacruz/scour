@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.8.0]
+> Dec 28, 2015
+
+- Implement `scour#reset()`.
+
 ## [v0.7.1]
 > Dec 27, 2015
 
@@ -64,3 +69,4 @@
 [v0.6.0]: https://github.com/rstacruz/scour/compare/v0.5.0...v0.6.0
 [v0.7.0]: https://github.com/rstacruz/scour/compare/v0.6.0...v0.7.0
 [v0.7.1]: https://github.com/rstacruz/scour/compare/v0.7.0...v0.7.1
+[v0.8.0]: https://github.com/rstacruz/scour/compare/v0.7.1...v0.8.0
