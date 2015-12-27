@@ -138,7 +138,7 @@ scour.prototype = {
     } else {
       result = utils.indexedMap(keypaths, (key) => [ key, this.get(key) ])
     }
-    return this.replace(result)
+    return this.reset(result)
   },
 
   /**
@@ -231,11 +231,11 @@ scour.prototype = {
    */
 
   filter (conditions) {
-    if (!this.value) return this.replace([])
+    if (!this.value) return this.reset([])
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions)
     }
-    return this.replace(sift(conditions, this.value))
+    return this.reset(sift(conditions, this.value))
   },
 
   filterByFunction (fn) {
@@ -250,7 +250,7 @@ scour.prototype = {
       this.each((val, key) => { if (fn(val, key)) result[key] = val.value })
     }
 
-    return this.replace(result)
+    return this.reset(result)
   },
 
   /**
@@ -258,7 +258,7 @@ scour.prototype = {
    */
 
   reject (conditions) {
-    if (!this.value) return this.replace([])
+    if (!this.value) return this.reset([])
     if (typeof conditions === 'function') {
       return this.filterByFunction(negate(conditions))
     } else {
@@ -333,7 +333,7 @@ scour.prototype = {
    */
 
   sortBy (condition) {
-    if (!this.value) return this.replace([])
+    if (!this.value) return this.reset([])
     var values
 
     if (typeof condition === 'string') {
@@ -350,7 +350,7 @@ scour.prototype = {
     }
 
     var sorted = sortValues(values, Array.isArray(this.value))
-    return this.replace(sorted)
+    return this.reset(sorted)
   },
 
   /**
@@ -490,7 +490,7 @@ scour.prototype = {
 
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
     const result = scour.set(this.value || {}, keypath, value.valueOf())
-    return this.replace(result, { root: null })
+    return this.reset(result, { root: null })
   },
 
   /**
@@ -515,7 +515,7 @@ scour.prototype = {
     }
 
     const result = scour.del(this.value, keypath)
-    return this.replace(result, { root: null })
+    return this.reset(result, { root: null })
   },
 
   /**
@@ -546,7 +546,7 @@ scour.prototype = {
       return this.root.set(this.keypath, result).go(this.keypath)
     }
 
-    return this.replace(result, { root: false })
+    return this.reset(result, { root: false })
   },
 
   /**
@@ -631,12 +631,12 @@ scour.prototype = {
   use (spec) {
     const extensions = buildExtensions(this.keypath, spec)
     if (this.root === this) {
-      return this.replace(this.value, { extensions, root: null })
+      return this.reset(this.value, { extensions, root: null })
     } else {
       // Spawn a new `root` with the extensions applied
       return this.root
-        .replace(this.root.value, { extensions, root: null })
-        .replace(this.value, { keypath: this.keypath })
+        .reset(this.root.value, { extensions, root: null })
+        .reset(this.value, { keypath: this.keypath })
     }
   },
 
@@ -771,23 +771,27 @@ scour.prototype = {
    */
 
   _get (result, keypath) {
-    return this.replace(result, {
+    return this.reset(result, {
       keypath: this.keypath.concat(keypath)
     })
   },
 
   /**
-   * Internal: Returns a clone with the `value` replaced. The new instance will
+   * Returns a clone with the `value` replaced. The new instance will
    * retain the same properties, so things like [use()] extensions are carried
-   * over. You may pass additional `options`.
+   * over.
    *
-   *     db = scour(data)
-   *     db = db.replace(newData)
+   *     db = scour({ name: 'hello' })
+   *     db.value  //=> { name: 'hello' }
    *
-   * I don't think this will be useful outside internal use.
+   *     db = db.reset({})
+   *     db.value  // => {}
+   *
+   * This is useful for, say, using Scour with [Redux] and implementing an
+   * action to reset the state back to empty.
    */
 
-  replace (value, options) {
+  reset (value, options) {
     const op = options || {}
     return new scour(value, {
       root:
