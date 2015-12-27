@@ -630,6 +630,21 @@ The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.
 returning the keys and values for the new object.
 The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
 <p>See <a href="#scour.indexedmap">scour.indexedMap()</a> for details and the non-wrapped version.</p>
+<h3 id="reset">reset</h3>
+<blockquote>
+<p><code>reset(value, options)</code></p>
+</blockquote>
+<p>Returns a clone with the <code>value</code> replaced. The new instance will
+retain the same properties, so things like <a href="#use">use()</a> extensions are carried
+over.</p>
+<pre><code class="lang-js">db = scour({ name: <span class="pl-s">&apos;hello&apos;</span> })
+db.value  <span class="pl-c">//=&gt; { name: &apos;hello&apos; }</span>
+
+db = db.reset({})
+db.value  <span class="pl-c">// =&gt; {}</span>
+</code></pre>
+<p>This is useful for, say, using Scour with <a href="http://rackt.github.io/redux">Redux</a> and implementing an
+action to reset the state back to empty.</p>
 <h2 id="attributes">Attributes</h2>
 <p>These attributes are available to <a href="#scour">scour</a> instances.</p>
 <h3 id="value">value</h3>
@@ -912,6 +927,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#mapobject" class="link title link-mapobject">mapObject</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#indexedmap" class="link title link-indexedmap">indexedMap</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#reset" class="link title link-reset">reset</a>
                 </li>
               </ul>
             </li>
