@@ -1045,7 +1045,7 @@ scour.prototype = {
         return [key, _this.get(key)];
       });
     }
-    return this.replace(result);
+    return this.reset(result);
   },
 
   /**
@@ -1138,11 +1138,11 @@ scour.prototype = {
    */
 
   filter: function filter(conditions) {
-    if (!this.value) return this.replace([]);
+    if (!this.value) return this.reset([]);
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions);
     }
-    return this.replace(sift(conditions, this.value));
+    return this.reset(sift(conditions, this.value));
   },
   filterByFunction: function filterByFunction(fn) {
     var isArray = Array.isArray(this.value);
@@ -1160,7 +1160,7 @@ scour.prototype = {
       });
     }
 
-    return this.replace(result);
+    return this.reset(result);
   },
 
   /**
@@ -1168,7 +1168,7 @@ scour.prototype = {
    */
 
   reject: function reject(conditions) {
-    if (!this.value) return this.replace([]);
+    if (!this.value) return this.reset([]);
     if (typeof conditions === 'function') {
       return this.filterByFunction(negate(conditions));
     } else {
@@ -1243,7 +1243,7 @@ scour.prototype = {
    */
 
   sortBy: function sortBy(condition) {
-    if (!this.value) return this.replace([]);
+    if (!this.value) return this.reset([]);
     var values;
 
     if (typeof condition === 'string') {
@@ -1264,7 +1264,7 @@ scour.prototype = {
     }
 
     var sorted = sortValues(values, Array.isArray(this.value));
-    return this.replace(sorted);
+    return this.reset(sorted);
   },
 
   /**
@@ -1404,7 +1404,7 @@ scour.prototype = {
 
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
     var result = scour.set(this.value || {}, keypath, value.valueOf());
-    return this.replace(result, { root: null });
+    return this.reset(result, { root: null });
   },
 
   /**
@@ -1429,7 +1429,7 @@ scour.prototype = {
     }
 
     var result = scour.del(this.value, keypath);
-    return this.replace(result, { root: null });
+    return this.reset(result, { root: null });
   },
 
   /**
@@ -1460,7 +1460,7 @@ scour.prototype = {
       return this.root.set(this.keypath, result).go(this.keypath);
     }
 
-    return this.replace(result, { root: false });
+    return this.reset(result, { root: false });
   },
 
   /**
@@ -1545,10 +1545,10 @@ scour.prototype = {
   use: function use(spec) {
     var extensions = buildExtensions(this.keypath, spec);
     if (this.root === this) {
-      return this.replace(this.value, { extensions: extensions, root: null });
+      return this.reset(this.value, { extensions: extensions, root: null });
     } else {
       // Spawn a new `root` with the extensions applied
-      return this.root.replace(this.root.value, { extensions: extensions, root: null }).replace(this.value, { keypath: this.keypath });
+      return this.root.reset(this.root.value, { extensions: extensions, root: null }).reset(this.value, { keypath: this.keypath });
     }
   },
 
@@ -1683,23 +1683,27 @@ scour.prototype = {
    */
 
   _get: function _get(result, keypath) {
-    return this.replace(result, {
+    return this.reset(result, {
       keypath: this.keypath.concat(keypath)
     });
   },
 
   /**
-   * Internal: Returns a clone with the `value` replaced. The new instance will
+   * Returns a clone with the `value` replaced. The new instance will
    * retain the same properties, so things like [use()] extensions are carried
-   * over. You may pass additional `options`.
+   * over.
    *
-   *     db = scour(data)
-   *     db = db.replace(newData)
+   *     db = scour({ name: 'hello' })
+   *     db.value  //=> { name: 'hello' }
    *
-   * I don't think this will be useful outside internal use.
+   *     db = db.reset({})
+   *     db.value  // => {}
+   *
+   * This is useful for, say, using Scour with [Redux] and implementing an
+   * action to reset the state back to empty.
    */
 
-  replace: function replace(value, options) {
+  reset: function reset(value, options) {
     var op = options || {};
     return new scour(value, {
       root: typeof op.root !== 'undefined' ? op.root : this.root,
