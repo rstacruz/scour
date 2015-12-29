@@ -18,6 +18,20 @@ describe('.set()', function () {
     expect(result.value).toEqual({ bob: { name: 'Robert' } })
   })
 
+  it('allows .go().set()', function () {
+    const data = { }
+    const result = scour(data).go('bob').set('name', 'Robert').root
+
+    expect(result.value).toEqual({ bob: { name: 'Robert' } })
+  })
+
+  it('allows .set() with dotted paths in an array', function () {
+    const data = { }
+    const result = scour(data).set(['ui', '1.2', 'loaded'], true)
+
+    expect(result.value).toEqual({ ui: { '1.2': { loaded: true } } })
+  })
+
   describe('for nonroot', function () {
     var data, root, users, result
 
