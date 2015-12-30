@@ -1,45 +1,45 @@
 'use strict'
 
+const test = require('tape')
 const set = require('../../utilities/set')
 
-describe('set', function () {
-  it('works', function () {
-    var data = { users: { bob: { name: 'robert' } } }
-    var result = set(data, ['users', 'bob', 'name'], 'john')
+test('scour.set()', (t) => {
+  var data, result
 
-    expect(result).toEqual({ users: { bob: { name: 'john' } } })
-  })
+  data = { users: { bob: { name: 'robert' } } }
+  result = set(data, ['users', 'bob', 'name'], 'john')
 
-  it('creates deep structures', function () {
-    var data = { users: 2 }
-    var result = set(data, ['users', 'bob', 'name'], 'john')
+  t.deepEqual(
+    result, { users: { bob: { name: 'john' } } },
+    'works')
 
-    expect(result).toEqual({ users: { bob: { name: 'john' } } })
-  })
+  data = { users: 2 }
+  result = set(data, ['users', 'bob', 'name'], 'john')
 
-  it('handles arrays', function () {
-    var data = { users: [ 'item' ] }
-    var result = set(data, ['users', '0', 'name'], 'john')
+  t.deepEqual(
+    result, { users: { bob: { name: 'john' } } },
+    'creates deep structures')
 
-    expect(result).toEqual({ users: [
-      { name: 'john' }
-    ]})
-  })
+  data = { users: [ 'item' ] }
+  result = set(data, ['users', '0', 'name'], 'john')
 
-  it('handles arrays', function () {
-    var data = { users: [ 'item' ] }
-    var result = set(data, ['users', '1', 'name'], 'john')
+  t.deepEqual(
+    result, { users: [ { name: 'john' } ]},
+    'handles arrays')
 
-    expect(result).toEqual({ users: [
-      'item',
-      { name: 'john' }
-    ]})
-  })
+  data = { users: [ 'item' ] }
+  result = set(data, ['users', '1', 'name'], 'john')
 
-  it('handles string turning into objects', function () {
-    var data = { users: [ '...' ] }
-    var result = set(data, [ 'users', 0, 'name' ], 'john')
+  t.deepEqual(
+    result, { users: [ 'item', { name: 'john' } ]},
+    'handles pushing to arrays')
 
-    expect(result).toEqual({ users: [ { name: 'john' } ] })
-  })
+  data = { users: [ '...' ] }
+  result = set(data, [ 'users', 0, 'name' ], 'john')
+
+  t.deepEqual(
+    result, { users: [ { name: 'john' } ] },
+    'string turning into objects')
+
+  t.end()
 })

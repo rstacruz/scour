@@ -1,19 +1,18 @@
 'use strict'
 
+const test = require('tape')
 const del = require('../../utilities/del')
 
-describe('del', function () {
-  it('works', function () {
-    var data = { users: { bob: { name: 'robert' } } }
-    var result = del(data, ['users', 'bob', 'name'])
+test('scour.del()', (t) => {
+  var data, result
 
-    expect(result).toEqual({ users: { bob: { } } })
-  })
+  data = { users: { bob: { name: 'robert' } } }
+  result = del(data, ['users', 'bob', 'name'])
+  t.deepEqual(result, { users: { bob: { } } })
 
-  it('works with deep structures', function () {
-    var data = { users: {} }
-    var result = del(data, ['users', 'bob', 'name'], 'john')
+  data = { users: {} }
+  result = del(data, ['users', 'bob', 'name'], 'john')
+  t.deepEqual(result, { users: {} }, 'for deep structures')
 
-    expect(result).toEqual({ users: {} })
-  })
+  t.end()
 })

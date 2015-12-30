@@ -1,55 +1,52 @@
 'use strict'
 
+const test = require('tape')
 const each = require('../../utilities/each')
 
-describe('each', function () {
-  it('works with arrays', function () {
-    var values = ''
-    each([7, 8, 9], function (val) { values += '.' + val })
-    expect(values).toEqual('.7.8.9')
-  })
+test('scour.each() with arrays', (t) => {
+  var values = ''
+  each([7, 8, 9], (val) => { values += '.' + val })
+  t.deepEqual(values, '.7.8.9', 'with arrays')
+  t.end()
+})
 
-  it('works with array keys', function () {
-    var keys = ''
-    each([9, 9, 9], function (_, key) { keys += '.' + key })
-    expect(keys).toEqual('.0.1.2')
-  })
+test('scour.each() with array keys', (t) => {
+  var keys = ''
+  each([9, 9, 9], function (_, key) { keys += '.' + key })
+  t.deepEqual(keys, '.0.1.2', 'with array keys')
+  t.end()
+})
 
-  it('works with objects', function () {
-    var values = ''
-    each({ a: 8, b: 9 }, function (val) { values += '.' + val })
-    expect(values).toEqual('.8.9')
-  })
+test('scour.each() with objects', (t) => {
+  var values = ''
+  each({ a: 8, b: 9 }, (val) => { values += '.' + val })
+  t.deepEqual(values, '.8.9', 'with objects')
+  t.end()
+})
 
-  it('works with objects with non-enumerable properties', function () {
-    var values = ''
-    var input = { a: 8, b: 9 }
-    Object.defineProperty(input, 'sue', { enumerable: false, value: 4 })
-    expect(input.sue).toEqual(4)
+test('scour.each() with objects with non-enumerable properties', (t) => {
+  var values = ''
+  var input = { a: 8, b: 9 }
+  Object.defineProperty(input, 'sue', { enumerable: false, value: 4 })
+  t.deepEqual(input.sue, 4)
 
-    each(input, function (val) { values += '.' + val })
-    expect(values).toEqual('.8.9')
-  })
+  each(input, (val) => { values += '.' + val })
+  t.deepEqual(values, '.8.9', 'with non-enumerables')
+  t.end()
+})
 
-  it('works with object keys', function () {
-    var keys = ''
-    each({ a: 1, b: 2 }, function (_, key) { keys += '.' + key })
-    expect(keys).toEqual('.a.b')
-  })
+test('scour.each() with object keys', (t) => {
+  var keys = ''
+  each({ a: 1, b: 2 }, function (_, key) { keys += '.' + key })
+  t.deepEqual(keys, '.a.b')
+  t.end()
+})
 
-  describe('without native fallback', function () {
-    before(function () {
-      delete each.native
-    })
-
-    after(function () {
-      each.native = Array.prototype.forEach
-    })
-
-    it('works with arrays', function () {
-      var values = ''
-      each([7, 8, 9], function (val) { values += '.' + val })
-      expect(values).toEqual('.7.8.9')
-    })
-  })
+test('scour.each() without native fallback', (t) => {
+  delete each.native
+  var values = ''
+  each([7, 8, 9], (val) => { values += '.' + val })
+  t.deepEqual(values, '.7.8.9')
+  each.native = Array.prototype.forEach
+  t.end()
 })

@@ -1,21 +1,24 @@
 'use strict'
 
+const test = require('tape')
 const cloneWithout = require('../../utilities/clone_without')
 
-describe('clone without', function () {
-  it('works for arrays', function () {
-    const data = [ 'Moe', 'Larry', 'Curly' ]
-    expect(cloneWithout(data, 0)).toEqual(['Larry', 'Curly'])
-  })
+test('scour.cloneWithout()', (t) => {
+  var input
 
-  it('works for objects', function () {
-    const data = { moe: 1, larry: 2, curly: 3 }
-    expect(cloneWithout(data, 'larry')).toEqual({ moe: 1, curly: 3 })
-  })
+  input = [ 'Moe', 'Larry', 'Curly' ]
+  t.deepEqual(
+    cloneWithout(input, 0), ['Larry', 'Curly'], 'for arrays')
 
-  it('works for objects with non-enumerable properties', function () {
-    const data = { moe: 1, larry: 2, curly: 3 }
-    Object.defineProperty(data, 'sue', { enumerable: false, value: 4 })
-    expect(cloneWithout(data, 'larry')).toEqual({ moe: 1, curly: 3 })
-  })
+  input = { moe: 1, larry: 2, curly: 3 }
+  t.deepEqual(
+    cloneWithout(input, 'larry'), { moe: 1, curly: 3 }, 'for objects')
+
+  input = { moe: 1, larry: 2, curly: 3 }
+  Object.defineProperty(input, 'sue', { enumerable: false, value: 4 })
+  t.deepEqual(
+    cloneWithout(input, 'larry'), { moe: 1, curly: 3 },
+    'for objects with non-enumerables')
+
+  t.end()
 })

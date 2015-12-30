@@ -1,21 +1,26 @@
 'use strict'
 
+const test = require('tape')
 const indexedMap = require('../../utilities/indexed_map')
 const scour = require('../../scour')
 
-describe('indexedMap', function () {
-  it('works', function () {
-    var input = { a: 'hello', b: 'world' }
-    var result = indexedMap(input, (val, key) => [ '_' + key, val.toUpperCase() ])
+test('scour.indexedMap()', (t) => {
+  var input, result
 
-    expect(result).toEqual({ _a: 'HELLO', _b: 'WORLD' })
-  })
+  input = { a: 'hello', b: 'world' }
+  result = indexedMap(input, (val, key) => [ '_' + key, val.toUpperCase() ])
 
-  it('works as wrapped', function () {
-    var input = { a: 'hello', b: 'world' }
-    var result = scour(input)
-      .indexedMap((val, key) => [ '_' + key, val.value.toUpperCase() ])
+  t.deepEqual(
+    result, { _a: 'HELLO', _b: 'WORLD' },
+    'as standalone')
 
-    expect(result).toEqual({ _a: 'HELLO', _b: 'WORLD' })
-  })
+   input = { a: 'hello', b: 'world' }
+   result = scour(input)
+    .indexedMap((val, key) => [ '_' + key, val.value.toUpperCase() ])
+
+  t.deepEqual(
+    result,{ _a: 'HELLO', _b: 'WORLD' },
+    'when wrapped')
+
+  t.end()
 })
