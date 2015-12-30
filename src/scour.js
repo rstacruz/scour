@@ -1,7 +1,7 @@
 /* eslint-disable new-cap */
 'use strict'
 
-const sift = require('sift')
+const Search = require('scour-search')
 const assign = require('object-assign')
 const buildExtensions = require('./build_extensions')
 const normalizeKeypath = require('../utilities/normalize_keypath')
@@ -235,7 +235,7 @@ scour.prototype = {
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions)
     }
-    return this.reset(sift(conditions, this.value))
+    return this.reset(Search(this.value).filter(conditions))
   },
 
   filterByFunction (fn) {
@@ -279,7 +279,7 @@ scour.prototype = {
    */
 
   find (conditions) {
-    const key = sift.keyOf(conditions, this.value)
+    var key = Search(this.value).filterKeys(conditions)[0]
     if (typeof key === 'undefined') return
     return this._get(this.value[key], [key])
   },
