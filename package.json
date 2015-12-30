@@ -40,16 +40,16 @@
     "object"
   ],
   "license": "MIT",
-  "main": "index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/rstacruz/scour.git"
   },
   "scripts": {
     "build": "babel src --out-dir lib",
-    "watch": "babel -w src --out-dir lib",
     "coverage": "istanbul cover test/index.js",
     "prepublish": "make -B update && npm run build",
-    "test": "node test/index.js | tap-spec"
+    "test": "node test/index.js | tap-spec",
+    "watch": "babel -w src --out-dir lib"
   }
 }
