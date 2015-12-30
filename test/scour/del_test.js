@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const scour = require('../../scour')
+const scour = require('../../src/scour')
 
 test('.del() works for root', (t) => {
   const data = { a: { b: 'foo' } }

@@ -8,7 +8,6 @@
       "es2015"
     ]
   },
-  "browser": "dist/scour.min.js",
   "bugs": {
     "url": "https://github.com/rstacruz/scour/issues"
   },
@@ -18,11 +17,9 @@
     "to-function": "2.0.6"
   },
   "devDependencies": {
-    "babel": "6.3.26",
+    "babel-cli": "6.3.17",
     "babel-preset-es2015": "6.3.13",
-    "babelify": "7.2.0",
     "benchmark": "1.0.0",
-    "browserify": "12.0.1",
     "docpress": "0.6.10",
     "expect": "1.13.4",
     "git-update-ghpages": "1.3.0",
@@ -31,8 +28,7 @@
     "standard": "5.4.1",
     "tap-spec": "4.1.1",
     "tape": "4.4.0",
-    "uglifyjs": "2.4.10",
-    "watchify": "3.6.1"
+    "uglifyjs": "2.4.10"
   },
   "directories": {
     "test": "test"
@@ -50,10 +46,10 @@
     "url": "git+https://github.com/rstacruz/scour.git"
   },
   "scripts": {
-    "build": "browserify -t babelify --bare -s scour scour.js > dist/scour.js; uglifyjs dist/scour.js -cm > dist/scour.min.js",
+    "build": "babel src --out-dir lib",
+    "watch": "babel -w src --out-dir lib",
     "coverage": "istanbul cover test/index.js",
     "prepublish": "make -B update && npm run build",
-    "test": "node test/index.js | tap-spec",
-    "watch": "watchify -v -t babelify --bare -s scour scour.js -o dist/scour.js"
+    "test": "node test/index.js | tap-spec"
   }
 }

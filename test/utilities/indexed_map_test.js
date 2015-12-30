@@ -2,7 +2,7 @@
 
 const test = require('tape')
 const indexedMap = require('../../utilities/indexed_map')
-const scour = require('../../scour')
+const scour = require('../../src/scour')
 
 test('scour.indexedMap()', (t) => {
   var input, result

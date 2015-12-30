@@ -1,7 +1,7 @@
 'use strict'
 
 var test = require('tape')
-var scour = require('../../scour')
+var scour = require('../../src/scour')
 
 const list = [
   { name: 'apple' },
