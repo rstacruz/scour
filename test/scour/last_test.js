@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const scour = require('../../scour')
+const scour = require('../../src/scour')
 
 test('.last()', (t) => {
   t.deepEqual(scour([ 'a', 'b' ]).last().value, 'b', 'for arrays')

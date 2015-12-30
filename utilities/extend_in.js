@@ -1,6 +1,6 @@
-const get = require('./get')
-const set = require('./set')
-const assign = require('object-assign')
+var get = require('./get')
+var set = require('./set')
+var assign = require('object-assign')
 
 module.exports = function extendIn (source, keypath, extensions) {
   if (keypath.length === 0) return assign({}, source, extensions)

@@ -3,11 +3,11 @@
 
 const sift = require('sift')
 const assign = require('object-assign')
-const buildExtensions = require('./lib/build_extensions')
-const normalizeKeypath = require('./utilities/normalize_keypath')
-const utils = require('./utilities')
-const negate = require('./lib/negate')
-const sortValues = require('./lib/sort_values')
+const buildExtensions = require('./build_extensions')
+const normalizeKeypath = require('../utilities/normalize_keypath')
+const utils = require('../utilities')
+const negate = require('./negate')
+const sortValues = require('../utilities/sort_values')
 const toFunction = require('to-function')
 
 /**

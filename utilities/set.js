@@ -1,6 +1,6 @@
 'use strict'
 
-const clone = require('./clone')
+var clone = require('./clone')
 
 /**
  * Sets a `keypath` into an `object` immutably.
@@ -10,10 +10,10 @@ const clone = require('./clone')
  */
 
 module.exports = function set (object, keypath, value) {
-  let results = {}
-  let parents = {}
+  var results = {}
+  var parents = {}
 
-  for (let i = 0, len = keypath.length; i < len; i++) {
+  for (var i = 0, len = keypath.length; i < len; i++) {
     if (i === 0) {
       parents[i] = object
     } else {
@@ -25,7 +25,7 @@ module.exports = function set (object, keypath, value) {
     }
   }
 
-  for (let i = keypath.length; i >= 0; i--) {
+  for (var i = keypath.length; i >= 0; i--) {
     if (!parents[i]) {
       results[i] = value
     } else {

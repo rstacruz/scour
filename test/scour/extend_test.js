@@ -1,7 +1,7 @@
 'use strict'
 
 const test = require('tape')
-const scour = require('../../scour')
+const scour = require('../../src/scour')
 var data, result, list
 
 test('.extend()', (t) => {
