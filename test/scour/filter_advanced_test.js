@@ -1,5 +1,6 @@
 'use strict'
 
+const test = require('tape')
 const scour = require('../../scour')
 
 const data = {
@@ -10,54 +11,27 @@ const data = {
   }
 }
 
-describe('.filter()', function () {
-  beforeEach(function () {
-    this.results = scour(data).go('users').filter({ name: { $regex: /^j/ } })
-  })
+test('.filter() advanced', (t) => {
+  var result = scour(data).go('users').filter({ name: { $regex: /^j/ } })
 
-  it('works', function () {
-    expect(this.results.go(1).value).toEqual({ name: 'john' })
-    expect(this.results.go(2).value).toEqual({ name: 'jake' })
-    expect(this.results.go(3).value).toEqual(undefined)
-  })
-
-  describe('on objects', function () {
-    beforeEach(function () {
-      this.results = scour(data).go('users').filter({ name: { $regex: /^a/ } })
-    })
-
-    it('has results indexed by id', function () {
-      expect(this.results.go(3).value).toEqual({ name: 'ara' })
-    })
-
-    it('has proper keypaths', function () {
-      expect(this.results.go(3).keypath).toEqual([ 'users', '3' ])
-    })
-  })
-
-  describe('on empties', function () {
-    beforeEach(function () {
-      this.results = scour(data).go('users').filter({ abc: 'def' })
-    })
-
-    it('works', function () {
-      expect(this.results.len()).toEqual(0)
-    })
-  })
+  t.deepEqual(result.go(1).value, { name: 'john' })
+  t.deepEqual(result.go(2).value, { name: 'jake' })
+  t.deepEqual(result.go(3).value, undefined)
+  t.end()
 })
 
-describe('.filter() via function', function () {
-  it('works for objects', function () {
-    var data = { a: 10, b: 11, c: 12 }
-    var result = scour(data).filter((val, key) => val.value % 2 === 0)
+test('.filter() on objects', (t) => {
+  var result = scour(data).go('users').filter({ name: { $regex: /^a/ } })
 
-    expect(result.value).toEqual({ a: 10, c: 12 })
-  })
+  t.deepEqual(result.go(3).value, { name: 'ara' }, 'indexes by id')
+  t.deepEqual(result.go(3).keypath, [ 'users', '3' ], 'has keypaths')
+  t.end()
+})
 
-  it('works for arrays', function () {
-    var data = [ 10, 11, 12 ]
-    var result = scour(data).filter((val, key) => val.value % 2 === 0)
+test('.filter() with empty result', (t) => {
+  t.deepEqual(
+    scour(data).go('users').filter({ abc: 'def' }).len(),
+    0)
 
-    expect(result.value).toEqual([ 10, 12 ])
-  })
+  t.end()
 })

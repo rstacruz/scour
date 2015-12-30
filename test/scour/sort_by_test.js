@@ -1,66 +1,69 @@
 'use strict'
 
+const test = require('tape')
 const scour = require('../../scour')
 const sortBy = require('../../utilities/sort_by')
 
-describe('.sortBy()', function () {
-  const object =
-    { wilma: { name: 'Wilma' },
-      barney: { name: 'Barney' },
-      fred: { name: 'Fred' } }
+const object =
+  { wilma: { name: 'Wilma' },
+    barney: { name: 'Barney' },
+    fred: { name: 'Fred' } }
 
-  const sortedObject =
-    { barney: { name: 'Barney' },
-      fred: { name: 'Fred' },
-      wilma: { name: 'Wilma' } }
+const sortedObject =
+  { barney: { name: 'Barney' },
+    fred: { name: 'Fred' },
+    wilma: { name: 'Wilma' } }
 
-  const list =
-    [ { name: 'Wilma' }, { name: 'Barney' }, { name: 'Fred' } ]
+const list =
+  [ { name: 'Wilma' }, { name: 'Barney' }, { name: 'Fred' } ]
 
-  const sortedList =
-    [ { name: 'Barney' }, { name: 'Fred' }, { name: 'Wilma' } ]
+const sortedList =
+  [ { name: 'Barney' }, { name: 'Fred' }, { name: 'Wilma' } ]
 
-  describe('in scour-wrapping', function () {
-    it('works for arrays via function', function () {
-      const result = scour(list).sortBy((item) => item.get('name'))
-      expect(result.value).toEqual(sortedList)
-    })
+test('.sortBy() in scour-wrapping', (t) => {
+  t.deepEqual(
+    scour(list).sortBy((item) => item.get('name')).value,
+    sortedList,
+    'for arrays via funciton')
 
-    it('works for objects via function', function () {
-      const result = scour(object).sortBy((item) => item.get('name'))
-      expect(result.value).toEqual(sortedObject)
-    })
+  t.deepEqual(
+    scour(object).sortBy((item) => item.get('name')).value,
+    sortedObject,
+    'for objects via function')
 
-    it('works for arrays via string', function () {
-      const result = scour(list).sortBy('name')
-      expect(result.value).toEqual(sortedList)
-    })
+  t.deepEqual(
+    scour(list).sortBy('name').value,
+    sortedList,
+    'for arrays via string')
 
-    it('works for objects via string', function () {
-      const result = scour(object).sortBy('name')
-      expect(result.value).toEqual(sortedObject)
-    })
-  })
+  t.deepEqual(
+    scour(object).sortBy('name').value,
+    sortedObject,
+    'for objects via string')
 
-  describe('in standalone', function () {
-    it('works for arrays via function', function () {
-      const result = sortBy(list, (item) => item.name)
-      expect(result).toEqual(sortedList)
-    })
+  t.end()
+})
 
-    it('works for objects via function', function () {
-      const result = sortBy(object, (item) => item.name)
-      expect(result).toEqual(sortedObject)
-    })
+test('.sortBy() in standalone', (t) => {
+  t.deepEqual(
+    sortBy(list, (item) => item.name),
+    sortedList,
+    'for arrays via function')
 
-    it('works for arrays via string', function () {
-      const result = sortBy(list, 'name')
-      expect(result).toEqual(sortedList)
-    })
+  t.deepEqual(
+    sortBy(object, (item) => item.name),
+    sortedObject,
+    'for objects via function')
 
-    it('works for objects via string', function () {
-      const result = sortBy(object, 'name')
-      expect(result).toEqual(sortedObject)
-    })
-  })
+  t.deepEqual(
+    sortBy(list, 'name'),
+    sortedList,
+    'for arrays via string')
+
+  t.deepEqual(
+    sortBy(object, 'name'),
+    sortedObject,
+    'for objects via string')
+
+  t.end()
 })

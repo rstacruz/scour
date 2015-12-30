@@ -1,74 +1,74 @@
 'use strict'
 
+const test = require('tape')
 const scour = require('../../scour')
 
-describe('.set()', function () {
-  it('works for root', function () {
-    const data = { users: { bob: { name: 'robert' } } }
-    const result = scour(data).set(['users', 'bob'], { id: 2 })
+var data, result
 
-    expect(result.value).toEqual({ users: { bob: { id: 2 } } })
-    expect(result.keypath).toEqual([])
-  })
+test('.set() root', (t) => {
+  var data = { users: { bob: { name: 'robert' } } }
+  var result = scour(data).set(['users', 'bob'], { id: 2 })
 
-  it('allows dot notation', function () {
-    const data = { bob: { name: 'Bob' } }
-    const result = scour(data).set('bob.name', 'Robert')
+  t.deepEqual(result.value, { users: { bob: { id: 2 } } })
+  t.deepEqual(result.keypath, [])
+  t.end()
+})
 
-    expect(result.value).toEqual({ bob: { name: 'Robert' } })
-  })
+test('.set() dot notation', (t) => {
+  var data = { bob: { name: 'Bob' } }
+  var result = scour(data).set('bob.name', 'Robert')
 
-  it('allows .go().set()', function () {
-    const data = { }
-    const result = scour(data).go('bob').set('name', 'Robert').root
+  t.deepEqual(
+    result.value,
+    { bob: { name: 'Robert' } })
+  t.end()
+})
 
-    expect(result.value).toEqual({ bob: { name: 'Robert' } })
-  })
+test('.set()', (t) => {
+  t.deepEqual(
+    scour({ }).go('bob').set('name', 'Robert').root.value,
+    { bob: { name: 'Robert' } },
+    'allow .go().set()')
 
-  it('allows .set() with dotted paths in an array', function () {
-    const data = { }
-    const result = scour(data).set(['ui', '1.2', 'loaded'], true)
+  t.deepEqual(
+    scour({}).set(['ui', '1.2', 'loaded'], true).value,
+    { ui: { '1.2': { loaded: true } } },
+    'allow dotted paths in an array')
 
-    expect(result.value).toEqual({ ui: { '1.2': { loaded: true } } })
-  })
+  t.end()
+})
 
-  describe('for nonroot', function () {
-    var data, root, users, result
+test('.set() for nonroot', (t) => {
+  var data = { users: { bob: { name: 'robert' } } }
+  var root = scour(data)
+  var users = root.go('users')
+  var result = users.set(['matt'], { name: 'matthew' })
 
-    beforeEach(function () {
-      data = { users: { bob: { name: 'robert' } } }
-      root = scour(data)
-      users = root.go('users')
-      result = users.set(['matt'], { name: 'matthew' })
-    })
+  t.deepEqual(
+    result.root.value, 
+    { users:
+      { bob: { name: 'robert' },
+        matt: { name: 'matthew' } } },
+    'sets correct values in root')
 
-    it('sets the correct values in root', function () {
-      expect(result.root.value).toEqual(
-        { users:
-          { bob: { name: 'robert' },
-            matt: { name: 'matthew' } } })
-    })
+  t.deepEqual(
+    result.root.keypath, [], 'sets root keypath') 
+  t.deepEqual(
+    result.keypath, ['users'], 'sets keypath')
+  t.deepEqual(
+    root.value, { users: { bob: { name: 'robert' } } },
+    'leaves old values unchanged')
 
-    it('sets root keypath', function () {
-      expect(result.root.keypath).toEqual([])
-    })
+  t.end()
+})
 
-    it('sets keypath', function () {
-      expect(result.keypath).toEqual(['users'])
-    })
+test('.set() with wrapping', (t) => {
+  var a = scour({ a: true })
+  var b = scour({ b: true })
 
-    it('leaves old data unchanged', function () {
-      expect(root.value).toEqual(
-        { users: { bob: { name: 'robert' } } })
-    })
-  })
+  t.deepEqual(
+    a.set('c', b).value,
+    { a: true, c: { b: true } })
 
-  it('works with wrapping', function () {
-    const a = scour({ a: true })
-    const b = scour({ b: true })
-
-    const result = a.set('c', b)
-
-    expect(result.value).toEqual({ a: true, c: { b: true } })
-  })
+  t.end()
 })
