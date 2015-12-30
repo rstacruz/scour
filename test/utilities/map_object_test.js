@@ -2,7 +2,7 @@
 
 const test = require('tape')
 const mapObject = require('../../utilities/map_object')
-const scour = require('../../src/scour')
+const scour = require('../../src')
 
 test('scour.mapObject()', (t) => {
   var input, result
