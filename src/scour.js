@@ -279,9 +279,10 @@ scour.prototype = {
    */
 
   find (conditions) {
-    var key = Search(this.value).filterKeys(conditions)[0]
-    if (typeof key === 'undefined') return
-    return this._get(this.value[key], [key])
+    var value = this.value
+    var key = Search(value).indexOf(conditions)
+    if (key === -1) return
+    return this._get(value[key], [key])
   },
 
   /**
