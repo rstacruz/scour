@@ -2,7 +2,7 @@
 'use strict'
 
 const bm = require('./bm')
-const scour = require('../scour.js')
+const scour = require('../lib/scour')
 
 const data =
   { artists:

@@ -1,7 +1,7 @@
 'use strict'
 
 var test = require('tape')
-var scour = require('../../src/scour')
+var scour = require('../../src')
 
 const data = {
   users: {
