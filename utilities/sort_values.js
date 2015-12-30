@@ -8,7 +8,7 @@ var map = require('../utilities/map')
  */
 
 module.exports = function sortValues (values, isArray) {
-  var sorted = values.sort((left, right) => {
+  var sorted = values.sort(function (left, right) {
     var a = left.criteria
     var b = right.criteria
     if (a !== b) {
@@ -19,8 +19,8 @@ module.exports = function sortValues (values, isArray) {
   })
 
   if (isArray === false) {
-    return indexedMap(sorted, (res) => [ res.key, res.value ])
+    return indexedMap(sorted, function (res) { return [ res.key, res.value ] })
   } else {
-    return map(sorted, (res) => res.value)
+    return map(sorted, function (res) { return res.value })
   }
 }

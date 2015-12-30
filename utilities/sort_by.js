@@ -9,9 +9,9 @@ module.exports = function sortBy (each, condition, isArray) {
 
   condition = toFunction(condition)
 
-  var values = map(each, (value, key, index) => ({
-    key, value, criteria: condition(value, key), index
-  }))
+  var values = map(each, function (value, key, index) {
+    return { key: key, value: value, criteria: condition(value, key), index: index }
+  })
 
   return sortValues(values, isArray)
 }

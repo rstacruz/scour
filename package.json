@@ -1,7 +1,7 @@
 {
   "name": "scourjs",
   "description": "Traverse objects and arrays",
-  "version": "0.9.2",
+  "version": "0.9.3",
   "author": "Rico Sta. Cruz <rico@ricostacruz.com>",
   "babel": {
     "presets": [
@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "object-assign": "4.0.1",
-    "scour-search": "0.3.2",
+    "scour-search": "0.3.3",
     "to-function": "2.0.6"
   },
   "devDependencies": {
