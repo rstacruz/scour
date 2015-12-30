@@ -13,7 +13,7 @@
   },
   "dependencies": {
     "object-assign": "4.0.1",
-    "scour-search": "0.2.0",
+    "scour-search": "0.3.0",
     "sift": "https://github.com/rstacruz/sift.js/tarball/feature/sift-by-object",
     "to-function": "2.0.6"
   },
