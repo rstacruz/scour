@@ -10,7 +10,7 @@ module.exports = function normalizeKeypath (keypath, isArguments) {
   if (typeof keypath === 'string') {
     return keypath.split('.')
   } else if (isArguments && keypath.length === 1) {
-    if (Array.isArray(keypath[0])) return keypath[0].map((k) => '' + k)
+    if (Array.isArray(keypath[0])) return keypath[0].map(function (k) { return '' + k })
     if (typeof keypath[0] === 'number') return [ '' + keypath[0] ]
     return ('' + keypath[0]).split('.')
   } else {
