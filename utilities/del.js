@@ -1,7 +1,7 @@
 'use strict'
 
-const clone = require('./clone')
-const cloneWithout = require('./clone_without')
+var clone = require('./clone')
+var cloneWithout = require('./clone_without')
 
 /**
  * Deletes a `keypath` from an `object` immutably.
@@ -13,10 +13,10 @@ const cloneWithout = require('./clone_without')
  */
 
 module.exports = function del (object, keypath) {
-  let results = {}
-  let parents = {}
+  var results = {}
+  var parents = {}
 
-  for (let i = 0, len = keypath.length; i < len; i++) {
+  for (var i = 0, len = keypath.length; i < len; i++) {
     if (i === 0) {
       parents[i] = object
     } else {
@@ -27,7 +27,7 @@ module.exports = function del (object, keypath) {
     }
   }
 
-  for (let i = keypath.length - 1; i >= 0; i--) {
+  for (var i = keypath.length - 1; i >= 0; i--) {
     if (i === keypath.length - 1) {
       results[i] = cloneWithout(parents[i], keypath[i])
       delete results[i][keypath[i]]

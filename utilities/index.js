@@ -121,7 +121,7 @@ exports.mapObject = require('./map_object')
  *
  * The callback `fn` should return an array with two elements: with `result[0]`
  * being the key, and `result[1]` being the value. These are what the new
- * object will be constructed with.
+ * object will be varructed with.
  *
  * The `iterable` parameter can be an object or an array. This works like
  * `Array#map`, but also works on objects as well as arrays.

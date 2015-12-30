@@ -1,4 +1,4 @@
-const forEach = require('./each')
+var forEach = require('./each')
 
 module.exports = function filter (each, fn, _isArray) {
   var isArray = typeof _isArray !== 'undefined' ? _isArray : Array.isArray(each)

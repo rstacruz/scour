@@ -1,5 +1,5 @@
-const indexedMap = require('../utilities/indexed_map')
-const map = require('../utilities/map')
+var indexedMap = require('../utilities/indexed_map')
+var map = require('../utilities/map')
 
 /*
  * Internal: Sorts a `{ key, value, criteria, index }` tuple array by
@@ -9,8 +9,8 @@ const map = require('../utilities/map')
 
 module.exports = function sortValues (values, isArray) {
   var sorted = values.sort((left, right) => {
-    const a = left.criteria
-    const b = right.criteria
+    var a = left.criteria
+    var b = right.criteria
     if (a !== b) {
       if (a > b || a === void 0) return 1
       if (a < b || b === void 0) return -1

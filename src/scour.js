@@ -7,7 +7,7 @@ const buildExtensions = require('./build_extensions')
 const normalizeKeypath = require('../utilities/normalize_keypath')
 const utils = require('../utilities')
 const negate = require('./negate')
-const sortValues = require('./sort_values')
+const sortValues = require('../utilities/sort_values')
 const toFunction = require('to-function')
 
 /**

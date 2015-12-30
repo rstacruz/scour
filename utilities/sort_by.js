@@ -1,7 +1,7 @@
-const map = require('./map')
-const forEach = require('./each')
-const toFunction = require('to-function')
-const sortValues = require('../lib/sort_values')
+var map = require('./map')
+var forEach = require('./each')
+var toFunction = require('to-function')
+var sortValues = require('./sort_values')
 
 module.exports = function sortBy (each, condition, isArray) {
   if (typeof isArray === 'undefined' && !Array.isArray(each)) isArray = false
