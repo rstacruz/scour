@@ -12,8 +12,9 @@ var clone = require('./clone')
 module.exports = function set (object, keypath, value) {
   var results = {}
   var parents = {}
+  var i, len
 
-  for (var i = 0, len = keypath.length; i < len; i++) {
+  for (i = 0, len = keypath.length; i < len; i++) {
     if (i === 0) {
       parents[i] = object
     } else {
@@ -25,7 +26,7 @@ module.exports = function set (object, keypath, value) {
     }
   }
 
-  for (var i = keypath.length; i >= 0; i--) {
+  for (i = keypath.length; i >= 0; i--) {
     if (!parents[i]) {
       results[i] = value
     } else {

@@ -15,8 +15,9 @@ var cloneWithout = require('./clone_without')
 module.exports = function del (object, keypath) {
   var results = {}
   var parents = {}
+  var i, len
 
-  for (var i = 0, len = keypath.length; i < len; i++) {
+  for (i = 0, len = keypath.length; i < len; i++) {
     if (i === 0) {
       parents[i] = object
     } else {
@@ -27,7 +28,7 @@ module.exports = function del (object, keypath) {
     }
   }
 
-  for (var i = keypath.length - 1; i >= 0; i--) {
+  for (i = keypath.length - 1; i >= 0; i--) {
     if (i === keypath.length - 1) {
       results[i] = cloneWithout(parents[i], keypath[i])
       delete results[i][keypath[i]]

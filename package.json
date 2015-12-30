@@ -50,7 +50,8 @@
     "build": "babel src --out-dir lib",
     "coverage": "istanbul cover test/index.js",
     "prepublish": "make -B update && npm run build",
-    "test": "node test/index.js | tap-spec",
+    "test": "node test | tap-spec",
+    "test:lint": "standard src/* test/* utilities/*",
     "watch": "babel -w src --out-dir lib"
   }
 }
