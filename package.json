@@ -31,7 +31,7 @@
     "mocha": "2.3.4",
     "mocha-standard": "1.0.0",
     "standard": "5.4.1",
-    "tap-difflet": "0.4.0",
+    "tap-spec": "4.1.1",
     "tape": "4.4.0",
     "uglifyjs": "2.4.10",
     "watchify": "3.6.1"
@@ -55,8 +55,7 @@
     "build": "browserify -t babelify --bare -s scour scour.js > dist/scour.js; uglifyjs dist/scour.js -cm > dist/scour.min.js",
     "coverage": "istanbul cover _mocha -- -R spec",
     "prepublish": "make -B update && npm run build",
-    "test": "mocha",
-    "test:tape": "node test/index.js | tap-difflet",
+    "test": "node test/index.js | tap-spec",
     "watch": "watchify -v -t babelify --bare -s scour scour.js -o dist/scour.js"
   }
 }
