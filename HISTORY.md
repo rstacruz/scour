@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.9.1]
+> Dec 30, 2015
+
+- Fix packaging.
+
 ## [v0.9.0]
 > Dec 30, 2015
 
@@ -78,3 +83,4 @@
 [v0.7.1]: https://github.com/rstacruz/scour/compare/v0.7.0...v0.7.1
 [v0.8.0]: https://github.com/rstacruz/scour/compare/v0.7.1...v0.8.0
 [v0.9.0]: https://github.com/rstacruz/scour/compare/v0.8.0...v0.9.0
+[v0.9.1]: https://github.com/rstacruz/scour/compare/v0.9.0...v0.9.1
