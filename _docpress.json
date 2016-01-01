@@ -399,6 +399,11 @@
                 "title": "Versus Immutable.js",
                 "depth": 2,
                 "id": "versus-immutable.js"
+              },
+              {
+                "title": "Versus Baobab",
+                "depth": 2,
+                "id": "versus-baobab"
               }
             ]
           },
@@ -844,6 +849,11 @@
           "title": "Versus Immutable.js",
           "depth": 2,
           "id": "versus-immutable.js"
+        },
+        {
+          "title": "Versus Baobab",
+          "depth": 2,
+          "id": "versus-baobab"
         }
       ]
     },

@@ -67,6 +67,85 @@
 <p><a href="http://facebook.github.io/immutable-js/">Immutable</a> is a library for dealing with data in an immutable fashion.</p>
 <p>Scour also has extensions via <a href="index.html#use">use()</a>, which allows you to navigate your data with model-like objects (<a href="extensions_example.html">example</a>).</p>
 <p>It is really hefty (like 57kb) and has a huge API surface area.</p>
+<h2 id="versus-baobab">Versus Baobab</h2>
+<p><a href="https://github.com/Yomguithereal/baobab">Baobab</a> has a similar goal to Scour. Unlike scour, it supports mutable data structures and events. Scour is optimized towards immutable data handling and can take advantage of performance improvements dealing with immutable stores.</p>
+<p>Baobab keeps a single instance (<code>new Baobab()</code>) to manage the entire store. Scour instead creates a new root object for every change. This makes Scour suitable for things like Redux.</p>
+<p>Baobab also has good support for Arrays, which Scour doesn&#x2019;t implement yet.</p>
+<p>Baobab has support for computed properties via <code>Baobab.monkey</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Scour</th>
+<th>Baobab</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>.go(&apos;path&apos;)</code></td>
+<td><code>.select(&apos;path&apos;)</code></td>
+</tr>
+<tr>
+<td><code>.go(&apos;path&apos;).filter(function)</code></td>
+<td><code>.select(&apos;path&apos;, function)</code></td>
+</tr>
+<tr>
+<td><code>.filter(function)</code></td>
+<td><code>.select(function)</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.on(&apos;update&apos;, fn)</code></td>
+</tr>
+<tr>
+<td><code>.value</code></td>
+<td><code>.get()</code></td>
+</tr>
+<tr>
+<td><code>.set(&apos;key&apos;, &apos;value&apos;)</code></td>
+<td><code>.set(&apos;key&apos;, &apos;value&apos;)</code></td>
+</tr>
+<tr>
+<td><code>.del(&apos;key&apos;)</code></td>
+<td><code>.unset(&apos;key&apos;)</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.push(&apos;item&apos;)</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.unshift(&apos;item&apos;)</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.concat(&apos;item&apos;)</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.splice(&apos;item&apos;)</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.apply(args)</code></td>
+</tr>
+<tr>
+<td><code>.extend(object)</code></td>
+<td><code>.merge({ object })</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>.deepMerge({ object })</code></td>
+</tr>
+<tr>
+<td><code>a.root === a</code></td>
+<td><code>a.isRoot()</code></td>
+</tr>
+<tr>
+<td><em>N/A</em></td>
+<td><code>Baobab.monkey</code></td>
+</tr>
+</tbody>
+</table>
 
         </div>
         <div class="footer-nav">
@@ -88,6 +167,8 @@
                     <li class="heading-item -depth-2"><a href="#versus-lodash" class="hlink link-versus-lodash">Versus Lodash</a>
                     </li>
                     <li class="heading-item -depth-2"><a href="#versus-immutable.js" class="hlink link-versus-immutable.js">Versus Immutable.js</a>
+                    </li>
+                    <li class="heading-item -depth-2"><a href="#versus-baobab" class="hlink link-versus-baobab">Versus Baobab</a>
                     </li>
                   </ul>
                 </li>
