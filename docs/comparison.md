@@ -43,3 +43,34 @@ It is really hefty (like 57kb) and has a huge API surface area.
 [get()]: ../README.md#get
 [use()]: ../README.md#use
 [example]: extensions_example.md
+
+## Versus Baobab
+
+[Baobab] has a similar goal to Scour. Unlike scour, it supports mutable data structures and events. Scour is optimized towards immutable data handling and can take advantage of performance improvements dealing with immutable stores.
+
+Baobab keeps a single instance (`new Baobab()`) to manage the entire store. Scour instead creates a new root object for every change. This makes Scour suitable for things like Redux.
+
+Baobab also has good support for Arrays, which Scour doesn't implement yet.
+
+Baobab has support for computed properties via `Baobab.monkey`.
+
+| Scour | Baobab
+|---|---
+| `.go('path')` | `.select('path')`
+| `.go('path').filter(function)` | `.select('path', function)`
+| `.filter(function)` | `.select(function)`
+| *N/A* | `.on('update', fn)`
+| `.value` | `.get()`
+| `.set('key', 'value')` | `.set('key', 'value')`
+| `.del('key')` | `.unset('key')`
+| *N/A* | `.push('item')`
+| *N/A* | `.unshift('item')`
+| *N/A* | `.concat('item')`
+| *N/A* | `.splice('item')`
+| *N/A* | `.apply(args)`
+| `.extend(object)` | `.merge({ object })`
+| *N/A* | `.deepMerge({ object })`
+| `a.root === a` | `a.isRoot()`
+| *N/A* | `Baobab.monkey`
+
+[Baobab]: https://github.com/Yomguithereal/baobab
