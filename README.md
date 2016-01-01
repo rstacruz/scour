@@ -600,9 +600,8 @@ See [set()] for more information on working with immutables.
 
 > `extend(objects...)`
 
-Extends the data with more values. Returns a [scour]-wrapped object. Only
-supports objects; arrays and non-objects will return undefined. Just like
-[Object.assign], you may pass multiple objects to the parameters.
+Extends the data with more values. Returns a [scour]-wrapped object. Just
+like [Object.assign], you may pass multiple objects to the parameters.
 
 ```js
 data  = { a: 1, b: 2 }
@@ -612,6 +611,16 @@ data2 = scour(data).extend({ c: 3 })
 ```js
 data2  // => [scour { a: 1, b: 2, c: 3 }]
 data2.value   // => { a: 1, b: 2, c: 3 }
+```
+
+When used with anything non-object, it will be overridden.
+
+```js
+data = {}
+db = scour(data)
+db = db.go('state').extend({ pressed: true }).root
+
+db.value  // => { state: { pressed: true } }
 ```
 
 See [set()] for more information on working with immutables.

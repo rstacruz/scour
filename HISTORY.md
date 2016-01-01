@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.10.0]
+> Jan 1, 2016
+
+- `scour#extend()` - override non-objects.
+
 ## [v0.9.3]
 > Dec 30, 2015
 
