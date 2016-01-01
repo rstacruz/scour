@@ -725,6 +725,19 @@ that it's the way that the JavaScript API for [JSON.stringify] works.
 
 [JSON.stringify]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior
 
+### equal
+
+> `equal(other)`
+
+Checks for equality between two Scour-wrapped objects.
+
+```js
+a = scour(data)
+b = scour(data)
+
+a.equal(b)   // => true
+```
+
 ## Iteration methods
 
 These methods are generally useful for collections. These

@@ -667,6 +667,20 @@ scour.prototype = {
     return this.value
   },
 
+  /**
+   * Checks for equality between two Scour-wrapped objects.
+   *
+   *     a = scour(data)
+   *     b = scour(data)
+   *
+   *     a.equal(b)   // => true
+   */
+
+  equal (other) {
+    return this.value === other.value &&
+      this.keypath.join('.') === other.keypath.join('.')
+  },
+
   toString () {
     return `[scour (${this.keys().join(', ')})]`
   },
