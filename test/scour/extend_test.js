@@ -32,6 +32,12 @@ test('.extend()', (t) => {
     result.value, { a: { c: 2 } },
     'overrides objects')
 
+  data = { ui: {} }
+  result = scour(data).go('ui.button').extend({ a: 1 }).root
+  t.deepEqual(
+    result.value, { ui: { button: { a: 1 } } },
+    'overrides undefineds')
+
   data = { a: { b: 1 } }
   result = scour(data).extend({ c: { d: 2 } })
   t.deepEqual(
@@ -40,14 +46,14 @@ test('.extend()', (t) => {
     'is chainable')
 
   t.deepEqual(
-    scour('hello').extend({ a: 1 }),
-    undefined,
-    'fails on non objects')
+    scour('hello').extend({ a: 1 }).value,
+    { a: 1 },
+    'overrides non objects')
 
   t.deepEqual(
-    scour([]).extend({ a: 1 }),
-    undefined,
-    'fails on arrays')
+    scour([]).extend({ a: 1 }).value,
+    { a: 1 },
+    'overrides arrays')
 
   t.deepEqual(
     scour({}).extend('huh'),

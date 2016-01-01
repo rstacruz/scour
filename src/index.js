@@ -521,9 +521,8 @@ scour.prototype = {
 
   /**
    * extend : extend(objects...)
-   * Extends the data with more values. Returns a [scour]-wrapped object. Only
-   * supports objects; arrays and non-objects will return undefined. Just like
-   * [Object.assign], you may pass multiple objects to the parameters.
+   * Extends the data with more values. Returns a [scour]-wrapped object. Just
+   * like [Object.assign], you may pass multiple objects to the parameters.
    *
    *    data  = { a: 1, b: 2 }
    *    data2 = scour(data).extend({ c: 3 })
@@ -531,13 +530,23 @@ scour.prototype = {
    *    data2  // => [scour { a: 1, b: 2, c: 3 }]
    *    data2.value   // => { a: 1, b: 2, c: 3 }
    *
+   * When used with anything non-object, it will be overridden.
+   *
+   *     data = {}
+   *     db = scour(data)
+   *     db = db.go('state').extend({ pressed: true }).root
+   *
+   *     db.value  // => { state: { pressed: true } }
+   *
    * See [set()] for more information on working with immutables.
    */
 
   extend () {
-    if (typeof this.value !== 'object' || Array.isArray(this.value)) return
     var result = {}
-    assign(result, this.value)
+    if (typeof this.value === 'object' && !Array.isArray(this.value)) {
+      assign(result, this.value)
+    }
+
     for (var i = 0, len = arguments.length; i < len; i++) {
       if (typeof arguments[i] !== 'object') return
       assign(result, arguments[i])
