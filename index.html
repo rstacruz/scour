@@ -555,6 +555,16 @@ db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <spa
 work with <code>scour</code>-wrapped objects. The name of this method is a bit
 confusing, as it doesn&#x2019;t actually return a JSON string &#x2014; but I&#x2019;m afraid
 that it&#x2019;s the way that the JavaScript API for <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior">JSON.stringify</a> works.</p>
+<h3 id="equal">equal</h3>
+<blockquote>
+<p><code>equal(other)</code></p>
+</blockquote>
+<p>Checks for equality between two Scour-wrapped objects.</p>
+<pre><code class="lang-js">a = scour(data)
+b = scour(data)
+
+a.equal(b)   <span class="pl-c">// =&gt; true</span>
+</code></pre>
 <h2 id="iteration-methods">Iteration methods</h2>
 <p>These methods are generally useful for collections. These
 methods can work with either arrays or array-like objects, such as
@@ -919,6 +929,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
                 <li class="menu-item -level-2"><a href="#use" class="link title link-use">use</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#tojson" class="link title link-tojson">toJSON</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#equal" class="link title link-equal">equal</a>
                 </li>
               </ul>
             </li>

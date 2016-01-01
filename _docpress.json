@@ -172,6 +172,11 @@
                 "title": "toJSON",
                 "depth": 3,
                 "id": "tojson"
+              },
+              {
+                "title": "equal",
+                "depth": 3,
+                "id": "equal"
               }
             ]
           },
@@ -612,6 +617,11 @@
               "title": "toJSON",
               "depth": 3,
               "id": "tojson"
+            },
+            {
+              "title": "equal",
+              "depth": 3,
+              "id": "equal"
             }
           ]
         },
