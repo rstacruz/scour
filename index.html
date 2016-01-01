@@ -459,14 +459,20 @@ scour(data).del([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">
 <blockquote>
 <p><code>extend(objects...)</code></p>
 </blockquote>
-<p>Extends the data with more values. Returns a <a href="#scour">scour</a>-wrapped object. Only
-supports objects; arrays and non-objects will return undefined. Just like
-<a href="https://devdocs.io/javascript/global_objects/object/assign">Object.assign</a>, you may pass multiple objects to the parameters.</p>
+<p>Extends the data with more values. Returns a <a href="#scour">scour</a>-wrapped object. Just
+like <a href="https://devdocs.io/javascript/global_objects/object/assign">Object.assign</a>, you may pass multiple objects to the parameters.</p>
 <pre><code class="lang-js">data  = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> }
 data2 = scour(data).extend({ c: <span class="hljs-number">3</span> })
 </code></pre>
 <pre><code class="lang-js">data2  <span class="pl-c">// =&gt; [scour { a: 1, b: 2, c: 3 }]</span>
 data2.value   <span class="pl-c">// =&gt; { a: 1, b: 2, c: 3 }</span>
+</code></pre>
+<p>When used with anything non-object, it will be overridden.</p>
+<pre><code class="lang-js">data = {}
+db = scour(data)
+db = db.go(<span class="pl-s">&apos;state&apos;</span>).extend({ pressed: <span class="pl-c1">true</span> }).root
+
+db.value  <span class="pl-c">// =&gt; { state: { pressed: true } }</span>
 </code></pre>
 <p>See <a href="#set">set()</a> for more information on working with immutables.</p>
 <h2 id="utility-methods">Utility methods</h2>

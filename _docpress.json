@@ -308,6 +308,26 @@
             "slug": "history",
             "headings": [
               {
+                "title": "[v0.10.0]",
+                "depth": 2,
+                "id": "v0.10.0"
+              },
+              {
+                "title": "[v0.9.3]",
+                "depth": 2,
+                "id": "v0.9.3"
+              },
+              {
+                "title": "[v0.9.1]",
+                "depth": 2,
+                "id": "v0.9.1"
+              },
+              {
+                "title": "[v0.9.0]",
+                "depth": 2,
+                "id": "v0.9.0"
+              },
+              {
                 "title": "[v0.8.0]",
                 "depth": 2,
                 "id": "v0.8.0"
@@ -723,6 +743,26 @@
       "title": "Changelog",
       "slug": "history",
       "headings": [
+        {
+          "title": "[v0.10.0]",
+          "depth": 2,
+          "id": "v0.10.0"
+        },
+        {
+          "title": "[v0.9.3]",
+          "depth": 2,
+          "id": "v0.9.3"
+        },
+        {
+          "title": "[v0.9.1]",
+          "depth": 2,
+          "id": "v0.9.1"
+        },
+        {
+          "title": "[v0.9.0]",
+          "depth": 2,
+          "id": "v0.9.0"
+        },
         {
           "title": "[v0.8.0]",
           "depth": 2,
