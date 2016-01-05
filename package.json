@@ -34,6 +34,7 @@
     "test": "test"
   },
   "homepage": "https://github.com/rstacruz/scour#readme",
+  "jsnext:main": "src/index.js",
   "keywords": [
     "array",
     "immutable",
