@@ -499,31 +499,9 @@ scour.prototype = {
     const result = scour.set(this.value || {}, keypath, value.valueOf())
 
     // Update indices, if any
-    let indices = this._updateIndices(result, keypath)
+    let indices = updateIndices(this.indices, result, keypath)
 
     return this.reset(result, { root: null, indices })
-  },
-
-  /**
-   * Internal: in the root, given the new data `result`, do an update because
-   * `keypath` was changed
-   */
-
-  _updateIndices (result, keypath) {
-    let indices = this.indices
-    if (!indices) return
-
-    for (let i = keypath.length; i >= 0; i--) {
-      let newKeypath = keypath.slice(0, i)
-      let keypathStr = newKeypath.join('.')
-      if (indices[keypathStr]) {
-        const newData = utils.get(result, newKeypath)
-        indices[keypathStr] =
-          indices[keypathStr].reindex(newData, Object.keys(newData))
-      }
-    }
-
-    return indices
   },
 
   /**
@@ -548,7 +526,7 @@ scour.prototype = {
     }
 
     const result = scour.del(this.value, keypath)
-    let indices = this._updateIndices(result, keypath)
+    let indices = updateIndices(this.indices, result, keypath)
     return this.reset(result, { root: null, indices })
   },
 
@@ -687,7 +665,13 @@ scour.prototype = {
    * index : index(keypath, field)
    * Sets up indices to improve [filter()] performance.
    *
+   *     data =
+   *       { users:
+   *         { 1: { name: 'John Creamer' },
+   *           2: { name: 'Stephane K' } } }
+   *
    *     db = scour(data).index('users', 'name')
+   *     db.filter({ name: 'Stephane K' })
    */
 
   index (keypath, field) {
@@ -962,6 +946,27 @@ function thisify (fn) {
   return function () {
     return fn.bind(null, this.forEach.bind(this)).apply(this, arguments)
   }
+}
+
+/**
+ * Internal: in the root, given the new data `result`, do an update because
+ * `keypath` was changed.
+ */
+
+function updateIndices (indices, result, keypath) {
+  if (!indices) return
+
+  for (let i = keypath.length; i >= 0; i--) {
+    let newKeypath = keypath.slice(0, i)
+    let keypathStr = newKeypath.join('.')
+    if (indices[keypathStr]) {
+      const newData = utils.get(result, newKeypath)
+      indices[keypathStr] =
+        indices[keypathStr].reindex(newData, Object.keys(newData))
+    }
+  }
+
+  return indices
 }
 
 module.exports = scour

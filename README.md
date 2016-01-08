@@ -714,6 +714,22 @@ users.go('john').hasName()              // works
 db.go('users.john').hasName()           // doesn't work
 ```
 
+### index
+
+> `index(keypath, field)`
+
+Sets up indices to improve [filter()] performance.
+
+```js
+data =
+  { users:
+    { 1: { name: 'John Creamer' },
+      2: { name: 'Stephane K' } } }
+
+db = scour(data).index('users', 'name')
+db.filter({ name: 'Stephane K' })
+```
+
 ### toJSON
 
 > `toJSON()`
