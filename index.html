@@ -241,7 +241,8 @@ scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">
 <p><code>getAt(index)</code></p>
 </blockquote>
 <p>Returns the item at <code>index</code>. This differs from <code>get</code> as this searches by
-index, not by key. This returns a the raw value, unlike <a href="#at">at()</a>.</p>
+index, not by key. This returns a the raw value, unlike <a href="#at">at()</a>.
+<em>(Since v0.5)</em></p>
 <pre><code class="lang-js">users =
   { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
     <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
@@ -326,7 +327,7 @@ to <code>at(len() - 1)</code>: see <a href="#at">at()</a> and <a href="#len">len
 </blockquote>
 <p>Sorts a collection. Returns a <a href="#scour">scour</a>-wrapped object suitable for
 chaining. Like other chainable methods, this works on arrays as well as
-objects.</p>
+objects. <em>(Since v0.8)</em></p>
 <pre><code class="lang-js">data =
   { <span class="hljs-number">0</span>: { name: <span class="pl-s">&apos;Wilma&apos;</span> },
     <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;Barney&apos;</span> },
