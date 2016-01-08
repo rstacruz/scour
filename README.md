@@ -311,6 +311,7 @@ scour(users).get(12)        // => [scour { name: 'steve' }]
 
 Returns the item at `index`. This differs from `get` as this searches by
 index, not by key. This returns a the raw value, unlike [at()].
+*(Since v0.5)*
 
 ```js
 users =
@@ -424,7 +425,7 @@ to `at(len() - 1)`: see [at()] and [len()].
 
 Sorts a collection. Returns a [scour]-wrapped object suitable for
 chaining. Like other chainable methods, this works on arrays as well as
-objects.
+objects. *(Since v0.8)*
 
 ```js
 data =

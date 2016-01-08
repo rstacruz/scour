@@ -167,6 +167,7 @@ scour.prototype = {
   /**
    * Returns the item at `index`. This differs from `get` as this searches by
    * index, not by key. This returns a the raw value, unlike [at()].
+   * *(Since v0.5)*
    *
    *     users =
    *       { 12: { name: 'steve' },
@@ -313,7 +314,7 @@ scour.prototype = {
   /**
    * Sorts a collection. Returns a [scour]-wrapped object suitable for
    * chaining. Like other chainable methods, this works on arrays as well as
-   * objects.
+   * objects. *(Since v0.8)*
    *
    *     data =
    *       { 0: { name: 'Wilma' },
