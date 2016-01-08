@@ -718,7 +718,10 @@ db.go('users.john').hasName()           // doesn't work
 
 > `index(keypath, field)`
 
-Sets up indices to improve [filter()] performance.
+Sets up indices to improve [filter()] performance. *(Since v0.12)*
+
+- `keypath` *(String | Array)* - the keypath of the collection.
+- `field` *(String)* - the name of the field to be indexed.
 
 ```js
 data =
