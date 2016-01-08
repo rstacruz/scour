@@ -21,7 +21,7 @@ test('indexing', (t) => {
     { 1: { name: 'john' } },
     'has scour-search indices')
 
-  t.deepEqual(db.indices.users, undefined,
+  t.deepEqual(db.indices, undefined,
     'doesnt have scour-search indices by default')
 
   t.end()
@@ -97,7 +97,7 @@ test('indexing: .set', (t) => {
   t.end()
 })
 
-test.only('indexing: .set deep', (t) => {
+test('indexing: .set deep', (t) => {
   let db = scour(data).index('users', 'name')
   t.ok(db.indices.users, 'has indices')
 
@@ -130,6 +130,6 @@ function sandbox (fn) {
 // todo:
 // x .index
 // x .filter
-//   .set
+// x .set
 //   .extend
 //   .indexOf

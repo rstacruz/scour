@@ -58,7 +58,7 @@ function scour (value, options) {
   this.root = options && options.root || this
   this.keypath = options && options.keypath || []
   this.extensions = options && options.extensions || []
-  this.indices = options && options.indices || {}
+  this.indices = options && options.indices || undefined
 
   // Apply any property extensions
   if (this.extensions.length) this.applyExtensions()
@@ -237,7 +237,10 @@ scour.prototype = {
       return this.filterByFunction(conditions)
     }
 
-    var idx = this.indices[this.keypath.join('.')] || Search(this.value)
+    var idx = this.indices &&
+      this.indices[this.keypath.join('.')] ||
+      Search(this.value)
+
     return this.reset(idx.filter(conditions))
   },
 
@@ -495,18 +498,27 @@ scour.prototype = {
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
     const result = scour.set(this.value || {}, keypath, value.valueOf())
 
-    // if has matching keypath in indices, update it
-    // .index('users', 'name').set('users', data) => reindex
-    let indices = this.indices
-    let keypathStr = keypath.join('.')
-    if (indices[keypathStr]) {
-      const newData = utils.get(result, keypath)
-      indices[keypathStr] =
-        indices[keypathStr].reindex(newData, Object.keys(newData))
-    }
-    // TODO: .index('users', 'name').set('users.2', data) => reindex(..., 2)
+    // Update indices, if any
+    let indices = this._updateIndices(result, keypath)
 
     return this.reset(result, { root: null, indices })
+  },
+
+  _updateIndices (result, keypath) {
+    let indices = this.indices
+    if (!indices) return
+
+    for (let i = keypath.length; i >= 0; i--) {
+      let newKeypath = keypath.slice(0, i)
+      let keypathStr = newKeypath.join('.')
+      if (indices[keypathStr]) {
+        const newData = utils.get(result, newKeypath)
+        indices[keypathStr] =
+          indices[keypathStr].reindex(newData, Object.keys(newData))
+      }
+    }
+
+    return indices
   },
 
   /**
@@ -676,7 +688,7 @@ scour.prototype = {
     keypath = normalizeKeypath(keypath)
     if (this.root !== this) return this.root.index(keypath)
 
-    var indices = assign({}, this.indices, {
+    var indices = assign({}, this.indices || {}, {
       [keypath.join('.')]: Search(this.get(keypath) || {}).index(field) // TODO remove ||{}
     })
 
