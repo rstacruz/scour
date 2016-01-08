@@ -24,21 +24,55 @@ test('indexing', (t) => {
   t.deepEqual(db.indices.users, undefined,
     'doesnt have scour-search indices by default')
 
-  t.deepEqual(
-    db.go('users').filter({ name: 'john' }).value,
-    { 1: { name: 'john' } },
-    'works with .filter (unindexed)')
+  t.end()
+})
 
-  t.deepEqual(
-    idb.go('users').filter({ name: 'john' }).value,
-    { 1: { name: 'john' } },
-    'works with .filter (indexed)')
+test('indexing: .filter unindexed', (t) => {
+  const db = scour(data)
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      { 1: { name: 'john' } },
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, true,
+      'falls back to filterFallback()')
+  })
 
   t.end()
 })
+
+test('indexing: .filter indexed', (t) => {
+  const db = scour(data).index('users', 'name')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      { 1: { name: 'john' } },
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
+function sandbox (fn) {
+  var sandbox = require('sinon').sandbox.create()
+  try { fn(sandbox) }
+  finally { sandbox.restore() }
+}
 
 // todo:
 // x .index
 // x .filter
 //   .set
 //   .extend
+//   .indexOf
