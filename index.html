@@ -551,7 +551,11 @@ db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <spa
 <blockquote>
 <p><code>index(keypath, field)</code></p>
 </blockquote>
-<p>Sets up indices to improve <a href="#filter">filter()</a> performance.</p>
+<p>Sets up indices to improve <a href="#filter">filter()</a> performance. <em>(Since v0.12)</em></p>
+<ul>
+<li><code>keypath</code> <em>(String | Array)</em> - the keypath of the collection.</li>
+<li><code>field</code> <em>(String)</em> - the name of the field to be indexed.</li>
+</ul>
 <pre><code class="lang-js">data =
   { users:
     { <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;John Creamer&apos;</span> },
