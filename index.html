@@ -565,6 +565,11 @@ db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <spa
 db = scour(data).index(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
 db.filter({ name: <span class="pl-s">&apos;Stephane K&apos;</span> })
 </code></pre>
+<p>Doing this will add an index in the root (acccessible via
+<code>scour().indices</code>) to make searches faster for certain <a href="#filter">filter()</a> queries.
+Any writing actions (<a href="#set">set()</a>, <a href="#extend">extend()</a>, <a href="#del">del()</a>) will automatically
+update the index.</p>
+<p>See <a href="https://github.com/rstacruz/scour-search">scour-search</a> for more information on indexing.</p>
 <h3 id="tojson">toJSON</h3>
 <blockquote>
 <p><code>toJSON()</code></p>
