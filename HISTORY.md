@@ -1,5 +1,10 @@
 # Changelog
 
+## [v0.12.0]
+> Jan  8, 2016
+
+- Implement `scour#index()`.
+
 ## [v0.11.0]
 > Jan 1, 2016
 
@@ -102,3 +107,4 @@
 [v0.9.3]: https://github.com/rstacruz/scour/compare/v0.9.1...v0.9.3
 [v0.10.0]: https://github.com/rstacruz/scour/compare/v0.9.3...v0.10.0
 [v0.11.0]: https://github.com/rstacruz/scour/compare/v0.10.0...v0.11.0
+[v0.12.0]: https://github.com/rstacruz/scour/compare/v0.11.0...v0.12.0

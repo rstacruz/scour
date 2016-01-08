@@ -678,6 +678,15 @@ scour.prototype = {
    *
    *     db = scour(data).index('users', 'name')
    *     db.filter({ name: 'Stephane K' })
+   *
+   * Doing this will add an index in the root (acccessible via
+   * `scour().indices`) to make searches faster for certain [filter()] queries.
+   * Any writing actions ([set()], [extend()], [del()]) will automatically
+   * update the index.
+   *
+   * See [scour-search] for more information on indexing.
+   *
+   * [scour-search]: https://github.com/rstacruz/scour-search
    */
 
   index (keypath, field) {
