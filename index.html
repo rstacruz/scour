@@ -553,6 +553,7 @@ db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <spa
 </blockquote>
 <p>Sets up indices to improve <a href="#filter">filter()</a> performance.</p>
 <pre><code class="lang-js">db = scour(data).index(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
+db.filter({ name: <span class="pl-s">&apos;John&apos;</span> })
 </code></pre>
 <h3 id="tojson">toJSON</h3>
 <blockquote>
