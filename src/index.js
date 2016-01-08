@@ -568,7 +568,9 @@ scour.prototype = {
       return this.root.set(this.keypath, result).go(this.keypath)
     }
 
-    return this.reset(result, { root: false })
+    // TODO
+    let indices = updateAllIndices(this.indices, result)
+    return this.reset(result, { root: false, indices })
   },
 
   /**
@@ -977,6 +979,17 @@ function updateIndices (indices, result, keypath) {
       indices[keypathStr] =
         indices[keypathStr].reindex(newData, keys)
     }
+  }
+
+  return indices
+}
+
+function updateAllIndices (indices, result) {
+  if (!indices) return
+
+  var keys = Object.keys(result)
+  for (var i = 0, len = keys.length; i < len; i++) {
+    indices = updateIndices(indices, result, [ keys[i] ])
   }
 
   return indices

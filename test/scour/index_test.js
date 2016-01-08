@@ -126,6 +126,52 @@ test('indexing: .set', (t) => {
   t.end()
 })
 
+test('indexing: .go.extend', (t) => {
+  let db = scour({}).index('users', 'name')
+  t.ok(db.indices.users, 'has indices')
+
+  db = db.go('users').extend(data.users).root
+  t.ok(db.indices.users, 'still has indices')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      { 1: { name: 'john' } },
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
+test('indexing: .extend root', (t) => {
+  let db = scour({}).index('users', 'name')
+  t.ok(db.indices.users, 'has indices')
+
+  db = db.extend(data)
+  t.ok(db.indices.users, 'still has indices')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      { 1: { name: 'john' } },
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
 test('indexing: .set deep', (t) => {
   let db = scour(data).index('users', 'name')
   t.ok(db.indices.users, 'has indices')
@@ -181,8 +227,9 @@ function sandbox (fn) {
 // x .filter
 // x .set
 // x .del
-//   .extend
+// x .extend
 //   .indexOf
 //
 // todo for scour-search:
 //   indexing nothing (data should not be undefined)
+//   .reindex(data) all
