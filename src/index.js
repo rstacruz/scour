@@ -965,13 +965,17 @@ function thisify (fn) {
 function updateIndices (indices, result, keypath) {
   if (!indices) return
 
-  for (let i = keypath.length; i >= 0; i--) {
+  for (let len = keypath.length, i = len; i >= 0; i--) {
     let newKeypath = keypath.slice(0, i)
     let keypathStr = newKeypath.join('.')
     if (indices[keypathStr]) {
       const newData = utils.get(result, newKeypath)
+      let keys = i === len
+        ? Object.keys(newData)
+        : keypath[i]
+
       indices[keypathStr] =
-        indices[keypathStr].reindex(newData, Object.keys(newData))
+        indices[keypathStr].reindex(newData, keys)
     }
   }
 

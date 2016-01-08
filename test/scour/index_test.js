@@ -150,7 +150,7 @@ test('indexing: .set deep', (t) => {
   t.end()
 })
 
-test.skip('indexing: .del', (t) => { // TODO
+test('indexing: .del', (t) => {
   let db = scour(data).index('users', 'name')
   db = db.del('users.1')
 
@@ -180,10 +180,9 @@ function sandbox (fn) {
 // x .index
 // x .filter
 // x .set
-//   .del
+// x .del
 //   .extend
 //   .indexOf
 //
 // todo for scour-search:
-//   deletions (reindex({...}, [1])
 //   indexing nothing (data should not be undefined)
