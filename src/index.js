@@ -58,6 +58,7 @@ function scour (value, options) {
   this.root = options && options.root || this
   this.keypath = options && options.keypath || []
   this.extensions = options && options.extensions || []
+  this.indices = options && options.indices || {}
 
   // Apply any property extensions
   if (this.extensions.length) this.applyExtensions()
@@ -235,7 +236,9 @@ scour.prototype = {
     if (typeof conditions === 'function') {
       return this.filterByFunction(conditions)
     }
-    return this.reset(Search(this.value).filter(conditions))
+
+    var idx = this.indices[this.keypath.join('.')] || Search(this.value)
+    return this.reset(idx.filter(conditions))
   },
 
   filterByFunction (fn) {
@@ -651,6 +654,24 @@ scour.prototype = {
   },
 
   /**
+   * index : index(keypath, field)
+   * Sets up indices to improve [filter()] performance.
+   *
+   *     db = scour(data).index('users', 'name')
+   */
+
+  index (keypath, field) {
+    keypath = normalizeKeypath(keypath)
+    if (this.root !== this) return this.root.index(keypath)
+
+    var indices = assign({}, this.indices, {
+      [keypath.join('.')]: Search(this.get(keypath)).index(field)
+    })
+
+    return this.reset(this.value, { indices })
+  },
+
+  /**
    * Returns the value for serialization. This allows `JSON.stringify()` to
    * work with `scour`-wrapped objects. The name of this method is a bit
    * confusing, as it doesn't actually return a JSON string — but I'm afraid
@@ -822,6 +843,8 @@ scour.prototype = {
         typeof op.root !== 'undefined' ? op.root : this.root,
       keypath:
         typeof op.keypath !== 'undefined' ? op.keypath : this.keypath,
+      indices:
+        typeof op.indices !== 'undefined' ? op.indices : this.indices,
       extensions: typeof op.extensions !== 'undefined'
         ? this.extensions.concat(op.extensions)
         : this.extensions
