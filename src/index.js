@@ -494,7 +494,19 @@ scour.prototype = {
 
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
     const result = scour.set(this.value || {}, keypath, value.valueOf())
-    return this.reset(result, { root: null })
+
+    // if has matching keypath in indices, update it
+    // .index('users', 'name').set('users', data) => reindex
+    let indices = this.indices
+    let keypathStr = keypath.join('.')
+    if (indices[keypathStr]) {
+      const newData = utils.get(result, keypath)
+      indices[keypathStr] =
+        indices[keypathStr].reindex(newData, Object.keys(newData))
+    }
+    // TODO: .index('users', 'name').set('users.2', data) => reindex(..., 2)
+
+    return this.reset(result, { root: null, indices })
   },
 
   /**
@@ -665,10 +677,10 @@ scour.prototype = {
     if (this.root !== this) return this.root.index(keypath)
 
     var indices = assign({}, this.indices, {
-      [keypath.join('.')]: Search(this.get(keypath)).index(field)
+      [keypath.join('.')]: Search(this.get(keypath) || {}).index(field) // TODO remove ||{}
     })
 
-    return this.reset(this.value, { indices })
+    return this.reset(this.value, { indices, root: null })
   },
 
   /**

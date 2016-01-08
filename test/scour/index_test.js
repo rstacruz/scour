@@ -64,6 +64,63 @@ test('indexing: .filter indexed', (t) => {
   t.end()
 })
 
+test('indexing: retaining indices', (t) => {
+  let db = scour({}).index('users', 'name')
+
+  t.ok(db.indices.users, 'has indices from the start')
+  t.ok(db.go('a').indices.users, '.go() retains indices')
+  t.ok(db.go('a').root === db, 'keeps root')
+  t.ok(db.go('a').root.indices.users, '.go().root retains indices')
+  t.end()
+})
+
+test('indexing: .set', (t) => {
+  let db = scour({}).index('users', 'name')
+  t.ok(db.indices.users, 'has indices')
+
+  db = db.set('users', data.users)
+  t.ok(db.indices.users, 'still has indices')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      { 1: { name: 'john' } },
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
+test.only('indexing: .set deep', (t) => {
+  let db = scour(data).index('users', 'name')
+  t.ok(db.indices.users, 'has indices')
+
+  db = db.set('users.4', { name: 'john' })
+  t.ok(db.indices.users, 'still has indices')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      { 1: { name: 'john' },
+        4: { name: 'john' } },
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
 function sandbox (fn) {
   var sandbox = require('sinon').sandbox.create()
   try { fn(sandbox) }
