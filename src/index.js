@@ -682,8 +682,13 @@ scour.prototype = {
     keypath = normalizeKeypath(keypath)
     if (this.root !== this) return this.root.index(keypath)
 
-    var indices = assign({}, this.indices || {}, {
-      [keypath.join('.')]: Search(this.get(keypath) || {}).index(field) // TODO remove ||{}
+    var oldIndices = this.indices || {}
+    var keypathStr = keypath.join('.')
+
+    var indices = assign({}, oldIndices, {
+      [keypathStr]:
+        (oldIndices[keypathStr] || Search(this.get(keypath) || {}))
+          .index(field) // TODO remove ||{}
     })
 
     return this.reset(this.value, { indices, root: null })

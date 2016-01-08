@@ -27,6 +27,35 @@ test('indexing', (t) => {
   t.end()
 })
 
+test('indexing: multiple indices', (t) => {
+  const data = {
+    users: {
+      1: { name: 'john', gender: 'm' },
+      2: { name: 'jake', gender: 'm' },
+      3: { name: 'ara', gender: 'f' }
+    }
+  }
+
+  const db = scour(data)
+    .index('users', 'name')
+    .index('users', 'gender')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.indices.users.filter({ name: 'john' }),
+      { 1: { name: 'john', gender: 'm' } },
+      'has scour-search indices')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
 test('indexing: .filter unindexed', (t) => {
   const db = scour(data)
 
