@@ -547,6 +547,13 @@ have those extensions applied to them.</p>
 <pre><code class="lang-js">users.go(<span class="pl-s">&apos;john&apos;</span>).hasName()              <span class="pl-c">// works</span>
 db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <span class="pl-c">// doesn&apos;t work</span>
 </code></pre>
+<h3 id="index">index</h3>
+<blockquote>
+<p><code>index(keypath, field)</code></p>
+</blockquote>
+<p>Sets up indices to improve <a href="#filter">filter()</a> performance.</p>
+<pre><code class="lang-js">db = scour(data).index(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
+</code></pre>
 <h3 id="tojson">toJSON</h3>
 <blockquote>
 <p><code>toJSON()</code></p>
@@ -927,6 +934,8 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
             <li class="menu-item -level-1 -parent"><a href="#utility-methods" class="link title link-utility-methods">Utility methods</a>
               <ul class="submenu">
                 <li class="menu-item -level-2"><a href="#use" class="link title link-use">use</a>
+                </li>
+                <li class="menu-item -level-2"><a href="#index" class="link title link-index">index</a>
                 </li>
                 <li class="menu-item -level-2"><a href="#tojson" class="link title link-tojson">toJSON</a>
                 </li>

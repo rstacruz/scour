@@ -169,6 +169,11 @@
                 "id": "use"
               },
               {
+                "title": "index",
+                "depth": 3,
+                "id": "index"
+              },
+              {
                 "title": "toJSON",
                 "depth": 3,
                 "id": "tojson"
@@ -622,6 +627,11 @@
               "title": "use",
               "depth": 3,
               "id": "use"
+            },
+            {
+              "title": "index",
+              "depth": 3,
+              "id": "index"
             },
             {
               "title": "toJSON",
