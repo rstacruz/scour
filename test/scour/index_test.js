@@ -121,6 +121,26 @@ test('indexing: .set deep', (t) => {
   t.end()
 })
 
+test.skip('indexing: .del', (t) => { // TODO
+  let db = scour(data).index('users', 'name')
+  db = db.del('users.1')
+
+  sandbox((sinon) => {
+    sinon.spy(Search.prototype, 'filterFallback')
+
+    t.deepEqual(
+      db.go('users').filter({ name: 'john' }).value,
+      {},
+      '.filter() works')
+
+    t.equal(
+      Search.prototype.filterFallback.called, false,
+      'doesnt fall back to filterFallback()')
+  })
+
+  t.end()
+})
+
 function sandbox (fn) {
   var sandbox = require('sinon').sandbox.create()
   try { fn(sandbox) }
@@ -131,5 +151,10 @@ function sandbox (fn) {
 // x .index
 // x .filter
 // x .set
+//   .del
 //   .extend
 //   .indexOf
+//
+// todo for scour-search:
+//   deletions (reindex({...}, [1])
+//   indexing nothing (data should not be undefined)

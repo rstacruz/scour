@@ -504,6 +504,11 @@ scour.prototype = {
     return this.reset(result, { root: null, indices })
   },
 
+  /**
+   * Internal: in the root, given the new data `result`, do an update because
+   * `keypath` was changed
+   */
+
   _updateIndices (result, keypath) {
     let indices = this.indices
     if (!indices) return
@@ -543,7 +548,8 @@ scour.prototype = {
     }
 
     const result = scour.del(this.value, keypath)
-    return this.reset(result, { root: null })
+    let indices = this._updateIndices(result, keypath)
+    return this.reset(result, { root: null, indices })
   },
 
   /**
