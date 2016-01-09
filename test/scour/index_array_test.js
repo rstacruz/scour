@@ -3,6 +3,7 @@
 const test = require('tape')
 const scour = require('../../src')
 const Search = require('scour-search')
+const sandbox = require('sinon-in-sandbox')
 
 const data = {
   users: [
@@ -215,21 +216,3 @@ test('indexing arrays: .del', (t) => {
 
   t.end()
 })
-
-function sandbox (fn) {
-  var sandbox = require('sinon').sandbox.create()
-  try { fn(sandbox) }
-  finally { sandbox.restore() }
-}
-
-// todo:
-// x .index
-// x .filter
-// x .set
-// x .del
-// x .extend
-//   .indexOf
-//
-// todo for scour-search:
-//   indexing arrays nothing (data should not be undefined)
-//   .reindex(data) all
