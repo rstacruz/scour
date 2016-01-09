@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.0]
+> Jan 10, 2016
+
+- Version bump; no functional changes.
+
+[v1.0.0]: https://github.com/rstacruz/scour/compare/v0.12.0...v1.0.0
+
 ## [v0.12.0]
 > Jan  8, 2016
 
