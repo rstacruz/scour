@@ -14,7 +14,6 @@
   "dependencies": {
     "object-assign": "4.0.1",
     "scour-search": "0.3.3",
-    "sinon-in-sandbox": "1.0.0",
     "to-function": "2.0.6"
   },
   "devDependencies": {
@@ -26,6 +25,7 @@
     "istanbul": "0.4.1",
     "mdx": "0.3.1",
     "sinon": "1.17.2",
+    "sinon-in-sandbox": "1.0.0",
     "standard": "5.4.1",
     "tap-spec": "4.1.1",
     "tape": "4.4.0",
