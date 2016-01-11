@@ -1,5 +1,12 @@
 # Changelog
 
+## [v1.0.1]
+> Jan 11, 2016
+
+- Remove `sinon-in-sandbox` as a dependency.
+
+[v1.0.1]: https://github.com/rstacruz/scour/compare/v1.0.0...v1.0.1
+
 ## [v1.0.0]
 > Jan 10, 2016
 
