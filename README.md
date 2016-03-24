@@ -293,7 +293,7 @@ attr.keypath   // => ['users', '12', 'name']
 > `at(index)`
 
 Returns the item at `index`. This differs from `go` as this searches by
-index, not by key. This returns a the raw value, unlike [getAt()]. Rules
+index, not by key. This returns a [scour] instance, unlike [getAt()]. Rules
 [on null values] apply.
 
 ```js
@@ -310,7 +310,7 @@ scour(users).get(12)        // => [scour { name: 'steve' }]
 > `getAt(index)`
 
 Returns the item at `index`. This differs from `get` as this searches by
-index, not by key. This returns a the raw value, unlike [at()].
+index, not by key. This returns a raw value, unlike [at()].
 *(Since v0.5)*
 
 ```js
