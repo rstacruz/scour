@@ -30,23 +30,23 @@
 <p>We&#x2019;re going to use a scour-wrapped object as the <code>initialState</code> for <code>createStore()</code>.</p>
 <pre><code class="lang-js"><span class="pl-k">import</span> { createStore } <span class="pl-k">from</span> <span class="pl-s">&apos;redux&apos;</span>
 
-function reducer (state, action) {
-  /* `state` is a scour-wrapped object. */
-  switch (action.type) {
-    case <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>:
-      return state.set(<span class="pl-s">&apos;tracks&apos;</span>, action.data)
+<span class="hljs-function"><span class="pl-k">function</span> <span class="pl-ent">reducer</span> (<span class="hljs-params">state, action</span>) </span>{
+  <span class="pl-c">/* `state` is a scour-wrapped object. */</span>
+  <span class="pl-k">switch</span> (action.type) {
+    <span class="pl-k">case</span> <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>:
+      <span class="pl-k">return</span> state.set(<span class="pl-s">&apos;tracks&apos;</span>, action.data)
 
-    case <span class="pl-s">&apos;PLAY&apos;</span>:
-      return state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;playing&apos;</span>)
+    <span class="pl-k">case</span> <span class="pl-s">&apos;PLAY&apos;</span>:
+      <span class="pl-k">return</span> state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;playing&apos;</span>)
 
-    case <span class="pl-s">&apos;STOP&apos;</span>:
-      return state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;stopped&apos;</span>)
+    <span class="pl-k">case</span> <span class="pl-s">&apos;STOP&apos;</span>:
+      <span class="pl-k">return</span> state.set(<span class="pl-s">&apos;audio.state&apos;</span>, <span class="pl-s">&apos;stopped&apos;</span>)
 
-    case <span class="pl-s">&apos;SELECT_TRACK&apos;</span>:
-      var track = state.go(<span class="pl-s">&apos;tracks&apos;</span>, action.trackId)
-      return state.set(<span class="pl-s">&apos;audio.current_track&apos;</span>, track)
+    <span class="pl-k">case</span> <span class="pl-s">&apos;SELECT_TRACK&apos;</span>:
+      <span class="pl-k">var</span> track = state.go(<span class="pl-s">&apos;tracks&apos;</span>, action.trackId)
+      <span class="pl-k">return</span> state.set(<span class="pl-s">&apos;audio.current_track&apos;</span>, track)
   }
-  return state
+  <span class="pl-k">return</span> state
 }
 
 store = createStore(reducer, scour({}))
