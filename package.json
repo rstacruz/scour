@@ -28,7 +28,7 @@
     "sinon-in-sandbox": "1.0.0",
     "standard": "6.0.5",
     "tap-spec": "4.1.1",
-    "tape": "4.5.0",
+    "tape": "4.5.1",
     "uglifyjs": "2.4.10"
   },
   "directories": {
