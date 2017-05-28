@@ -481,6 +481,7 @@
     "index.html": {
       "source": "README.md",
       "title": "scour.js",
+      "pageTitle": "scour.js",
       "slug": "index",
       "headings": [
         {
@@ -785,7 +786,8 @@
     },
     "HISTORY.html": {
       "source": "HISTORY.md",
-      "title": "Changelog",
+      "title": "Changelog - scour.js",
+      "pageTitle": "Changelog",
       "slug": "history",
       "headings": [
         {
@@ -877,7 +879,8 @@
     },
     "comparison.html": {
       "source": "docs/comparison.md",
-      "title": "Comparison with others",
+      "title": "Comparison with others - scour.js",
+      "pageTitle": "Comparison with others",
       "slug": "comparison",
       "headings": [
         {
@@ -899,7 +902,8 @@
     },
     "extensions_example.html": {
       "source": "docs/extensions_example.md",
-      "title": "Extensions example",
+      "title": "Extensions example - scour.js",
+      "pageTitle": "Extensions example",
       "slug": "extensions_example",
       "headings": [
         {
@@ -921,7 +925,8 @@
     },
     "redux_example.html": {
       "source": "docs/redux_example.md",
-      "title": "Redux example",
+      "title": "Redux example - scour.js",
+      "pageTitle": "Redux example",
       "slug": "redux_example",
       "headings": [
         {

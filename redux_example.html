@@ -2,13 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="assets/style.css?t=a44c9e9d">
+    <link rel="stylesheet" href="assets/style.css?t=615badd5">
     <link rel="stylesheet" href="http://ricostacruz.com/docpress-rsc/style.css">
-    <script src="assets/script.js?t=2bcc4b59"></script>
-    <title>Redux example</title>
+    <script src="assets/script.js?t=36f3d457"></script>
+    <title>Redux example - scour.js</title>
     <meta name="viewport" content="width=device-width">
-    <script>
-      if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
+    <script>if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
         (function(d,o,c,p,r,e,s){d['GoogleAnalyticsObject']=r;d[r]=d[r]||function(){(d[r].q=d[r].q||[]).push(arguments)},d[r].l=1*new Date();e=o.createElement(c),s=o.getElementsByTagName(c)[0];e.async=1;e.src=p;s.parentNode.insertBefore(e,s)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create',"UA-20473929-1",'auto')
       }
@@ -17,9 +16,37 @@
   <body class="-menu-visible">
     <div class="doc-layout">
       <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="menu toc-menu">
+        <li class="menu-item -level-0 -parent">
+          <ul class="submenu">
+            <li class="menu-item -level-1"><a class="link title  link-index" href="index.html">scour.js</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title  link-history" href="HISTORY.html">Changelog</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-comparison" href="comparison.html">Comparison with others</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-extensions_example" href="extensions_example.html">Extensions example</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title -active link-redux_example" href="redux_example.html">Redux example</a>
+                  <ul class="headings heading-list">
+                    <li class="heading-item -depth-2"><a class="hlink link-defining-your-store" href="#defining-your-store">Defining your store</a>
+                    </li>
+                    <li class="heading-item -depth-2"><a class="hlink link-dispatching-events" href="#dispatching-events">Dispatching events</a>
+                    </li>
+                    <li class="heading-item -depth-2"><a class="hlink link-using-with-react" href="#using-with-react">Using with React</a>
+                    </li>
+                  </ul>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </div>
       <div class="body page-redux_example">
         <div class="header-nav">
-          <div class="right"><a href="https://github.com/rstacruz/scour" data-title="rstacruz/scour" class="iconlink">
+          <div class="right"><a class="iconlink" href="https://github.com/rstacruz/scour" data-title="rstacruz/scour">
               <!-- span.title Open in GitHub--><span class="icon -github"></span></a>
           </div>
         </div>
@@ -54,16 +81,16 @@ store = createStore(reducer, scour({}))
 <h2 id="dispatching-events">Dispatching events</h2>
 <p>Here&#x2019;s an example.</p>
 <pre><code class="lang-js">store.dispatch({
-  type: <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>,
-  data: {
-    <span class="hljs-number">1</span>: { title: <span class="pl-s">&apos;Levels&apos;</span>, artist: <span class="pl-s">&apos;Avicii&apos;</span> },
-    <span class="hljs-number">2</span>: { title: <span class="pl-s">&apos;Bonfire&apos;</span>, artist: <span class="pl-s">&apos;Knife Party&apos;</span> },
-    <span class="hljs-number">3</span>: { title: <span class="pl-s">&apos;Hello&apos;</span>, artist: <span class="pl-s">&apos;Adele&apos;</span> }
+  <span class="hljs-attr">type</span>: <span class="pl-s">&apos;LOAD_TRACKS&apos;</span>,
+  <span class="hljs-attr">data</span>: {
+    <span class="hljs-number">1</span>: { <span class="hljs-attr">title</span>: <span class="pl-s">&apos;Levels&apos;</span>, <span class="hljs-attr">artist</span>: <span class="pl-s">&apos;Avicii&apos;</span> },
+    <span class="hljs-number">2</span>: { <span class="hljs-attr">title</span>: <span class="pl-s">&apos;Bonfire&apos;</span>, <span class="hljs-attr">artist</span>: <span class="pl-s">&apos;Knife Party&apos;</span> },
+    <span class="hljs-number">3</span>: { <span class="hljs-attr">title</span>: <span class="pl-s">&apos;Hello&apos;</span>, <span class="hljs-attr">artist</span>: <span class="pl-s">&apos;Adele&apos;</span> }
   }
 })
 
-store.dispatch({ type: <span class="pl-s">&apos;SELECT_TRACK&apos;</span>, <span class="hljs-number">3</span> })
-store.dispatch({ type: <span class="pl-s">&apos;PLAY&apos;</span> })
+store.dispatch({ <span class="hljs-attr">type</span>: <span class="pl-s">&apos;SELECT_TRACK&apos;</span>, <span class="hljs-number">3</span> })
+store.dispatch({ <span class="hljs-attr">type</span>: <span class="pl-s">&apos;PLAY&apos;</span> })
 </code></pre>
 <h2 id="using-with-react">Using with React</h2>
 <p>Hmm&#x2026; I&#x2019;ll explain later.</p>
@@ -72,34 +99,6 @@ store.dispatch({ type: <span class="pl-s">&apos;PLAY&apos;</span> })
         <div class="footer-nav">
           <div class="left"><a href="extensions_example.html"><span class="title">Extensions example</span></a></div>
         </div>
-      </div>
-      <div class="menu toc-menu">
-        <li class="menu-item -level-0 -parent">
-          <ul class="submenu">
-            <li class="menu-item -level-1"><a href="index.html" class="link title  link-index">scour.js</a>
-            </li>
-            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="HISTORY.html" class="link title  link-history">Changelog</a>
-                </li>
-                <li class="menu-item -level-2"><a href="comparison.html" class="link title  link-comparison">Comparison with others</a>
-                </li>
-                <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
-                </li>
-                <li class="menu-item -level-2"><a href="redux_example.html" class="link title -active link-redux_example">Redux example</a>
-                  <ul class="headings heading-list">
-                    <li class="heading-item -depth-2"><a href="#defining-your-store" class="hlink link-defining-your-store">Defining your store</a>
-                    </li>
-                    <li class="heading-item -depth-2"><a href="#dispatching-events" class="hlink link-dispatching-events">Dispatching events</a>
-                    </li>
-                    <li class="heading-item -depth-2"><a href="#using-with-react" class="hlink link-using-with-react">Using with React</a>
-                    </li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
       </div>
     </div>
   </body>

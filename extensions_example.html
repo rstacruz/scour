@@ -2,13 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="assets/style.css?t=a44c9e9d">
+    <link rel="stylesheet" href="assets/style.css?t=615badd5">
     <link rel="stylesheet" href="http://ricostacruz.com/docpress-rsc/style.css">
-    <script src="assets/script.js?t=2bcc4b59"></script>
-    <title>Extensions example</title>
+    <script src="assets/script.js?t=36f3d457"></script>
+    <title>Extensions example - scour.js</title>
     <meta name="viewport" content="width=device-width">
-    <script>
-      if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
+    <script>if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
         (function(d,o,c,p,r,e,s){d['GoogleAnalyticsObject']=r;d[r]=d[r]||function(){(d[r].q=d[r].q||[]).push(arguments)},d[r].l=1*new Date();e=o.createElement(c),s=o.getElementsByTagName(c)[0];e.async=1;e.src=p;s.parentNode.insertBefore(e,s)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create',"UA-20473929-1",'auto')
       }
@@ -17,9 +16,37 @@
   <body class="-menu-visible">
     <div class="doc-layout">
       <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="menu toc-menu">
+        <li class="menu-item -level-0 -parent">
+          <ul class="submenu">
+            <li class="menu-item -level-1"><a class="link title  link-index" href="index.html">scour.js</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title  link-history" href="HISTORY.html">Changelog</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-comparison" href="comparison.html">Comparison with others</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title -active link-extensions_example" href="extensions_example.html">Extensions example</a>
+                  <ul class="headings heading-list">
+                    <li class="heading-item -depth-2"><a class="hlink link-defining-extensions" href="#defining-extensions">Defining extensions</a>
+                    </li>
+                    <li class="heading-item -depth-2"><a class="hlink link-root-extensions" href="#root-extensions">Root extensions</a>
+                    </li>
+                    <li class="heading-item -depth-2"><a class="hlink link-traversing-relationships" href="#traversing-relationships">Traversing relationships</a>
+                    </li>
+                  </ul>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-redux_example" href="redux_example.html">Redux example</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </div>
       <div class="body page-extensions_example">
         <div class="header-nav">
-          <div class="right"><a href="https://github.com/rstacruz/scour" data-title="rstacruz/scour" class="iconlink">
+          <div class="right"><a class="iconlink" href="https://github.com/rstacruz/scour" data-title="rstacruz/scour">
               <!-- span.title Open in GitHub--><span class="icon -github"></span></a>
           </div>
         </div>
@@ -29,15 +56,15 @@ sources. Notice that it has foreign key relations in it: objects in <code>albums
 have the <code>artist_id</code> property that maps to the ID&#x2019;s in <code>artists</code>.</p>
 <h5 class="file-heading" id="sample-data">Sample data</h5>
 <pre><code class="lang-js">data =
-  { artists:
-    { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, name: <span class="pl-s">&apos;Ella Fitzgerald&apos;</span> },
-      <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, name: <span class="pl-s">&apos;Frank Sinatra&apos;</span> },
-      <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, name: <span class="pl-s">&apos;Miles Davis&apos;</span> },
-      <span class="hljs-number">4</span>: { id: <span class="hljs-number">4</span>, name: <span class="pl-s">&apos;Taylor Swift&apos;</span> } },
-    albums:
-    { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, name: <span class="pl-s">&apos;Kind of Blue&apos;</span>, genre: <span class="pl-s">&apos;Jazz&apos;</span>, artist_id: <span class="hljs-number">3</span> },
-      <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, name: <span class="pl-s">&apos;Come Fly With Me&apos;</span>, genre: <span class="pl-s">&apos;Jazz&apos;</span>, artist_id: <span class="hljs-number">2</span> },
-      <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, name: <span class="pl-s">&apos;1984&apos;</span>, genre: <span class="pl-s">&apos;Pop&apos;</span>, artist_id: <span class="hljs-number">4</span> } } }
+  { <span class="hljs-attr">artists</span>:
+    { <span class="hljs-number">1</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Ella Fitzgerald&apos;</span> },
+      <span class="hljs-number">2</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Frank Sinatra&apos;</span> },
+      <span class="hljs-number">3</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Miles Davis&apos;</span> },
+      <span class="hljs-number">4</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">4</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Taylor Swift&apos;</span> } },
+    <span class="hljs-attr">albums</span>:
+    { <span class="hljs-number">1</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Kind of Blue&apos;</span>, <span class="hljs-attr">genre</span>: <span class="pl-s">&apos;Jazz&apos;</span>, <span class="hljs-attr">artist_id</span>: <span class="hljs-number">3</span> },
+      <span class="hljs-number">2</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Come Fly With Me&apos;</span>, <span class="hljs-attr">genre</span>: <span class="pl-s">&apos;Jazz&apos;</span>, <span class="hljs-attr">artist_id</span>: <span class="hljs-number">2</span> },
+      <span class="hljs-number">3</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;1984&apos;</span>, <span class="hljs-attr">genre</span>: <span class="pl-s">&apos;Pop&apos;</span>, <span class="hljs-attr">artist_id</span>: <span class="hljs-number">4</span> } } }
 </code></pre>
 <h2 id="defining-extensions">Defining extensions</h2>
 <p>You can define extensions to traverse this intelligently, like ActiveRecord.
@@ -52,7 +79,7 @@ be applied to certain keypaths.</p>
 Artist = {
   <span class="pl-c">// Defines a has-many relationship</span>
   albums () {
-    <span class="pl-k">return</span> <span class="pl-k">this</span>.root.albums().filter({ artist_id: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
+    <span class="pl-k">return</span> <span class="pl-k">this</span>.root.albums().filter({ <span class="hljs-attr">artist_id</span>: <span class="pl-k">this</span>.get(<span class="pl-s">&apos;id&apos;</span>) })
   }
 }
 
@@ -74,7 +101,7 @@ Album = {
 <h2 id="root-extensions">Root extensions</h2>
 <p>With the extensions to the root (<code>&apos;&apos;</code>), it defined an alias to <code>go(&apos;albums&apos;)</code>
 as <code>albums()</code>.</p>
-<pre><code class="lang-js">albums = db.albums().filter({ genre: <span class="pl-s">&apos;Jazz&apos;</span> })
+<pre><code class="lang-js">albums = db.albums().filter({ <span class="hljs-attr">genre</span>: <span class="pl-s">&apos;Jazz&apos;</span> })
 </code></pre>
 <h2 id="traversing-relationships">Traversing relationships</h2>
 <p>Combined with the extensions to <code>artists.*</code> and <code>albums.*</code>, we can use it to
@@ -82,11 +109,11 @@ traverse back-and-forth along &#x201C;models&#x201D;.</p>
 <h5 class="file-heading" id="chaining-example">Chaining example</h5>
 <pre><code class="lang-js">db
   .artists()
-  .find({ name: <span class="pl-s">&apos;Taylor Swift&apos;</span> })
+  .find({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Taylor Swift&apos;</span> })
   .albums()
 </code></pre>
 <h5 class="file-heading" id="another-example">Another example</h5>
-<pre><code class="lang-js">albums.each((album) =&gt; {
+<pre><code class="lang-js">albums.each(<span class="hljs-function">(<span class="hljs-params">album</span>) =&gt;</span> {
   <span class="pl-c1">console</span>.log(album.artist().get(<span class="pl-s">&apos;name&apos;</span>))
 })
 </code></pre>
@@ -96,34 +123,6 @@ traverse back-and-forth along &#x201C;models&#x201D;.</p>
           <div class="left"><a href="comparison.html"><span class="title">Comparison with others</span></a></div>
           <div class="right"><a href="redux_example.html"><span class="label">Next: </span><span class="title">Redux example</span></a></div>
         </div>
-      </div>
-      <div class="menu toc-menu">
-        <li class="menu-item -level-0 -parent">
-          <ul class="submenu">
-            <li class="menu-item -level-1"><a href="index.html" class="link title  link-index">scour.js</a>
-            </li>
-            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="HISTORY.html" class="link title  link-history">Changelog</a>
-                </li>
-                <li class="menu-item -level-2"><a href="comparison.html" class="link title  link-comparison">Comparison with others</a>
-                </li>
-                <li class="menu-item -level-2"><a href="extensions_example.html" class="link title -active link-extensions_example">Extensions example</a>
-                  <ul class="headings heading-list">
-                    <li class="heading-item -depth-2"><a href="#defining-extensions" class="hlink link-defining-extensions">Defining extensions</a>
-                    </li>
-                    <li class="heading-item -depth-2"><a href="#root-extensions" class="hlink link-root-extensions">Root extensions</a>
-                    </li>
-                    <li class="heading-item -depth-2"><a href="#traversing-relationships" class="hlink link-traversing-relationships">Traversing relationships</a>
-                    </li>
-                  </ul>
-                </li>
-                <li class="menu-item -level-2"><a href="redux_example.html" class="link title  link-redux_example">Redux example</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
       </div>
     </div>
   </body>

@@ -2,13 +2,12 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" href="assets/style.css?t=a44c9e9d">
+    <link rel="stylesheet" href="assets/style.css?t=615badd5">
     <link rel="stylesheet" href="http://ricostacruz.com/docpress-rsc/style.css">
-    <script src="assets/script.js?t=2bcc4b59"></script>
+    <script src="assets/script.js?t=36f3d457"></script>
     <title>scour.js</title>
     <meta name="viewport" content="width=device-width">
-    <script>
-      if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
+    <script>if (false || window.location.hostname.indexOf("ricostacruz.com") === window.location.hostname.length - 15) {
         (function(d,o,c,p,r,e,s){d['GoogleAnalyticsObject']=r;d[r]=d[r]||function(){(d[r].q=d[r].q||[]).push(arguments)},d[r].l=1*new Date();e=o.createElement(c),s=o.getElementsByTagName(c)[0];e.async=1;e.src=p;s.parentNode.insertBefore(e,s)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
         ga('create',"UA-20473929-1",'auto')
       }
@@ -17,9 +16,159 @@
   <body class="-menu-visible">
     <div class="doc-layout">
       <div class="toggle menu-toggle js-menu-toggle"></div>
+      <div class="menu toc-menu">
+        <li class="menu-item -level-0 -parent">
+          <ul class="submenu">
+            <li class="menu-item -level-1"><a class="link title -active link-index" href="index.html">scour.js</a>
+            </li>
+            <li class="menu-item -level-1"><a class="link title link-install" href="#install">Install</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-features" href="#features">Features</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-traversal" href="#traversal">Traversal</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-chaining" href="#chaining">Chaining</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-immutable-modifications" href="#immutable-modifications">Immutable modifications</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-advanced-traversing" href="#advanced-traversing">Advanced traversing</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-models" href="#models">Models</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-api" href="#api">API</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-scour" href="#scour">scour</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-chaining-methods" href="#chaining-methods">Chaining methods</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-go" href="#go">go</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-at" href="#at">at</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-getat" href="#getat">getAt</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-filter" href="#filter">filter</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-reject" href="#reject">reject</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-find" href="#find">find</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-first" href="#first">first</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-last" href="#last">last</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-sortby" href="#sortby">sortBy</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-reading-methods" href="#reading-methods">Reading methods</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-get" href="#get">get</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-len" href="#len">len</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-toarray" href="#toarray">toArray</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-keys" href="#keys">keys</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-writing-methods" href="#writing-methods">Writing methods</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-set" href="#set">set</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-del" href="#del">del</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-extend" href="#extend">extend</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-utility-methods" href="#utility-methods">Utility methods</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-use" href="#use">use</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-index" href="#index">index</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-tojson" href="#tojson">toJSON</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-equal" href="#equal">equal</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-iteration-methods" href="#iteration-methods">Iteration methods</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-foreach" href="#foreach">forEach</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-each" href="#each">each</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-map" href="#map">map</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-mapobject" href="#mapobject">mapObject</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-indexedmap" href="#indexedmap">indexedMap</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-reset" href="#reset">reset</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-attributes" href="#attributes">Attributes</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-value" href="#value">value</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-root" href="#root">root</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-keypath" href="#keypath">keypath</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1 -parent"><a class="link title link-utility-functions" href="#utility-functions">Utility functions</a>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title link-scour.get" href="#scour.get">scour.get</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.set" href="#scour.set">scour.set</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.del" href="#scour.del">scour.del</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.extendin" href="#scour.extendin">scour.extendIn</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.each" href="#scour.each">scour.each</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.map" href="#scour.map">scour.map</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.mapobject" href="#scour.mapobject">scour.mapObject</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.indexedmap" href="#scour.indexedmap">scour.indexedMap</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.filter" href="#scour.filter">scour.filter</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title link-scour.sortby" href="#scour.sortby">scour.sortBy</a>
+                </li>
+              </ul>
+            </li>
+            <li class="menu-item -level-1"><a class="link title link-thanks" href="#thanks">Thanks</a>
+            </li>
+            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
+              <ul class="submenu">
+                <li class="menu-item -level-2"><a class="link title  link-history" href="HISTORY.html">Changelog</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-comparison" href="comparison.html">Comparison with others</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-extensions_example" href="extensions_example.html">Extensions example</a>
+                </li>
+                <li class="menu-item -level-2"><a class="link title  link-redux_example" href="redux_example.html">Redux example</a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </div>
       <div class="body page-index">
         <div class="header-nav">
-          <div class="right"><a href="https://github.com/rstacruz/scour" data-title="rstacruz/scour" class="iconlink">
+          <div class="right"><a class="iconlink" href="https://github.com/rstacruz/scour" data-title="rstacruz/scour">
               <!-- span.title Open in GitHub--><span class="icon -github"></span></a>
           </div>
         </div>
@@ -47,10 +196,10 @@ As a simple utility with a broad purpose, it can be used to solve many problems.
 <p>Calling <code>scour(object)</code> returns a wrapper that you can use to traverse <code>object</code>.
 Use <a href="#get">get()</a> to retrieve values.</p>
 <pre><code class="lang-js">data =
-  { users:
-    { <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;john&apos;</span> },
-      <span class="hljs-number">2</span>: { name: <span class="pl-s">&apos;shane&apos;</span>, confirmed: <span class="pl-c1">true</span> },
-      <span class="hljs-number">3</span>: { name: <span class="pl-s">&apos;barry&apos;</span>, confirmed: <span class="pl-c1">true</span> } } }
+  { <span class="hljs-attr">users</span>:
+    { <span class="hljs-number">1</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;john&apos;</span> },
+      <span class="hljs-number">2</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;shane&apos;</span>, <span class="hljs-attr">confirmed</span>: <span class="pl-c1">true</span> },
+      <span class="hljs-number">3</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;barry&apos;</span>, <span class="hljs-attr">confirmed</span>: <span class="pl-c1">true</span> } } }
 </code></pre>
 <pre><code class="lang-js">scour(data).get(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;1&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;john&apos;</span>
 </code></pre>
@@ -59,10 +208,10 @@ Use <a href="#get">get()</a> to retrieve values.</p>
 <p>Use <a href="#go">go()</a> to dig into the structure. It will return another <code>scour</code>
 wrapper scoped to that object.</p>
 <pre><code class="lang-js">data =
-  { users:
-    { admins:
-      { bob: { logged_in: <span class="pl-c1">true</span> },
-        sue: { logged_in: <span class="pl-c1">false</span> } } } }
+  { <span class="hljs-attr">users</span>:
+    { <span class="hljs-attr">admins</span>:
+      { <span class="hljs-attr">bob</span>: { <span class="hljs-attr">logged_in</span>: <span class="pl-c1">true</span> },
+        <span class="hljs-attr">sue</span>: { <span class="hljs-attr">logged_in</span>: <span class="pl-c1">false</span> } } } }
 </code></pre>
 <pre><code class="lang-js">users  = scour(data).go(<span class="pl-s">&apos;users&apos;</span>)            <span class="pl-c">// =&gt; [scour (admins)]</span>
 admins = scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;admins&apos;</span>)  <span class="pl-c">// =&gt; [scour (bob, sue)]</span>
@@ -74,7 +223,7 @@ admins.go(<span class="pl-s">&apos;bob&apos;</span>).get(<span class="pl-s">&apo
 <p><code>scour()</code> provides a wrapper that can be used to chain methods. This is inspired by <a href="http://underscorejs.org/">Underscore</a> and <a href="http://lodash.com/">Lodash</a>.</p>
 <pre><code class="lang-js">scour(data)
   .go(<span class="pl-s">&apos;users&apos;</span>)
-  .filter({ admin: <span class="pl-c1">true</span> })
+  .filter({ <span class="hljs-attr">admin</span>: <span class="pl-c1">true</span> })
   .value
 </code></pre>
 <br>
@@ -97,7 +246,7 @@ modifications made.</p>
 <pre><code class="lang-js">users = scour(data).go(<span class="pl-s">&apos;users&apos;</span>)
 
 users
-  .filter({ confirmed: <span class="pl-c1">true</span> })
+  .filter({ <span class="hljs-attr">confirmed</span>: <span class="pl-c1">true</span> })
   .at(<span class="hljs-number">0</span>)
   .get(<span class="pl-s">&apos;name&apos;</span>)   <span class="pl-c">// =&gt; &apos;shane&apos;</span>
 </code></pre>
@@ -107,9 +256,9 @@ users
 See <a href="extensions_example.html">a detailed example</a> to learn more.</p>
 <h5 class="file-heading" id="sample-data">Sample data</h5>
 <pre><code class="lang-js">data =
-  { artists:
-    { <span class="hljs-number">1</span>: { first_name: <span class="pl-s">&apos;Louie&apos;</span>, last_name: <span class="pl-s">&apos;Armstrong&apos;</span> },
-      <span class="hljs-number">2</span>: { first_name: <span class="pl-s">&apos;Miles&apos;</span>, last_name: <span class="pl-s">&apos;Davis&apos;</span> } } }
+  { <span class="hljs-attr">artists</span>:
+    { <span class="hljs-number">1</span>: { <span class="hljs-attr">first_name</span>: <span class="pl-s">&apos;Louie&apos;</span>, <span class="hljs-attr">last_name</span>: <span class="pl-s">&apos;Armstrong&apos;</span> },
+      <span class="hljs-number">2</span>: { <span class="hljs-attr">first_name</span>: <span class="pl-s">&apos;Miles&apos;</span>, <span class="hljs-attr">last_name</span>: <span class="pl-s">&apos;Davis&apos;</span> } } }
 </code></pre>
 <h5 class="file-heading" id="your-models">Your models</h5>
 <pre><code class="lang-js">Root = {
@@ -129,7 +278,7 @@ Artist = {
     <span class="pl-s">&apos;artists.*&apos;</span>: Artist
   })
 
-db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).fullname()
+db.artists().find({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Miles&apos;</span> }).fullname()
 <span class="pl-c">//=&gt; &apos;Miles Davis&apos;</span>
 </code></pre>
 <br>
@@ -144,16 +293,16 @@ db.artists().find({ name: <span class="pl-s">&apos;Miles&apos;</span> }).fullnam
 </code></pre>
 <p>It can be called on any Object or Array. (In fact, it can be called on
 anything, but is only generally useful for Objects and Arrays.)</p>
-<pre><code class="lang-js">data = { menu: { visible: <span class="pl-c1">true</span>, position: <span class="pl-s">&apos;left&apos;</span> } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">menu</span>: { <span class="hljs-attr">visible</span>: <span class="pl-c1">true</span>, <span class="hljs-attr">position</span>: <span class="pl-s">&apos;left&apos;</span> } }
 scour(data).get(<span class="pl-s">&apos;menu.visible&apos;</span>)
 
-list = [ { id: <span class="hljs-number">2</span> }, { id: <span class="hljs-number">5</span> }, { id: <span class="hljs-number">12</span> } ]
+list = [ { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span> }, { <span class="hljs-attr">id</span>: <span class="hljs-number">5</span> }, { <span class="hljs-attr">id</span>: <span class="hljs-number">12</span> } ]
 scour(list).get(<span class="pl-s">&apos;0.id&apos;</span>)
 </code></pre>
 <p><strong>Chaining</strong>:
 You can use it to start method chains. In fact, the intended use is to keep
 your root <a href="#scour">scour</a> object around, and chain from this.</p>
-<pre><code class="lang-js">db = scour({ menu: { visible: <span class="pl-c1">true</span>, position: <span class="pl-s">&apos;left&apos;</span> } })
+<pre><code class="lang-js">db = scour({ <span class="hljs-attr">menu</span>: { <span class="hljs-attr">visible</span>: <span class="pl-c1">true</span>, <span class="hljs-attr">position</span>: <span class="pl-s">&apos;left&apos;</span> } })
 
 <span class="pl-c">// Elsewhere:</span>
 menu = db.go(<span class="pl-s">&apos;menu&apos;</span>)
@@ -178,17 +327,17 @@ methods return <a href="#scour">scour</a> instances, making them suitable for ch
 <h4 id="on-null-values">On null values</h4>
 <p>Note that <code>undefined</code>, <code>false</code> and <code>null</code> values are still <a href="#scour">scour</a>-wrapped
 when returned from <a href="#go">go()</a>, <a href="#at">at()</a> and [find()].</p>
-<pre><code class="lang-js">list = [ { name: <span class="pl-s">&apos;Homer&apos;</span> }, { name: <span class="pl-s">&apos;Bart&apos;</span> } ]
+<pre><code class="lang-js">list = [ { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Homer&apos;</span> }, { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Bart&apos;</span> } ]
 
 scour(list).at(<span class="hljs-number">4</span>)         <span class="pl-c">// =&gt; [ scour undefined ]</span>
 scour(list).at(<span class="hljs-number">4</span>).value   <span class="pl-c">// =&gt; undefined</span>
 </code></pre>
 <p>This is done so that you can chain methods safely even when something is null.
 This behavior is consistent with what you&#x2019;d expect with jQuery.</p>
-<pre><code class="lang-js">data = { users: { ... } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">users</span>: { ... } }
 db = scour(data)
 
-db.go(<span class="pl-s">&apos;blogposts&apos;</span>).map((post) =&gt; post.get(<span class="pl-s">&apos;title&apos;</span>))
+db.go(<span class="pl-s">&apos;blogposts&apos;</span>).map(<span class="hljs-function">(<span class="hljs-params">post</span>) =&gt;</span> post.get(<span class="pl-s">&apos;title&apos;</span>))
 <span class="pl-c">// =&gt; []</span>
 </code></pre>
 <h3 id="go">go</h3>
@@ -198,9 +347,9 @@ db.go(<span class="pl-s">&apos;blogposts&apos;</span>).map((post) =&gt; post.get
 <p>Navigates down to a given <code>keypath</code>. Always returns a <a href="#scour">scour</a> instance.
 Rules <a href="#on-null-values">on null values</a> apply.</p>
 <pre><code class="lang-js">data =
-  { users:
-    { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, last: <span class="pl-s">&apos;jobs&apos;</span> },
-      <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span>, last: <span class="pl-s">&apos;gates&apos;</span> } } }
+  { <span class="hljs-attr">users</span>:
+    { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span>, <span class="hljs-attr">last</span>: <span class="pl-s">&apos;jobs&apos;</span> },
+      <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span>, <span class="hljs-attr">last</span>: <span class="pl-s">&apos;gates&apos;</span> } } }
 
 scour(data).go(<span class="pl-s">&apos;users&apos;</span>)                    <span class="pl-c">// =&gt; [scour (users)]</span>
 scour(data).go(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;12&apos;</span>)              <span class="pl-c">// =&gt; [scour (name, last)]</span>
@@ -230,8 +379,8 @@ attr.keypath   <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;12&apos;, &
 index, not by key. This returns a the raw value, unlike <a href="#getat">getAt()</a>. Rules
 <a href="#on-null-values">on null values</a> apply.</p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span> } }
 
 scour(users).at(<span class="hljs-number">0</span>)          <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
 scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
@@ -244,8 +393,8 @@ scour(users).get(<span class="hljs-number">12</span>)        <span class="pl-c">
 index, not by key. This returns a the raw value, unlike <a href="#at">at()</a>.
 <em>(Since v0.5)</em></p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span> } }
 
 scour(users).at(<span class="hljs-number">0</span>)           <span class="pl-c">// =&gt; [scour { name: &apos;steve&apos; }]</span>
 scour(users).getAt(<span class="hljs-number">0</span>)        <span class="pl-c">// =&gt; { name: &apos;steve&apos; }</span>
@@ -257,39 +406,39 @@ scour(users).getAt(<span class="hljs-number">0</span>)        <span class="pl-c"
 <p>Sifts through the values and returns a set that matches given
 <code>conditions</code>. Supports simple objects, MongoDB-style
 queries, and functions.</p>
-<pre><code class="lang-js">scour(data).filter({ name: <span class="pl-s">&apos;Moe&apos;</span> })
-scour(data).filter({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;Larry&apos;</span>, <span class="pl-s">&apos;Curly&apos;</span>] })
-scour(data).filter((item) =&gt; item.get(<span class="pl-s">&apos;name&apos;</span>) === <span class="pl-s">&apos;Moe&apos;</span>)
+<pre><code class="lang-js">scour(data).filter({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Moe&apos;</span> })
+scour(data).filter({ <span class="hljs-attr">name</span>: { <span class="hljs-attr">$in</span>: [<span class="pl-s">&apos;Larry&apos;</span>, <span class="pl-s">&apos;Curly&apos;</span>] })
+scour(data).filter(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item.get(<span class="pl-s">&apos;name&apos;</span>) === <span class="pl-s">&apos;Moe&apos;</span>)
 </code></pre>
 <p><strong>Filter by object:</strong>
 If you pass an object as a condition, <code>filter()</code> will check if that object
 coincides with the objects in the collection.</p>
-<pre><code class="lang-js">scour(data).filter({ name: <span class="pl-s">&apos;Moe&apos;</span> })
+<pre><code class="lang-js">scour(data).filter({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Moe&apos;</span> })
 </code></pre>
 <p><strong>Filter by function:</strong>
 You may pass a function as a parameter. In this case, the <code>item</code> being
 passed to the callback will be a <a href="#scour">scour</a>-wrapped object. The result
 will also be a <a href="#scour">scour</a>-wrapped object, making it chainable.</p>
 <pre><code class="lang-js">scour(data)
-  .filter((item, key) =&gt; +item.get(<span class="pl-s">&apos;price&apos;</span>) &gt; <span class="hljs-number">200</span>)
+  .filter(<span class="hljs-function">(<span class="hljs-params">item, key</span>) =&gt;</span> +item.get(<span class="pl-s">&apos;price&apos;</span>) &gt; <span class="hljs-number">200</span>)
   .sortBy(<span class="pl-s">&apos;price&apos;</span>)
   .first()
 </code></pre>
 <p><strong>Advanced queries:</strong>
 MongoDB-style queries are supported as provided by <a href="https://www.npmjs.com/package/sift">sift.js</a>.  For
 reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>.</p>
-<pre><code class="lang-js">scour(products).filter({ price: { $gt: <span class="hljs-number">200</span> })
-scour(articles).filter({ published_at: { $not: <span class="pl-c1">null</span> }})
+<pre><code class="lang-js">scour(products).filter({ <span class="hljs-attr">price</span>: { <span class="hljs-attr">$gt</span>: <span class="hljs-number">200</span> })
+scour(articles).filter({ <span class="hljs-attr">published_at</span>: { <span class="hljs-attr">$not</span>: <span class="pl-c1">null</span> }})
 </code></pre>
 <p><strong>Arrays or objects:</strong>
 Both arrays and array-like objects are supported. In this example below,
 an object will be used as the input.</p>
 <pre><code class="lang-js">devices =
-  { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, name: <span class="pl-s">&apos;Phone&apos;</span>, mobile: <span class="pl-c1">true</span> },
-    <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, name: <span class="pl-s">&apos;Tablet&apos;</span>, mobile: <span class="pl-c1">true</span> },
-    <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, name: <span class="pl-s">&apos;Desktop&apos;</span>, mobile: <span class="pl-c1">false</span> } }
+  { <span class="hljs-number">1</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Phone&apos;</span>, <span class="hljs-attr">mobile</span>: <span class="pl-c1">true</span> },
+    <span class="hljs-number">2</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Tablet&apos;</span>, <span class="hljs-attr">mobile</span>: <span class="pl-c1">true</span> },
+    <span class="hljs-number">3</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Desktop&apos;</span>, <span class="hljs-attr">mobile</span>: <span class="pl-c1">false</span> } }
 
-scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
+scour(devices).filter({ <span class="hljs-attr">mobile</span>: <span class="pl-c1">true</span> }).len()
 <span class="pl-c">// =&gt; 2</span>
 </code></pre>
 <p>Also see <a href="#scour-filter">scour.filter()</a> for the unwrapped version.</p>
@@ -306,8 +455,8 @@ scour(devices).filter({ mobile: <span class="pl-c1">true</span> }).len()
 queries. For reference, see <a href="https://docs.mongodb.org/manual/reference/operator/query/">MongoDB Query Operators</a>. Also
 see <a href="#filter">filter()</a>, as this is functionally-equivalent to the first result of
 <code>filter()</code>. Rules <a href="#on-null-values">on null values</a> apply.</p>
-<pre><code class="lang-js">scour(data).find({ name: <span class="pl-s">&apos;john&apos;</span> })
-scour(data).find({ name: { $<span class="pl-k">in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
+<pre><code class="lang-js">scour(data).find({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;john&apos;</span> })
+scour(data).find({ <span class="hljs-attr">name</span>: { <span class="hljs-attr">$in</span>: [<span class="pl-s">&apos;moe&apos;</span>, <span class="pl-s">&apos;larry&apos;</span>] })
 </code></pre>
 <h3 id="first">first</h3>
 <blockquote>
@@ -329,9 +478,9 @@ to <code>at(len() - 1)</code>: see <a href="#at">at()</a> and <a href="#len">len
 chaining. Like other chainable methods, this works on arrays as well as
 objects. <em>(Since v0.8)</em></p>
 <pre><code class="lang-js">data =
-  { <span class="hljs-number">0</span>: { name: <span class="pl-s">&apos;Wilma&apos;</span> },
-    <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;Barney&apos;</span> },
-    <span class="hljs-number">2</span>: { name: <span class="pl-s">&apos;Fred&apos;</span> } }
+  { <span class="hljs-number">0</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Wilma&apos;</span> },
+    <span class="hljs-number">1</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Barney&apos;</span> },
+    <span class="hljs-number">2</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Fred&apos;</span> } }
 
 scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>).value
 <span class="pl-c">// { 1: { name: &apos;Barney&apos; },</span>
@@ -344,7 +493,7 @@ function, the <code>item</code> being passed is a <a href="#scour">scour</a>-wra
 in <a href="#foreach">forEach()</a> (et al). These two examples below are
 functionally-equivalent.</p>
 <pre><code class="lang-js">scour(data).sortBy(<span class="pl-s">&apos;name&apos;</span>)
-scour(data).sortBy((item) =&gt; item.get(<span class="pl-s">&apos;name&apos;</span>))
+scour(data).sortBy(<span class="hljs-function">(<span class="hljs-params">item</span>) =&gt;</span> item.get(<span class="pl-s">&apos;name&apos;</span>))
 </code></pre>
 <p>You may also define nested keys in dot-notation:</p>
 <pre><code class="lang-js">scour(data).sortBy(<span class="pl-s">&apos;user.name&apos;</span>)
@@ -357,9 +506,9 @@ scour(data).sortBy((item) =&gt; item.get(<span class="pl-s">&apos;name&apos;</sp
 </blockquote>
 <p>Returns data in a given <code>keypath</code>.</p>
 <pre><code class="lang-js">data =
-  { users:
-    { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-      <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } } }
+  { <span class="hljs-attr">users</span>:
+    { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span> },
+      <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span> } } }
 
 scour(data).get(<span class="pl-s">&apos;users&apos;</span>)       <span class="pl-c">// =&gt; same as data.users</span>
 scour(data).go(<span class="pl-s">&apos;users&apos;</span>).value  <span class="pl-c">// =&gt; same as data.users</span>
@@ -376,8 +525,8 @@ scour(data).get(<span class="pl-s">&apos;books&apos;</span>, <span class="pl-s">
 <p>Returns the length of the object or array. For objects, it returns the
 number of keys.</p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span> } }
 
 names = scour(users).len()  <span class="pl-c">// =&gt; 2</span>
 </code></pre>
@@ -389,8 +538,8 @@ names = scour(users).len()  <span class="pl-c">// =&gt; 2</span>
 that object. If the value is an array, it returns it as is. Also aliased
 as <code>values()</code>.</p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span> } }
 
 names = scour(users).toArray()
 <span class="pl-c">// =&gt; [ {name: &apos;steve&apos;}, {name: &apos;bill&apos;} ]</span>
@@ -411,7 +560,7 @@ data, but rather spawn new objects with the modifications done on them.</p>
 </blockquote>
 <p>Sets values immutably. Returns a copy of the same object (<a href="#scour">scour</a>-wrapped)
 with the modifications applied.</p>
-<pre><code class="lang-js">data = { bob: { name: <span class="pl-s">&apos;Bob&apos;</span> } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">bob</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Bob&apos;</span> } }
 db = scour(data)
 db.set([ <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span> ], <span class="pl-s">&apos;Robert&apos;</span>)
 <span class="pl-c">// db.value == { bob: { name: &apos;Robert&apos; } }</span>
@@ -419,7 +568,7 @@ db.set([ <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;nam
 <p><strong>Immutability:</strong>
 This is an immutable function, and will return a new object. It won&#x2019;t
 modify your original object.</p>
-<pre><code class="lang-js">profile = scour({ name: <span class="pl-s">&apos;John&apos;</span> })
+<pre><code class="lang-js">profile = scour({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;John&apos;</span> })
 profile2 = profile.set(<span class="pl-s">&apos;email&apos;</span>, <span class="pl-s">&apos;john@gmail.com&apos;</span>)
 
 profile.value   <span class="pl-c">// =&gt; { name: &apos;John&apos; }</span>
@@ -462,8 +611,8 @@ scour(data).del([<span class="pl-s">&apos;menu&apos;</span>, <span class="pl-s">
 </blockquote>
 <p>Extends the data with more values. Returns a <a href="#scour">scour</a>-wrapped object. Just
 like <a href="https://devdocs.io/javascript/global_objects/object/assign">Object.assign</a>, you may pass multiple objects to the parameters.</p>
-<pre><code class="lang-js">data  = { a: <span class="hljs-number">1</span>, b: <span class="hljs-number">2</span> }
-data2 = scour(data).extend({ c: <span class="hljs-number">3</span> })
+<pre><code class="lang-js">data  = { <span class="hljs-attr">a</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">2</span> }
+data2 = scour(data).extend({ <span class="hljs-attr">c</span>: <span class="hljs-number">3</span> })
 </code></pre>
 <pre><code class="lang-js">data2  <span class="pl-c">// =&gt; [scour { a: 1, b: 2, c: 3 }]</span>
 data2.value   <span class="pl-c">// =&gt; { a: 1, b: 2, c: 3 }</span>
@@ -471,7 +620,7 @@ data2.value   <span class="pl-c">// =&gt; { a: 1, b: 2, c: 3 }</span>
 <p>When used with anything non-object, it will be overridden.</p>
 <pre><code class="lang-js">data = {}
 db = scour(data)
-db = db.go(<span class="pl-s">&apos;state&apos;</span>).extend({ pressed: <span class="pl-c1">true</span> }).root
+db = db.go(<span class="pl-s">&apos;state&apos;</span>).extend({ <span class="hljs-attr">pressed</span>: <span class="pl-c1">true</span> }).root
 
 db.value  <span class="pl-c">// =&gt; { state: { pressed: true } }</span>
 </code></pre>
@@ -485,9 +634,9 @@ db.value  <span class="pl-c">// =&gt; { state: { pressed: true } }</span>
 <p>Extends functionality for certain keypaths with custom methods.
 See <a href="extensions_example.html">Extensions example</a> for examples.</p>
 <pre><code class="lang-js">data =
-  { users:
-    { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span>, surname: <span class="pl-s">&apos;jobs&apos;</span> },
-      <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span>, surname: <span class="pl-s">&apos;gates&apos;</span> } } }
+  { <span class="hljs-attr">users</span>:
+    { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span>, <span class="hljs-attr">surname</span>: <span class="pl-s">&apos;jobs&apos;</span> },
+      <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span>, <span class="hljs-attr">surname</span>: <span class="pl-s">&apos;gates&apos;</span> } } }
 
 extensions = {
   <span class="pl-s">&apos;users.*&apos;</span>: {
@@ -534,7 +683,7 @@ some examples:</p>
 Any extensions in a scoped object (ie, made with <a href="#go">go()</a>) will be used relative
 to it. For instance, if you define an extension to <code>admins.*</code> inside
 <code>.go(&apos;users&apos;)</code>, it will affect `users.</p>
-<pre><code class="lang-js">data = { users: { john: { } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">users</span>: { <span class="hljs-attr">john</span>: { } }
 db = scour(data)
 
 users = db.go(<span class="pl-s">&apos;users&apos;</span>)
@@ -558,12 +707,12 @@ db.go(<span class="pl-s">&apos;users.john&apos;</span>).hasName()           <spa
 <li><code>field</code> <em>(String)</em> - the name of the field to be indexed.</li>
 </ul>
 <pre><code class="lang-js">data =
-  { users:
-    { <span class="hljs-number">1</span>: { name: <span class="pl-s">&apos;John Creamer&apos;</span> },
-      <span class="hljs-number">2</span>: { name: <span class="pl-s">&apos;Stephane K&apos;</span> } } }
+  { <span class="hljs-attr">users</span>:
+    { <span class="hljs-number">1</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;John Creamer&apos;</span> },
+      <span class="hljs-number">2</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Stephane K&apos;</span> } } }
 
 db = scour(data).index(<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;name&apos;</span>)
-db.filter({ name: <span class="pl-s">&apos;Stephane K&apos;</span> })
+db.filter({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Stephane K&apos;</span> })
 </code></pre>
 <p>Doing this will add an index in the root (acccessible via
 <code>scour().indices</code>) to make searches faster for certain <a href="#filter">filter()</a> queries.
@@ -593,22 +742,22 @@ a.equal(b)   <span class="pl-c">// =&gt; true</span>
 methods can work with either arrays or array-like objects, such as
 below.</p>
 <pre><code class="lang-js">subjects =
-  { <span class="hljs-number">1</span>: { id: <span class="hljs-number">1</span>, title: <span class="pl-s">&apos;Math&apos;</span>, level: <span class="hljs-number">101</span> },
-    <span class="hljs-number">2</span>: { id: <span class="hljs-number">2</span>, title: <span class="pl-s">&apos;Science&apos;</span>, level: <span class="hljs-number">103</span> },
-    <span class="hljs-number">3</span>: { id: <span class="hljs-number">3</span>, title: <span class="pl-s">&apos;History&apos;</span>, level: <span class="hljs-number">102</span> } }
+  { <span class="hljs-number">1</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">1</span>, <span class="hljs-attr">title</span>: <span class="pl-s">&apos;Math&apos;</span>, <span class="hljs-attr">level</span>: <span class="hljs-number">101</span> },
+    <span class="hljs-number">2</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">2</span>, <span class="hljs-attr">title</span>: <span class="pl-s">&apos;Science&apos;</span>, <span class="hljs-attr">level</span>: <span class="hljs-number">103</span> },
+    <span class="hljs-number">3</span>: { <span class="hljs-attr">id</span>: <span class="hljs-number">3</span>, <span class="hljs-attr">title</span>: <span class="pl-s">&apos;History&apos;</span>, <span class="hljs-attr">level</span>: <span class="hljs-number">102</span> } }
 </code></pre>
 <p><strong>Values:</strong>
 For all these functions, The items passed onto the callbacks <em>is</em> a
 <a href="#scour">scour</a>-wrapped object. Use <code>item.value</code> or <code>this</code> to access the raw
 values.</p>
-<pre><code class="lang-js">scour(subjects).forEach((subject, key) =&gt; {
+<pre><code class="lang-js">scour(subjects).forEach(<span class="hljs-function">(<span class="hljs-params">subject, key</span>) =&gt;</span> {
   <span class="pl-c1">console</span>.log(subject.get(<span class="pl-s">&apos;title&apos;</span>))
 })
 </code></pre>
 <p><strong>Return values:</strong>
 For methods that return values (such as <a href="#map">map()</a>, the returned results <em>is
 not</em> a <a href="#scour">scour</a>-wrapped object, and isn&#x2019;t suitable for chaining.</p>
-<pre><code class="lang-js">scour(subjects).map((subject, key) =&gt; {
+<pre><code class="lang-js">scour(subjects).map(<span class="hljs-function">(<span class="hljs-params">subject, key</span>) =&gt;</span> {
   <span class="pl-k">return</span> subject.get(<span class="pl-s">&apos;title&apos;</span>) + <span class="pl-s">&apos; &apos;</span> + subject.get(<span class="pl-s">&apos;level&apos;</span>)
 })
 <span class="pl-c">// =&gt; [ &apos;Math 101&apos;, &apos;Science 103&apos;, &apos;History 102&apos; ]</span>
@@ -620,10 +769,10 @@ not</em> a <a href="#scour">scour</a>-wrapped object, and isn&#x2019;t suitable 
 <p>Loops through each item. Supports both arrays and objects.
 The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;steve&apos;</span> },
+    <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;bill&apos;</span> } }
 
-scour(users).each((user, key) =&gt; {
+scour(users).each(<span class="hljs-function">(<span class="hljs-params">user, key</span>) =&gt;</span> {
   <span class="pl-c1">console</span>.log(user.get(<span class="pl-s">&apos;name&apos;</span>))
 })
 </code></pre>
@@ -646,10 +795,10 @@ scour(users).each((user, key) =&gt; {
 return values. Supports both arrays and objects.
 The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.</p>
 <pre><code class="lang-js">users =
-  { <span class="hljs-number">12</span>: { name: <span class="pl-s">&apos;Steve&apos;</span> },
-    <span class="hljs-number">23</span>: { name: <span class="pl-s">&apos;Bill&apos;</span> } }
+  { <span class="hljs-number">12</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Steve&apos;</span> },
+    <span class="hljs-number">23</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Bill&apos;</span> } }
 
-names = scour(users).map((user, key) =&gt; user.get(<span class="pl-s">&apos;name&apos;</span>))
+names = scour(users).map(<span class="hljs-function">(<span class="hljs-params">user, key</span>) =&gt;</span> user.get(<span class="pl-s">&apos;name&apos;</span>))
 <span class="pl-c">// =&gt; [ &apos;Steve&apos;, &apos;Bill&apos; ]</span>
 </code></pre>
 <h3 id="mapobject">mapObject</h3>
@@ -676,7 +825,7 @@ The rules specified in <a href="#iteration-methods">Iteration methods</a> apply.
 <p>Returns a clone with the <code>value</code> replaced. The new instance will
 retain the same properties, so things like <a href="#use">use()</a> extensions are carried
 over.</p>
-<pre><code class="lang-js">db = scour({ name: <span class="pl-s">&apos;hello&apos;</span> })
+<pre><code class="lang-js">db = scour({ <span class="hljs-attr">name</span>: <span class="pl-s">&apos;hello&apos;</span> })
 db.value  <span class="pl-c">//=&gt; { name: &apos;hello&apos; }</span>
 
 db = db.reset({})
@@ -692,11 +841,11 @@ action to reset the state back to empty.</p>
 </blockquote>
 <p>The raw value being wrapped. You can use this to terminate a chained call.</p>
 <pre><code class="lang-js">users =
-  [ { name: <span class="pl-s">&apos;john&apos;</span>, admin: <span class="pl-c1">true</span> },
-    { name: <span class="pl-s">&apos;kyle&apos;</span>, admin: <span class="pl-c1">false</span> } ]
+  [ { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;john&apos;</span>, <span class="hljs-attr">admin</span>: <span class="pl-c1">true</span> },
+    { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;kyle&apos;</span>, <span class="hljs-attr">admin</span>: <span class="pl-c1">false</span> } ]
 
 scour(users)
-  .filter({ admin: <span class="pl-c1">true</span> })
+  .filter({ <span class="hljs-attr">admin</span>: <span class="pl-c1">true</span> })
   .value
 <span class="pl-c">// =&gt; [ { name: &apos;john&apos;, admin: true } ]</span>
 </code></pre>
@@ -716,7 +865,7 @@ photos.root    <span class="pl-c">// =&gt; same as `db`</span>
 <p>This allows you to return to the root when needed.</p>
 <pre><code class="lang-js">db = scour(...)
 artist = db.go(<span class="pl-s">&apos;artists&apos;</span>, <span class="pl-s">&apos;9328&apos;</span>)
-artist.root.go(<span class="pl-s">&apos;albums&apos;</span>).find({ artist_id: artist.get(<span class="pl-s">&apos;id&apos;</span>) })
+artist.root.go(<span class="pl-s">&apos;albums&apos;</span>).find({ <span class="hljs-attr">artist_id</span>: artist.get(<span class="pl-s">&apos;id&apos;</span>) })
 </code></pre>
 <h3 id="keypath">keypath</h3>
 <blockquote>
@@ -743,7 +892,7 @@ user.keypath             <span class="pl-c">// =&gt; [&apos;users&apos;, &apos;a
 <p><code>scour.get(object, keypath)</code></p>
 </blockquote>
 <p>Gets a keypath from an object.</p>
-<pre><code class="lang-js">data = { users: { bob: { name: <span class="pl-s">&apos;john&apos;</span> } } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">users</span>: { <span class="hljs-attr">bob</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;john&apos;</span> } } }
 
 result = get(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span>])
 <span class="pl-c">// =&gt; &apos;robert&apos;</span>
@@ -754,7 +903,7 @@ result = get(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl
 <p><code>scour.set(object, keypath, value)</code></p>
 </blockquote>
 <p>Sets a <code>keypath</code> into an <code>object</code> immutably.</p>
-<pre><code class="lang-js">data = { users: { bob: { name: <span class="pl-s">&apos;john&apos;</span> } } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">users</span>: { <span class="hljs-attr">bob</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;john&apos;</span> } } }
 
 result = set(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span>], <span class="pl-s">&apos;robert&apos;</span>)
 <span class="pl-c">// =&gt; { users: { bob: { name: &apos;robert&apos; } } }</span>
@@ -765,7 +914,7 @@ result = set(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl
 <p><code>scour.del(object, keypath)</code></p>
 </blockquote>
 <p>Deletes a <code>keypath</code> from an <code>object</code> immutably.</p>
-<pre><code class="lang-js">data = { users: { bob: { name: <span class="pl-s">&apos;robert&apos;</span> } } }
+<pre><code class="lang-js">data = { <span class="hljs-attr">users</span>: { <span class="hljs-attr">bob</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;robert&apos;</span> } } }
 result = del(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>, <span class="pl-s">&apos;name&apos;</span>])
 
 <span class="pl-c">// =&gt; { users: { bob: {} } }</span>
@@ -776,8 +925,8 @@ result = del(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl
 <p><code>scour.extendIn(object, keypath, extensions...)</code></p>
 </blockquote>
 <p>Extends a <code>keypath</code> from an <code>object</code> immutably.</p>
-<pre><code class="lang-js">data = { users: { bob: { name: <span class="pl-s">&apos;robert&apos;</span> } } }
-result = extendIn(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>], { email: <span class="pl-s">&apos;bob@gmail.com&apos;</span> })
+<pre><code class="lang-js">data = { <span class="hljs-attr">users</span>: { <span class="hljs-attr">bob</span>: { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;robert&apos;</span> } } }
+result = extendIn(data, [<span class="pl-s">&apos;users&apos;</span>, <span class="pl-s">&apos;bob&apos;</span>], { <span class="hljs-attr">email</span>: <span class="pl-s">&apos;bob@gmail.com&apos;</span> })
 
 <span class="pl-c">// =&gt; { users: { bob: { name: &apos;robert&apos;, email: &apos;bob@gmail.com&apos; } } }</span>
 </code></pre>
@@ -810,7 +959,7 @@ on every element in this array. Works like <a href="http://devdocs.io/javascript
 objects as well as arrays, and it returns an object instead.</p>
 <p>The callback <code>fn</code> will be invoked with two parameters: <code>currentValue</code> and
 <code>key</code>, just like <a href="http://devdocs.io/javascript/global_objects/array/map">Array#map</a>.</p>
-<pre><code class="lang-js">object = { a: <span class="hljs-number">20</span>, b: <span class="hljs-number">30</span>, c: <span class="hljs-number">40</span> }
+<pre><code class="lang-js">object = { <span class="hljs-attr">a</span>: <span class="hljs-number">20</span>, <span class="hljs-attr">b</span>: <span class="hljs-number">30</span>, <span class="hljs-attr">c</span>: <span class="hljs-number">40</span> }
 result = scour.mapObject(object, (val, key) =&gt; {
   <span class="pl-k">return</span> <span class="pl-s">&apos;$&apos;</span> + val + <span class="pl-s">&apos;.00&apos;</span>
 })
@@ -857,7 +1006,7 @@ return an <code>Array</code>. If <code>false</code>, it will always be an <code>
 <p><code>scour.sortBy(iterable, criteria)</code></p>
 </blockquote>
 <p>Sorts by a given criteria.</p>
-<pre><code class="lang-js">list = [ { name: <span class="pl-s">&apos;Fred&apos;</span> }, { name: <span class="pl-s">&apos;Barney&apos;</span> }, { name: <span class="pl-s">&apos;Wilma&apos;</span> } ]
+<pre><code class="lang-js">list = [ { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Fred&apos;</span> }, { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Barney&apos;</span> }, { <span class="hljs-attr">name</span>: <span class="pl-s">&apos;Wilma&apos;</span> } ]
 scour.sortBy(list, <span class="pl-s">&apos;name&apos;</span>)
 </code></pre>
 <p>This is also available as <code>require(&apos;scourjs/utilities/sort_by&apos;)</code>.</p>
@@ -875,156 +1024,6 @@ Twitter <a href="https://twitter.com/rstacruz">@rstacruz</a></p>
         <div class="footer-nav">
           <div class="right"><a href="HISTORY.html"><span class="label">Next: </span><span class="title">Changelog</span></a></div>
         </div>
-      </div>
-      <div class="menu toc-menu">
-        <li class="menu-item -level-0 -parent">
-          <ul class="submenu">
-            <li class="menu-item -level-1"><a href="index.html" class="link title -active link-index">scour.js</a>
-            </li>
-            <li class="menu-item -level-1"><a href="#install" class="link title link-install">Install</a>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#features" class="link title link-features">Features</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#traversal" class="link title link-traversal">Traversal</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#chaining" class="link title link-chaining">Chaining</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#immutable-modifications" class="link title link-immutable-modifications">Immutable modifications</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#advanced-traversing" class="link title link-advanced-traversing">Advanced traversing</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#models" class="link title link-models">Models</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#api" class="link title link-api">API</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#scour" class="link title link-scour">scour</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#chaining-methods" class="link title link-chaining-methods">Chaining methods</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#go" class="link title link-go">go</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#at" class="link title link-at">at</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#getat" class="link title link-getat">getAt</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#filter" class="link title link-filter">filter</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#reject" class="link title link-reject">reject</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#find" class="link title link-find">find</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#first" class="link title link-first">first</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#last" class="link title link-last">last</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#sortby" class="link title link-sortby">sortBy</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#reading-methods" class="link title link-reading-methods">Reading methods</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#get" class="link title link-get">get</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#len" class="link title link-len">len</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#toarray" class="link title link-toarray">toArray</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#keys" class="link title link-keys">keys</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#writing-methods" class="link title link-writing-methods">Writing methods</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#set" class="link title link-set">set</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#del" class="link title link-del">del</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#extend" class="link title link-extend">extend</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#utility-methods" class="link title link-utility-methods">Utility methods</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#use" class="link title link-use">use</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#index" class="link title link-index">index</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#tojson" class="link title link-tojson">toJSON</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#equal" class="link title link-equal">equal</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#iteration-methods" class="link title link-iteration-methods">Iteration methods</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#foreach" class="link title link-foreach">forEach</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#each" class="link title link-each">each</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#map" class="link title link-map">map</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#mapobject" class="link title link-mapobject">mapObject</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#indexedmap" class="link title link-indexedmap">indexedMap</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#reset" class="link title link-reset">reset</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#attributes" class="link title link-attributes">Attributes</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#value" class="link title link-value">value</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#root" class="link title link-root">root</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#keypath" class="link title link-keypath">keypath</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1 -parent"><a href="#utility-functions" class="link title link-utility-functions">Utility functions</a>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="#scour.get" class="link title link-scour.get">scour.get</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.set" class="link title link-scour.set">scour.set</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.del" class="link title link-scour.del">scour.del</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.extendin" class="link title link-scour.extendin">scour.extendIn</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.each" class="link title link-scour.each">scour.each</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.map" class="link title link-scour.map">scour.map</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.mapobject" class="link title link-scour.mapobject">scour.mapObject</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.indexedmap" class="link title link-scour.indexedmap">scour.indexedMap</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.filter" class="link title link-scour.filter">scour.filter</a>
-                </li>
-                <li class="menu-item -level-2"><a href="#scour.sortby" class="link title link-scour.sortby">scour.sortBy</a>
-                </li>
-              </ul>
-            </li>
-            <li class="menu-item -level-1"><a href="#thanks" class="link title link-thanks">Thanks</a>
-            </li>
-            <li class="menu-item -level-1 -parent"><span class="title">Appendix</span>
-              <ul class="submenu">
-                <li class="menu-item -level-2"><a href="HISTORY.html" class="link title  link-history">Changelog</a>
-                </li>
-                <li class="menu-item -level-2"><a href="comparison.html" class="link title  link-comparison">Comparison with others</a>
-                </li>
-                <li class="menu-item -level-2"><a href="extensions_example.html" class="link title  link-extensions_example">Extensions example</a>
-                </li>
-                <li class="menu-item -level-2"><a href="redux_example.html" class="link title  link-redux_example">Redux example</a>
-                </li>
-              </ul>
-            </li>
-          </ul>
-        </li>
       </div>
     </div>
   </body>
