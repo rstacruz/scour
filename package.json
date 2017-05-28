@@ -12,7 +12,7 @@
     "url": "https://github.com/rstacruz/scour/issues"
   },
   "dependencies": {
-    "object-assign": "4.0.1",
+    "object-assign": "4.1.0",
     "scour-search": "0.3.3",
     "to-function": "2.0.6"
   },
