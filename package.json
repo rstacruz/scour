@@ -29,7 +29,7 @@
     "standard": "6.0.5",
     "tap-spec": "4.1.1",
     "tape": "4.5.0",
-    "uglifyjs": "2.4.10"
+    "uglifyjs": "2.4.11"
   },
   "directories": {
     "test": "test"
