@@ -539,7 +539,7 @@ with the modifications applied.
 ```js
 data = { bob: { name: 'Bob' } }
 db = scour(data)
-db.set([ 'bob', 'name' ], 'Robert')
+db = db.set([ 'bob', 'name' ], 'Robert')
 // db.value == { bob: { name: 'Robert' } }
 ```
 
