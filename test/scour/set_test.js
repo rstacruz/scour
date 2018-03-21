@@ -72,3 +72,13 @@ test('.set() with wrapping', (t) => {
 
   t.end()
 })
+
+test('.set() null', (t) => {
+  var data = { bob: { name: 'Bob' } }
+  var result = scour(data).set('bob.name', null)
+
+  t.deepEqual(
+    result.value,
+    { bob: { name: null } })
+  t.end()
+})
