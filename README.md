@@ -1,3 +1,7 @@
+> ## End-of-life
+>
+> July 2020: Thank you to all the users and contributors who have made this project possible. Moving forward, please consider alternatives such as [immer](https://www.npmjs.com/package/immer).
+
 # scour.js
 
 <!-- {.massive-header.-with-tagline} -->
