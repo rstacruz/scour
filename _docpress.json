@@ -9,6 +9,11 @@
         "slug": "index",
         "headings": [
           {
+            "title": "End-of-life",
+            "depth": 2,
+            "id": "end-of-life"
+          },
+          {
             "title": "Install",
             "depth": 2,
             "id": "install"
@@ -484,6 +489,11 @@
       "pageTitle": "scour.js",
       "slug": "index",
       "headings": [
+        {
+          "title": "End-of-life",
+          "depth": 2,
+          "id": "end-of-life"
+        },
         {
           "title": "Install",
           "depth": 2,
