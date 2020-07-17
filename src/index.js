@@ -497,7 +497,8 @@ scour.prototype = {
     }
 
     // use .valueOf() to denature any scour-wrapping or String() or whatnot
-    const result = scour.set(this.value || {}, keypath, value.valueOf())
+    value = value && value.valueOf() || value
+    const result = scour.set(this.value || {}, keypath, value)
 
     // Update indices, if any
     let indices = updateIndices(this.indices, result, keypath)
