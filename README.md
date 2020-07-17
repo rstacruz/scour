@@ -6,6 +6,8 @@
 
 # scour.js
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/rstacruz/scour.svg)](https://greenkeeper.io/)
+
 <!-- {.massive-header.-with-tagline} -->
 
 > Traverse objects and arrays immutably
